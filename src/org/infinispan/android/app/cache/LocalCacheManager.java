@@ -1,16 +1,21 @@
 package org.infinispan.android.app.cache;
 
+import java.io.Serializable;
+
 import org.apache.log4j.Logger;
 import org.infinispan.Cache;
 import org.infinispan.android.app.logger.LoggerFactory;
+import org.infinispan.android.app.model.CacheElement;
 import org.infinispan.container.DataContainer;
 import org.infinispan.manager.DefaultCacheManager;
 
-public class LocalCacheManager {
+public class LocalCacheManager implements Serializable{
 	
+	private static final long serialVersionUID = 4062592999323781354L;
+
 	private static final Logger logger = LoggerFactory.getLogger(LocalCacheManager.class);
 
-	private Cache<String, String> cache;
+	private Cache<Integer, CacheElement> cache;
 
 	private DefaultCacheManager cacheManager;
 
@@ -21,10 +26,10 @@ public class LocalCacheManager {
 		try {
 			if (cacheManager == null) {
 				cacheManager = new DefaultCacheManager();
+				cache = cacheManager.getCache();
+				cache.start();
+				logger.info("Cache was started");
 			}
-			cache = cacheManager.getCache();
-			cache.start();
-			logger.info("Cache was started");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -42,30 +47,36 @@ public class LocalCacheManager {
 		}
 	}
 	
-	public void put(String key, String value) {
-		handleStoppedCache();
-		cache.put(key, value);
+	public void put(Integer key, CacheElement value) {
+		if (isCacheStarted()) {
+			cache.put(key, value);
+		}
 	}
 	
-	public String get(String key) {
-		handleStoppedCache();
-		return cache.get(key);
+	public CacheElement get(Integer key) {
+		if (isCacheStarted()) {
+			return cache.get(key);
+		}
+		return null;
 	}
 	
 	public DataContainer getAll() {
-		handleStoppedCache();
-		return cache.getAdvancedCache().getDataContainer();
-	}
-	
-	public String remove(String key) {
-		handleStoppedCache();
-		return cache.remove(key);
-	}
-	
-	private void handleStoppedCache() {
-		if (cacheManager == null || cache == null) {
-			startCache();
+		if (isCacheStarted()) {
+			return cache.getAdvancedCache().getDataContainer();
 		}
+		return null;
+	}
+	
+	public CacheElement remove(Integer key) {
+		if (isCacheStarted()) {
+			return cache.remove(key);
+		}
+		return null;
+		
+	}
+	
+	private boolean isCacheStarted() {
+		return cacheManager != null && cache != null;
 	}
 
 }

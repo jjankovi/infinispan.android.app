@@ -1,73 +1,68 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linear_layout_1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="60dp"
-        android:ems="10"
-        android:hint="@string/value" />
-        
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="start"
+            android:text="@string/start_button" />
+
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="stop"
+            android:text="@string/stop_button" />
+
+    </LinearLayout>
+
+     <ListView
+        android:id="@+id/listView1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.5">
+    </ListView>
     
+    <TableRow
+        android:id="@+id/toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginBottom= "-7dp">
+        
+        
+         <Button
+            android:id="@+id/delete_item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_marginRight="-3.7dp"
+            android:layout_marginLeft="-5dp"
+            android:onClick="delete" 
+            android:text="@string/delete_item" />
+         
+         <Button
+            android:id="@+id/modify_item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_marginRight="-3.7dp"
+            android:layout_marginLeft="-5dp"
+            android:onClick="modify"
+            android:text="@string/modify_item" />
+        
+    </TableRow>
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/editText2"
-        android:layout_alignParentLeft="true"
-        android:ems="10"
-        android:hint="@string/key" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:onClick="put"
-        android:text="@string/put_button" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/button3"
-        android:onClick="remove"
-        android:text="@string/remove_button" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/editText1"
-        android:layout_centerHorizontal="true"
-        android:onClick="values"
-        android:text="@string/values_button" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="104dp"
-        android:layout_toRightOf="@+id/button4"
-        android:onClick="stop"
-        android:text="@string/stop_button" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_toLeftOf="@+id/button4"
-        android:onClick="start"
-        android:text="@string/start_button" />
-
-</RelativeLayout>
+</LinearLayout>
