@@ -13,6 +13,18 @@ public class AddActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+        
+        Intent intent = getIntent();
+        String value1 = intent.getStringExtra("value1");
+        if (value1!=null) {
+        	EditText textValue1 = (EditText)findViewById(R.id.value1);
+        	textValue1.setText(value1);
+        }
+        String value2 = intent.getStringExtra("value2");
+        if (value2!=null) {
+        	EditText textValue2 = (EditText)findViewById(R.id.value2);
+        	textValue2.setText(value2);
+        }
     }
 
 	@Override
@@ -27,7 +39,7 @@ public class AddActivity extends Activity {
 	}
 	
 	/** Called when the add button is pressed **/
-	public void add(View view) {
+	public void save(View view) {
 		Intent intent = getIntent();
 		intent.putExtra("value1", ((EditText)
 				findViewById(R.id.value1)).getText().toString());

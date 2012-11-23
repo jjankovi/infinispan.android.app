@@ -4,30 +4,43 @@
 	android:layout_height="fill_parent"
 	android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/linear_layout_1"
+    <TableRow
+        android:id="@+id/top_toolbar"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
-
+        android:layout_height="wrap_content" 
+        android:layout_marginTop= "-7dp">
+        
         <Button
-            android:id="@+id/start"
+            android:id="@+id/select_all"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="start"
-            android:text="@string/start_button" />
-
+            android:layout_weight="0.3"
+            android:layout_marginRight="-4.2dp"
+            android:layout_marginLeft="-5dp"
+            android:onClick="selectAll" 
+            android:text="@string/select_all" />
+        
         <Button
-            android:id="@+id/stop"
+            android:id="@+id/select_count"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="stop"
-            android:text="@string/stop_button" />
-
-    </LinearLayout>
+            android:layout_weight="0.3"
+            android:layout_marginRight="-4.2dp"
+            android:layout_marginLeft="-4.2dp"
+            android:clickable="false"
+            android:text="@string/select_count" />
+         
+         <Button
+            android:id="@+id/deselect_all"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:layout_marginRight="-5dp"
+            android:layout_marginLeft="-4.2dp"
+            android:onClick="deselectAll"
+            android:text="@string/deselect_all" />
+        
+    </TableRow>
 
      <ListView
         android:id="@+id/listView1"
@@ -37,7 +50,7 @@
     </ListView>
     
     <TableRow
-        android:id="@+id/toolbar"
+        android:id="@+id/bottom_toolbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
         android:layout_marginBottom= "-7dp">

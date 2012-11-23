@@ -27,7 +27,7 @@ public class LocalCacheManager implements Serializable{
 			if (cacheManager == null) {
 				cacheManager = new DefaultCacheManager();
 				cache = cacheManager.getCache();
-				cache.start();
+				cache.start();				
 				logger.info("Cache was started");
 			}
 		} catch (Exception e) {
@@ -75,7 +75,7 @@ public class LocalCacheManager implements Serializable{
 		
 	}
 	
-	private boolean isCacheStarted() {
+	public boolean isCacheStarted() {
 		return cacheManager != null && cache != null;
 	}
 
