@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical" >
+
+    <TableRow
+        android:id="@+id/top_toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop= "-7dp">
+        
+        <Button
+            android:id="@+id/select_all"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:layout_marginRight="-4.2dp"
+            android:layout_marginLeft="-5dp"
+            android:onClick="selectAll" 
+            android:text="@string/select_all" />
+        
+        <Button
+            android:id="@+id/select_count"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:layout_marginRight="-4.2dp"
+            android:layout_marginLeft="-4.2dp"
+            android:clickable="false"
+            android:text="@string/select_count" />
+         
+         <Button
+            android:id="@+id/deselect_all"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:layout_marginRight="-5dp"
+            android:layout_marginLeft="-4.2dp"
+            android:onClick="deselectAll"
+            android:text="@string/deselect_all" />
+        
+    </TableRow>
+
+     <ListView
+        android:id="@+id/listView1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.5">
+    </ListView>
+    
+    <TableRow
+        android:id="@+id/bottom_toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginBottom= "-7dp">
+        
+        <Button
+            android:id="@+id/add_item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+           android:layout_marginRight="-4.2dp"
+            android:layout_marginLeft="-5dp"
+            android:onClick="add" 
+            android:text="@string/add_item" />
+        
+        
+         <Button
+            android:id="@+id/delete_item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:layout_marginRight="-4.2dp"
+            android:layout_marginLeft="-4.2dp"
+            android:onClick="delete" 
+            android:text="@string/delete_item" />
+         
+         <Button
+            android:id="@+id/modify_item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:layout_marginRight="-5dp"
+            android:layout_marginLeft="-4.2dp"
+            android:onClick="modify"
+            android:text="@string/modify_item" />
+        
+    </TableRow>
+
+</LinearLayout>

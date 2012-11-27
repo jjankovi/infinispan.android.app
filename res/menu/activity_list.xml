@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/add_item"
+        android:title="@string/add_item"
+        android:orderInCategory="100" />
+     <item android:id="@+id/shutdown_item"
+        android:title="@string/shutdown_item"
+        android:orderInCategory="100" />
+</menu>
