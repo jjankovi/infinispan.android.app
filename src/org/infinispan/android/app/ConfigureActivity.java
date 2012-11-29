@@ -1,20 +1,15 @@
 package org.infinispan.android.app;
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
+import android.preference.PreferenceActivity;
 
-public class ConfigureActivity extends Activity {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configure);
-    }
+public class ConfigureActivity extends PreferenceActivity {
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_configure, menu);
-        return true;
-    }
+	 @Override
+	    public void onCreate(Bundle savedInstanceState) {
+	        super.onCreate(savedInstanceState);
+	        addPreferencesFromResource(R.xml.preferences);
+	    }
+	
 }
