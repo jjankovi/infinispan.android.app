@@ -1,33 +1,28 @@
 package org.infinispan.android.app.cache;
 
-import java.io.Serializable;
-
 import org.apache.log4j.Logger;
 import org.infinispan.Cache;
 import org.infinispan.android.app.logger.LoggerFactory;
 import org.infinispan.android.app.model.CacheElement;
 import org.infinispan.container.DataContainer;
+import org.infinispan.lifecycle.ComponentStatus;
 import org.infinispan.manager.DefaultCacheManager;
 
-public class LocalCacheManager implements Serializable{
+public class CacheManager {
 	
-	private static final long serialVersionUID = 4062592999323781354L;
-
-	private static final Logger logger = LoggerFactory.getLogger(LocalCacheManager.class);
+	private static final Logger logger = 
+			LoggerFactory.getLogger(CacheManager.class);
 
 	private Cache<Integer, CacheElement> cache;
 
 	private DefaultCacheManager cacheManager;
-
-//	private String configFile = "gui-demo-cache-config.xml";
-
 	
 	public void startCache() {
 		try {
 			if (cacheManager == null) {
 				cacheManager = new DefaultCacheManager();
 				cache = cacheManager.getCache();
-				cache.start();				
+				cache.start();	
 				logger.info("Cache was started");
 			}
 		} catch (Exception e) {
@@ -76,7 +71,19 @@ public class LocalCacheManager implements Serializable{
 	}
 	
 	public boolean isCacheStarted() {
-		return cacheManager != null && cache != null;
+		boolean cacheManagerState;
+		boolean cacheState = false;
+		if (cacheManager == null) {
+			cacheManagerState = false;
+		} else {
+			cacheManagerState = cacheManager.getStatus() == ComponentStatus.RUNNING;
+		}
+		if (cache == null) {
+			cacheState = false;
+		} else {
+			cacheState = cache.getStatus() == ComponentStatus.RUNNING; 
+		}
+		return cacheManagerState && cacheState;			   
 	}
 
 }

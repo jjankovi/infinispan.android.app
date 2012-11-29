@@ -1,6 +1,6 @@
 package org.infinispan.android.app;
 
-import org.infinispan.android.app.cache.LocalCacheManager;
+import org.infinispan.android.app.cache.CacheManager;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.view.View;
 
 public class MainActivity extends Activity {
 
-	private static LocalCacheManager localCache = null;
+	public static CacheManager localCache = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         if (localCache == null) {
-			localCache = new LocalCacheManager();
+			localCache = new CacheManager();
 		}
     }
 
@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
 	public void items(View view) {
 		
 		Intent intent = new Intent(this, ListActivity.class);
-		startActivityForResult(intent, 0);
+		startActivity(intent);
 		
 	}
 	
@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
 	public void configure(View view) {
 		
 		Intent intent = new Intent(this, ConfigureActivity.class);
-		startActivityForResult(intent, 0);
+		startActivity(intent);
 		
 	}
 	

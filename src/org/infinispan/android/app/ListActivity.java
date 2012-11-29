@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.infinispan.android.app.cache.LocalCacheManager;
 import org.infinispan.android.app.model.CacheElement;
 import org.infinispan.container.DataContainer;
 import org.infinispan.container.entries.InternalCacheEntry;
@@ -23,8 +22,6 @@ import android.widget.ListView;
 
 public class ListActivity extends Activity {
 
-	private static LocalCacheManager localCache = null;
-	
 	private ProgressDialog progressDialog = null;
 	
 	private int modifedItemId;
@@ -43,10 +40,6 @@ public class ListActivity extends Activity {
 		
 		this.progressDialog = ProgressDialog.show(
 				this, "Starting the application", "Local cache starting...", true, false);
-		
-		if (localCache == null) {
-			localCache = new LocalCacheManager();
-		}
 		
 		/** start local cache at startup **/
 		new StartApplication().execute();
@@ -73,7 +66,7 @@ public class ListActivity extends Activity {
 			} else {
 				id = modifedItemId;
 			}
-			localCache.put(id, 
+			MainActivity.localCache.put(id, 
 					new CacheElement(
 					data.getStringExtra("value1"), 
 					data.getStringExtra("value2")));
@@ -119,7 +112,7 @@ public class ListActivity extends Activity {
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {
 				String listItem = (String) listView.getItemAtPosition(index);
-				localCache.remove(Integer.parseInt(listItem.split(" ")[0]));
+				MainActivity.localCache.remove(Integer.parseInt(listItem.split(" ")[0]));
 			}
 		}
 		updateItems();
@@ -159,8 +152,8 @@ public class ListActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			if (!localCache.isCacheStarted()) {
-				localCache.startCache();
+			if (!MainActivity.localCache.isCacheStarted()) {
+				MainActivity.localCache.startCache();
 				generateCacheElements(3);
 			}
 			return null;
@@ -200,7 +193,7 @@ public class ListActivity extends Activity {
 	 */
 	private void generateCacheElements(int elementsCount) {
 		for (int i = 0; i < elementsCount; i++) {
-			localCache.put(Integer.valueOf(i), new CacheElement(
+			MainActivity.localCache.put(Integer.valueOf(i), new CacheElement(
 					"1data" + i + i, "2data" + i + i));
 		}
 	}
@@ -213,7 +206,7 @@ public class ListActivity extends Activity {
 	 */
 	private void updateItems() {
 		List<String> listElements = new ArrayList<String>();
-		DataContainer container = localCache.getAll();
+		DataContainer container = MainActivity.localCache.getAll();
 		if (container != null) {
 			for (InternalCacheEntry entry : container.entrySet()) {
 				listElements.add(entry.getKey() + " " + entry.getValue());
