@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
     /** Called when eshop item button is pressed */
 	public void eshop(View view) {
 		
-		Intent intent = new Intent(this, ItemsActivity.class);
+		Intent intent = new Intent(this, ShopActivity.class);
 		startActivity(intent);
 		
 	}

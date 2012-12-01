@@ -1,11 +1,15 @@
 package org.infinispan.android.app;
 
+import java.io.Serializable;
+
+import org.infinispan.android.app.model.ShopItem;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 
 public class AddActivity extends Activity {
 	
@@ -15,15 +19,26 @@ public class AddActivity extends Activity {
         setContentView(R.layout.activity_add);
         
         Intent intent = getIntent();
-        String value1 = intent.getStringExtra("value1");
-        if (value1!=null) {
-        	EditText textValue1 = (EditText)findViewById(R.id.value1);
-        	textValue1.setText(value1);
+
+        Serializable serializableItem = null;
+        if (intent.getExtras() != null) {
+        	serializableItem = intent.getExtras().getSerializable("item");
         }
-        String value2 = intent.getStringExtra("value2");
-        if (value2!=null) {
-        	EditText textValue2 = (EditText)findViewById(R.id.value2);
-        	textValue2.setText(value2);
+        
+        if (serializableItem != null) {
+        	ShopItem shopItem = (ShopItem)serializableItem;
+        	
+        	TextView name = (TextView)findViewById(R.id.name);
+            name.setText(shopItem.getName());
+            
+            TextView prize = (TextView)findViewById(R.id.prize);
+            prize.setText(shopItem.getPrize() + "");
+            
+            TextView description = (TextView)findViewById(R.id.description);
+            description.setText(shopItem.getDescription());
+            
+            TextView manufacturer = (TextView)findViewById(R.id.manufacturer);
+            manufacturer.setText(shopItem.getManufacturer());
         }
     }
 
@@ -41,10 +56,17 @@ public class AddActivity extends Activity {
 	/** Called when the add button is pressed **/
 	public void save(View view) {
 		Intent intent = getIntent();
-		intent.putExtra("value1", ((EditText)
-				findViewById(R.id.value1)).getText().toString());
-		intent.putExtra("value2", ((EditText)
-				findViewById(R.id.value2)).getText().toString());
+		
+		TextView name = (TextView)findViewById(R.id.name);
+		TextView prize = (TextView)findViewById(R.id.prize);
+		TextView description = (TextView)findViewById(R.id.description);
+		TextView manufacturer = (TextView)findViewById(R.id.manufacturer);
+		
+		ShopItem shopItem = new ShopItem(name.getText().toString(), 
+				Float.parseFloat(prize.getText().toString()), 
+				description.getText().toString(), 
+				manufacturer.getText().toString());
+		intent.putExtra("item", shopItem);
 		setResult(RESULT_OK, intent);
 		finish();
 	}

@@ -24,7 +24,9 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="configure">Configure</string>
-    <string name="value1">Value1</string>
-    <string name="value2">Value2</string>
+    <string name="nameHint">Item name</string>
+    <string name="prizeHint">Prize</string>
+    <string name="descriptionHint">Description</string>
+    <string name="manufacturerHint">Manufacturer</string>
   
 </resources>

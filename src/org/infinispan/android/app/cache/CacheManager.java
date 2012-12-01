@@ -3,7 +3,7 @@ package org.infinispan.android.app.cache;
 import org.apache.log4j.Logger;
 import org.infinispan.Cache;
 import org.infinispan.android.app.logger.LoggerFactory;
-import org.infinispan.android.app.model.CacheElement;
+import org.infinispan.android.app.model.ShopItem;
 import org.infinispan.container.DataContainer;
 import org.infinispan.lifecycle.ComponentStatus;
 import org.infinispan.manager.DefaultCacheManager;
@@ -13,7 +13,7 @@ public class CacheManager {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(CacheManager.class);
 
-	private Cache<Integer, CacheElement> cache;
+	private Cache<Integer, ShopItem> cache;
 
 	private DefaultCacheManager cacheManager;
 	
@@ -42,13 +42,13 @@ public class CacheManager {
 		}
 	}
 	
-	public void put(Integer key, CacheElement value) {
+	public void put(Integer key, ShopItem value) {
 		if (isCacheStarted()) {
 			cache.put(key, value);
 		}
 	}
 	
-	public CacheElement get(Integer key) {
+	public ShopItem get(Integer key) {
 		if (isCacheStarted()) {
 			return cache.get(key);
 		}
@@ -62,7 +62,7 @@ public class CacheManager {
 		return null;
 	}
 	
-	public CacheElement remove(Integer key) {
+	public ShopItem remove(Integer key) {
 		if (isCacheStarted()) {
 			return cache.remove(key);
 		}

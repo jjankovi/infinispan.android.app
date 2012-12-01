@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.infinispan.android.app.model.CacheElement;
+import org.infinispan.android.app.model.ShopItem;
 import org.infinispan.container.DataContainer;
 import org.infinispan.container.entries.InternalCacheEntry;
 
@@ -21,7 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class ItemsActivity extends Activity {
+public class ShopActivity extends Activity {
 
 	private ProgressDialog progressDialog = null;
 	
@@ -36,7 +36,7 @@ public class ItemsActivity extends Activity {
 		ListView listView = (ListView)findViewById(R.id.elements);
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		listView.setOnItemClickListener(new CustomListClickListener());
-				
+		
 		Thread.currentThread().setContextClassLoader(
 				getClass().getClassLoader());
 		
@@ -84,10 +84,10 @@ public class ItemsActivity extends Activity {
 			} else {
 				id = modifedItemId;
 			}
-			MainActivity.localCache.put(id, 
-					new CacheElement(
-					data.getStringExtra("value1"), 
-					data.getStringExtra("value2")));
+			ShopItem shopItem = (ShopItem)data.getExtras().getSerializable("item");
+			if (shopItem != null) {
+				MainActivity.localCache.put(id, shopItem);
+			}
 			updateItems();
 			updateUI();
 		}
@@ -137,11 +137,9 @@ public class ItemsActivity extends Activity {
 			if (listView.isItemChecked(index)) {
 				String listItem = (String) listView.getItemAtPosition(index);
 				modifedItemId = Integer.parseInt(listItem.split(" ")[0]);
-				String value1 = listItem.split(" ")[1];
-				String value2 = listItem.split(" ")[2];
+				
 				Intent intent = new Intent(this, AddActivity.class);
-				intent.putExtra("value1", value1);
-				intent.putExtra("value2", value2);
+				intent.putExtra("item", MainActivity.localCache.get(modifedItemId));
 				startActivityForResult(intent, 2);
 			}
 		}
@@ -173,8 +171,8 @@ public class ItemsActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			updateItems();
 			updateUI();
-			if (ItemsActivity.this.progressDialog != null) {
-                ItemsActivity.this.progressDialog.dismiss();
+			if (ShopActivity.this.progressDialog != null) {
+                ShopActivity.this.progressDialog.dismiss();
             }
 		}
 
@@ -203,8 +201,8 @@ public class ItemsActivity extends Activity {
 	 */
 	private void generateCacheElements(int elementsCount) {
 		for (int i = 0; i < elementsCount; i++) {
-			MainActivity.localCache.put(Integer.valueOf(i), new CacheElement(
-					"1data" + i + i, "2data" + i + i));
+			MainActivity.localCache.put(Integer.valueOf(i), 
+					new ShopItem("item" + i, i+20, "information" + i, "manufacturer" + i));
 		}
 	}
 

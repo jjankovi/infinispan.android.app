@@ -7,52 +7,80 @@
         android:id="@+id/layout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:gravity="center_horizontal"
         android:layout_alignParentTop="true"
-        >
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="10dp" >
 
-        <Button 
-        	android:id="@+id/save_button"
-    		android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-    		android:layout_weight="1"
-    		android:onClick="save"
-        	android:text="@string/save"
-        />
-     
-    	<Button 
-        	android:id="@+id/cancel_button"
-    		android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-    		android:layout_weight="1"
-    		android:onClick="cancel"
-    		android:text="@string/cancel"
-        />   
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="save"
+            android:text="@string/save" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="cancel"
+            android:text="@string/cancel" />
     </LinearLayout>
-    
-   
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/layout1"
-        android:orientation="vertical" >
-        
-        <EditText 
-            android:id="@+id/value1"
-            android:layout_width="fill_parent"
+        android:layout_marginLeft="22dp" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/value1" />
-        
-        <EditText 
-            android:id="@+id/value2"
-            android:layout_width="fill_parent"
+            android:contentDescription="description"
+            android:src="@drawable/ic_launcher" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/value2" />
-        
-    </LinearLayout>
+            android:layout_below="@id/imageView1"
+            android:ems="13"
+			android:hint="@string/nameHint"            
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/prize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:ems="13"
+            android:hint="@string/prizeHint"
+            android:inputType="number" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/prize"
+            android:ems="13"
+            android:hint="@string/descriptionHint"
+            android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/manufacturer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:hint="@string/manufacturerHint"
+            android:ems="13" />
+       
+    </RelativeLayout>
 
 </RelativeLayout>
