@@ -1,28 +1,57 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:orientation="vertical" >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center" >
 
-    <Button
-        android:id="@+id/items_button"
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|fill|center_horizontal|top|left|fill_vertical|center_vertical|fill_horizontal"
+        android:layout_marginBottom="10dp" >
+
+        <Button
+            android:id="@+id/eshopButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/custom_button"
+            android:drawableTop="@drawable/ic_menu_shop"
+            android:onClick="eshop"
+            android:text="@string/eshop"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/configure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/custom_button"
+            android:drawableTop="@drawable/ic_menu_preferences"
+            android:onClick="configure"
+            android:text="@string/configure"
+            android:textSize="15dp" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="items"
-        android:text="@string/items" />
+        android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/configure_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="configure"
-        android:text="@string/configure_item" />
+        <Button
+            android:id="@+id/shutdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/custom_button"
+            android:drawableTop="@drawable/ic_menu_shutdown"
+            android:onClick="shutdown"
+            android:text="@string/shutdown"
+            android:textSize="15dp" />
 
-    <Button
-        android:id="@+id/shutdown_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="shutdown"
-        android:text="@string/shutdown_item" />
+    </TableRow>
 
-</LinearLayout>
+</TableLayout>

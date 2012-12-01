@@ -14,13 +14,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class ListActivity extends Activity {
+public class ItemsActivity extends Activity {
 
 	private ProgressDialog progressDialog = null;
 	
@@ -32,7 +33,8 @@ public class ListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
 		
-		ListView listView = (ListView)findViewById(R.id.listView1);
+		ListView listView = (ListView)findViewById(R.id.elements);
+		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		listView.setOnItemClickListener(new CustomListClickListener());
 				
 		Thread.currentThread().setContextClassLoader(
@@ -49,6 +51,22 @@ public class ListActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_list, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.add_item:
+			Intent intent = new Intent(this, AddActivity.class);
+			startActivityForResult(intent, 1);
+			return true;
+		case R.id.refresh:
+			updateItems();
+			updateUI();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 	
 	@Override
@@ -78,7 +96,7 @@ public class ListActivity extends Activity {
 	/** Called when the select all button is pressed */
 	public void selectAll(View view) {
 		
-		ListView listView = (ListView) findViewById(R.id.listView1);
+		ListView listView = (ListView) findViewById(R.id.elements);
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			listView.setItemChecked(index, true);
 			updateUI();
@@ -89,7 +107,7 @@ public class ListActivity extends Activity {
 	/** Called when the deselect all button is pressed */
 	public void deselectAll(View view) {
 		
-		ListView listView = (ListView) findViewById(R.id.listView1);
+		ListView listView = (ListView) findViewById(R.id.elements);
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			listView.setItemChecked(index, false);
 			updateUI();
@@ -97,18 +115,10 @@ public class ListActivity extends Activity {
 		
 	}
 	
-	/** Called when the add button is pressed */
-	public void add(View view) {
-		
-		Intent intent = new Intent(this, AddActivity.class);
-		startActivityForResult(intent, 1);
-		
-	}
-
 	/** Called when the delete button is pressed */
 	public void delete(View view) {
 
-		ListView listView = (ListView) findViewById(R.id.listView1);
+		ListView listView = (ListView) findViewById(R.id.elements);
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {
 				String listItem = (String) listView.getItemAtPosition(index);
@@ -122,7 +132,7 @@ public class ListActivity extends Activity {
 	/** Called when the modify button is pressed */
 	public void modify(View view) {
 		
-		ListView listView = (ListView) findViewById(R.id.listView1);
+		ListView listView = (ListView) findViewById(R.id.elements);
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {
 				String listItem = (String) listView.getItemAtPosition(index);
@@ -163,8 +173,8 @@ public class ListActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			updateItems();
 			updateUI();
-			if (ListActivity.this.progressDialog != null) {
-                ListActivity.this.progressDialog.dismiss();
+			if (ItemsActivity.this.progressDialog != null) {
+                ItemsActivity.this.progressDialog.dismiss();
             }
 		}
 
@@ -212,11 +222,10 @@ public class ListActivity extends Activity {
 				listElements.add(entry.getKey() + " " + entry.getValue());
 			}
 		}
-		ListView listView = (ListView) findViewById(R.id.listView1);
+		ListView listView = (ListView) findViewById(R.id.elements);
 		listView.setAdapter(new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_multiple_choice, listElements));
 		listView.setItemsCanFocus(false);
-		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);		
 		listView.invalidateViews();
 	}
 	
@@ -227,7 +236,7 @@ public class ListActivity extends Activity {
 	private void updateUI() {
 		
 		/** obtain the count of selected items in list view **/
-		ListView listView = (ListView)findViewById(R.id.listView1);
+		ListView listView = (ListView)findViewById(R.id.elements);
 		int checkedCount = 0;
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {

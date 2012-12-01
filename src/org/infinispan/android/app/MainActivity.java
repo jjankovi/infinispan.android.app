@@ -2,10 +2,10 @@ package org.infinispan.android.app;
 
 import org.infinispan.android.app.cache.CacheManager;
 
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
@@ -29,10 +29,10 @@ public class MainActivity extends Activity {
         return true;
     }
     
-    /** Called when add item button is pressed */
-	public void items(View view) {
+    /** Called when eshop item button is pressed */
+	public void eshop(View view) {
 		
-		Intent intent = new Intent(this, ListActivity.class);
+		Intent intent = new Intent(this, ItemsActivity.class);
 		startActivity(intent);
 		
 	}
@@ -49,6 +49,12 @@ public class MainActivity extends Activity {
 	public void shutdown(View view) {
 	
 		new ApplicationShutDownTask().execute();
+	
+	}
+	
+	/** Called when help button is pressed */
+	public void help(View view) {
+	
 	
 	}
 	

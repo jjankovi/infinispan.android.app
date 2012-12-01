@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="listOptions">
+	    <item>Local</item>
+	    <item>Replicated</item>
+	    <item>Distributed</item>
+	</string-array>    
+	<string-array name="listValues">
+	    <item>Local setting</item>
+	    <item>Replicated setting</item>
+	    <item>Distributed setting</item>
+	</string-array>
+</resources>

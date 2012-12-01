@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory
-        android:title="First category" >
-    </PreferenceCategory>
-    <PreferenceCategory
-        android:title="Second category" >
-    </PreferenceCategory>
+
+    <ListPreference
+        android:entries="@array/listOptions"
+        android:entryValues="@array/listValues"
+        android:key="clustering"
+        android:summary="Select one of available clustering modes"
+        android:title="Clustering mode" />
+    
+    <CheckBoxPreference
+        android:title="Cache store" 
+        android:key="cacheStore" 
+        android:defaultValue="false"
+        android:summaryOff="Turn on the cache store" 
+        android:summaryOn="Turn off the cache store" />
+
 </PreferenceScreen>

@@ -1,8 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/add_item"
         android:title="@string/add_item"
+        android:icon="@drawable/ic_menu_add"
         android:orderInCategory="100" />
-     <item android:id="@+id/shutdown_item"
-        android:title="@string/shutdown_item"
-        android:orderInCategory="100" />
+	<item android:id="@+id/refresh"
+        android:title="@string/refresh"
+        android:icon="@drawable/ic_menu_refresh"
+        android:orderInCategory="100" />         
 </menu>

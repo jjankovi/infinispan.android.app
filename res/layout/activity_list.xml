@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical" >
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <TableRow
         android:id="@+id/top_toolbar"
@@ -43,11 +43,12 @@
     </TableRow>
 
      <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/elements"
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.5">
-    </ListView>
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        >
+   	</ListView>
     
     <TableRow
         android:id="@+id/bottom_toolbar"
@@ -55,36 +56,26 @@
         android:layout_height="wrap_content" 
         android:layout_marginBottom= "-7dp">
         
-        <Button
-            android:id="@+id/add_item"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-           android:layout_marginRight="-4.2dp"
-            android:layout_marginLeft="-5dp"
-            android:onClick="add" 
-            android:text="@string/add_item" />
-        
         
          <Button
             android:id="@+id/delete_item"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_weight="0.5"
             android:layout_marginRight="-4.2dp"
             android:layout_marginLeft="-4.2dp"
             android:onClick="delete" 
             android:text="@string/delete_item" />
          
          <Button
-            android:id="@+id/modify_item"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:layout_marginRight="-5dp"
-            android:layout_marginLeft="-4.2dp"
-            android:onClick="modify"
-            android:text="@string/modify_item" />
+             android:id="@+id/modify_item"
+             android:layout_width="fill_parent"
+             android:layout_height="match_parent"
+             android:layout_marginLeft="-4.2dp"
+             android:layout_marginRight="-5dp"
+             android:layout_weight="0.5"
+             android:onClick="modify"
+             android:text="@string/modify_item" />
         
     </TableRow>
 
