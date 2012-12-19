@@ -1,10 +1,11 @@
-package org.infinispan.android.app;
+package invoices.manager.activity;
+
+import invoices.manager.model.Invoice;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Random;
 
-import org.infinispan.android.app.model.ShopItem;
 import org.infinispan.container.DataContainer;
 import org.infinispan.container.entries.InternalCacheEntry;
 
@@ -21,21 +22,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class ShopActivity extends Activity {
+public class InvoicesActivity extends Activity {
 
 	private ProgressDialog progressDialog = null;
 	
-	private int modifedItemId;
+	private ListView listView;
+	private Button selectCount;
+	private Button deleteItem;
+	private Button modifyItem;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
-		
-		ListView listView = (ListView)findViewById(R.id.elements);
-		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-		listView.setOnItemClickListener(new CustomListClickListener());
+		setView();
 		
 		Thread.currentThread().setContextClassLoader(
 				getClass().getClassLoader());
@@ -47,6 +48,16 @@ public class ShopActivity extends Activity {
 		new StartApplication().execute();
 	}
 	
+	private void setView() {
+		listView = (ListView)findViewById(R.id.elements);
+		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		listView.setOnItemClickListener(new CustomListClickListener());
+		
+		selectCount = (Button)findViewById(R.id.select_count);
+		deleteItem = (Button)findViewById(R.id.delete_item);
+		modifyItem = (Button)findViewById(R.id.modify_item);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_list, menu);
@@ -72,21 +83,9 @@ public class ShopActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
-			int id;
-			
-			/** if request code was 1 we are 
-			 *  going to add a new item **/
-			if (requestCode == 1) {
-				id = new Random().nextInt(10000);
-				
-				/** if request code was not 1 we are 
-				 *  going to modify an existing item **/
-			} else {
-				id = modifedItemId;
-			}
-			ShopItem shopItem = (ShopItem)data.getExtras().getSerializable("item");
-			if (shopItem != null) {
-				MainActivity.localCache.put(id, shopItem);
+			Invoice invoice = (Invoice)data.getExtras().getSerializable("item");
+			if (invoice != null) {
+				MainActivity.localCache.put(invoice.getId(), invoice);
 			}
 			updateItems();
 			updateUI();
@@ -96,7 +95,6 @@ public class ShopActivity extends Activity {
 	/** Called when the select all button is pressed */
 	public void selectAll(View view) {
 		
-		ListView listView = (ListView) findViewById(R.id.elements);
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			listView.setItemChecked(index, true);
 			updateUI();
@@ -107,7 +105,6 @@ public class ShopActivity extends Activity {
 	/** Called when the deselect all button is pressed */
 	public void deselectAll(View view) {
 		
-		ListView listView = (ListView) findViewById(R.id.elements);
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			listView.setItemChecked(index, false);
 			updateUI();
@@ -118,7 +115,6 @@ public class ShopActivity extends Activity {
 	/** Called when the delete button is pressed */
 	public void delete(View view) {
 
-		ListView listView = (ListView) findViewById(R.id.elements);
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {
 				String listItem = (String) listView.getItemAtPosition(index);
@@ -132,14 +128,12 @@ public class ShopActivity extends Activity {
 	/** Called when the modify button is pressed */
 	public void modify(View view) {
 		
-		ListView listView = (ListView) findViewById(R.id.elements);
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {
 				String listItem = (String) listView.getItemAtPosition(index);
-				modifedItemId = Integer.parseInt(listItem.split(" ")[0]);
-				
 				Intent intent = new Intent(this, AddActivity.class);
-				intent.putExtra("item", MainActivity.localCache.get(modifedItemId));
+				intent.putExtra("item", MainActivity.localCache.get(
+						Integer.parseInt(listItem.split(" ")[0])));
 				startActivityForResult(intent, 2);
 			}
 		}
@@ -171,8 +165,8 @@ public class ShopActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			updateItems();
 			updateUI();
-			if (ShopActivity.this.progressDialog != null) {
-                ShopActivity.this.progressDialog.dismiss();
+			if (InvoicesActivity.this.progressDialog != null) {
+                InvoicesActivity.this.progressDialog.dismiss();
             }
 		}
 
@@ -200,10 +194,13 @@ public class ShopActivity extends Activity {
 	 * @param elementsCount number of elements to be generated
 	 */
 	private void generateCacheElements(int elementsCount) {
-		for (int i = 0; i < elementsCount; i++) {
-			MainActivity.localCache.put(Integer.valueOf(i), 
-					new ShopItem("item" + i, i+20, "information" + i, "manufacturer" + i));
-		}
+//		for (int i = 0; i < elementsCount; i++) {
+//			MainActivity.localCache.put(Integer.valueOf(i), 
+//					new Invoice("item" + i, i+20, "information" + i, "manufacturer" + i));
+//		}
+		MainActivity.localCache.put(12, new Invoice(1, new GregorianCalendar(2012, 12, 19), 
+				new GregorianCalendar(2012, 12, 19), (long)12.12, 
+				"Jaroslav", "D. Makovickeho", "Martin"));
 	}
 
 	/**
@@ -220,7 +217,6 @@ public class ShopActivity extends Activity {
 				listElements.add(entry.getKey() + " " + entry.getValue());
 			}
 		}
-		ListView listView = (ListView) findViewById(R.id.elements);
 		listView.setAdapter(new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_multiple_choice, listElements));
 		listView.setItemsCanFocus(false);
@@ -234,7 +230,6 @@ public class ShopActivity extends Activity {
 	private void updateUI() {
 		
 		/** obtain the count of selected items in list view **/
-		ListView listView = (ListView)findViewById(R.id.elements);
 		int checkedCount = 0;
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {
@@ -242,8 +237,7 @@ public class ShopActivity extends Activity {
 			}
 		}
 		/** update selected items counter **/
-		Button button = (Button)findViewById(R.id.select_count);
-		button.setText(checkedCount + " items");
+		selectCount.setText(checkedCount + " items");
 		
 		/** show delete/modify buttons according to count of selected items **/
 		if (checkedCount < 1) {
@@ -257,10 +251,8 @@ public class ShopActivity extends Activity {
 	
 	private void enableButtons(boolean deleteButtonShow, 
 			boolean modifyButtonShow) {
-		Button button = (Button)findViewById(R.id.delete_item);
-		button.setEnabled(deleteButtonShow);			
-		button = (Button)findViewById(R.id.modify_item);
-		button.setEnabled(modifyButtonShow);
+		deleteItem.setEnabled(deleteButtonShow);			
+		modifyItem.setEnabled(modifyButtonShow);
 	}
 
 }

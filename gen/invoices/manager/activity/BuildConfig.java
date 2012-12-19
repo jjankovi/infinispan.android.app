@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package org.infinispan.android.app;
+package invoices.manager.activity;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;

@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package org.infinispan.android.app;
+package invoices.manager.activity;
 
 public final class R {
     public static final class array {
@@ -16,8 +16,7 @@ public final class R {
     }
     public static final class color {
         public static final int blue1=0x7f060000;
-        public static final int blue2=0x7f060001;
-        public static final int grey=0x7f060002;
+        public static final int grey=0x7f060001;
     }
     public static final class drawable {
         public static final int custom_button=0x7f020000;
@@ -25,37 +24,43 @@ public final class R {
         public static final int ic_action_search=0x7f020002;
         public static final int ic_launcher=0x7f020003;
         public static final int ic_menu_add=0x7f020004;
-        public static final int ic_menu_preferences=0x7f020005;
-        public static final int ic_menu_refresh=0x7f020006;
-        public static final int ic_menu_shop=0x7f020007;
-        public static final int ic_menu_shutdown=0x7f020008;
+        public static final int ic_menu_configure=0x7f020005;
+        public static final int ic_menu_invoices=0x7f020006;
+        public static final int ic_menu_refresh=0x7f020007;
+        public static final int ic_menu_shop=0x7f020008;
+        public static final int ic_menu_shutdown=0x7f020009;
     }
     public static final class id {
-        public static final int about=0x7f0a0018;
-        public static final int add_item=0x7f0a0016;
-        public static final int bottom_toolbar=0x7f0a000e;
-        public static final int cancel_button=0x7f0a0002;
-        public static final int configure=0x7f0a0013;
-        public static final int delete_item=0x7f0a000f;
-        public static final int description=0x7f0a0007;
-        public static final int deselect_all=0x7f0a000c;
-        public static final int elements=0x7f0a000d;
-        public static final int eshopButton=0x7f0a0012;
-        public static final int imageView1=0x7f0a0004;
-        public static final int layout1=0x7f0a0000;
-        public static final int manufacturer=0x7f0a0008;
-        public static final int modify_item=0x7f0a0010;
-        public static final int name=0x7f0a0005;
+        public static final int about=0x7f0a001d;
+        public static final int add_item=0x7f0a001b;
+        public static final int bottom_toolbar=0x7f0a0013;
+        public static final int cancel_button=0x7f0a000d;
+        public static final int city=0x7f0a0005;
+        public static final int configure=0x7f0a0018;
+        public static final int dateOfIssue=0x7f0a0008;
+        public static final int dateOfIssueLabel=0x7f0a0007;
+        public static final int delete_item=0x7f0a0014;
+        public static final int deselect_all=0x7f0a0011;
+        public static final int elements=0x7f0a0012;
+        public static final int invoice=0x7f0a0001;
+        public static final int invoiceNumber=0x7f0a0002;
+        public static final int invoicesButton=0x7f0a0017;
+        public static final int layout1=0x7f0a000b;
+        public static final int maturityDate=0x7f0a000a;
+        public static final int maturityDateLabel=0x7f0a0009;
+        public static final int modify_item=0x7f0a0015;
+        public static final int name=0x7f0a0003;
         public static final int prize=0x7f0a0006;
-        public static final int refresh=0x7f0a0017;
-        public static final int relativeLayout1=0x7f0a0003;
-        public static final int save_button=0x7f0a0001;
-        public static final int select_all=0x7f0a000a;
-        public static final int select_count=0x7f0a000b;
-        public static final int shutdown=0x7f0a0015;
-        public static final int tableRow1=0x7f0a0011;
-        public static final int tableRow2=0x7f0a0014;
-        public static final int top_toolbar=0x7f0a0009;
+        public static final int refresh=0x7f0a001c;
+        public static final int relativeLayout1=0x7f0a0000;
+        public static final int save_button=0x7f0a000c;
+        public static final int select_all=0x7f0a000f;
+        public static final int select_count=0x7f0a0010;
+        public static final int shutdown=0x7f0a001a;
+        public static final int street=0x7f0a0004;
+        public static final int tableRow1=0x7f0a0016;
+        public static final int tableRow2=0x7f0a0019;
+        public static final int top_toolbar=0x7f0a000e;
     }
     public static final class layout {
         public static final int activity_add=0x7f030000;
@@ -75,16 +80,23 @@ public final class R {
          */
         public static final int app_name=0x7f070000;
         public static final int cancel=0x7f070011;
+        public static final int cityHint=0x7f070017;
         public static final int configure=0x7f070012;
+        public static final int dateOfIssueHint=0x7f070019;
         public static final int delete_item=0x7f07000e;
-        public static final int descriptionHint=0x7f070015;
         public static final int deselect_all=0x7f070006;
-        public static final int eshop=0x7f07000a;
         public static final int help=0x7f07000d;
-        public static final int manufacturerHint=0x7f070016;
+        /**  Labels 
+         */
+        public static final int invoice=0x7f070013;
+        /**  Text fields 
+         */
+        public static final int invoiceNumberHint=0x7f070014;
+        public static final int invoices=0x7f07000a;
+        public static final int maturityDateHint=0x7f07001a;
         public static final int modify_item=0x7f07000f;
-        public static final int nameHint=0x7f070013;
-        public static final int prizeHint=0x7f070014;
+        public static final int nameHint=0x7f070015;
+        public static final int prizeHint=0x7f070018;
         public static final int refresh=0x7f070009;
         public static final int save=0x7f070010;
         /**  Buttons names 
@@ -92,6 +104,7 @@ public final class R {
         public static final int select_all=0x7f070005;
         public static final int select_count=0x7f070007;
         public static final int shutdown=0x7f07000b;
+        public static final int streetHint=0x7f070016;
         /**  Activities names 
          */
         public static final int title_activity_add=0x7f070001;

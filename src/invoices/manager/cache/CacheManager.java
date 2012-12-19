@@ -1,9 +1,10 @@
-package org.infinispan.android.app.cache;
+package invoices.manager.cache;
+
+import invoices.manager.logger.LoggerFactory;
+import invoices.manager.model.Invoice;
 
 import org.apache.log4j.Logger;
 import org.infinispan.Cache;
-import org.infinispan.android.app.logger.LoggerFactory;
-import org.infinispan.android.app.model.ShopItem;
 import org.infinispan.container.DataContainer;
 import org.infinispan.lifecycle.ComponentStatus;
 import org.infinispan.manager.DefaultCacheManager;
@@ -13,7 +14,7 @@ public class CacheManager {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(CacheManager.class);
 
-	private Cache<Integer, ShopItem> cache;
+	private Cache<Integer, Invoice> cache;
 
 	private DefaultCacheManager cacheManager;
 	
@@ -42,13 +43,13 @@ public class CacheManager {
 		}
 	}
 	
-	public void put(Integer key, ShopItem value) {
+	public void put(Integer key, Invoice value) {
 		if (isCacheStarted()) {
 			cache.put(key, value);
 		}
 	}
 	
-	public ShopItem get(Integer key) {
+	public Invoice get(Integer key) {
 		if (isCacheStarted()) {
 			return cache.get(key);
 		}
@@ -62,7 +63,7 @@ public class CacheManager {
 		return null;
 	}
 	
-	public ShopItem remove(Integer key) {
+	public Invoice remove(Integer key) {
 		if (isCacheStarted()) {
 			return cache.remove(key);
 		}

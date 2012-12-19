@@ -1,13 +1,13 @@
 <resources>
 
     <!-- App name -->
-    <string name="app_name">InfiniApp</string>
+    <string name="app_name">Invoices Manager</string>
 
     <!-- Activities names -->
-    <string name="title_activity_add">AddActivity</string>
-    <string name="title_activity_main">InfiniApp</string>
-    <string name="title_activity_list">ListActivity</string>
-    <string name="title_activity_configure">ConfigureActivity</string>
+    <string name="title_activity_add">Adding the invoice</string>
+    <string name="title_activity_main">Invoices Manager</string>
+    <string name="title_activity_list">Invoices</string>
+    <string name="title_activity_configure">Configuration</string>
 
     <!-- Buttons names -->
     <string name="select_all">Select All</string>
@@ -15,7 +15,7 @@
     <string name="select_count">0 items</string>
     <string name="add_item">Add item</string>
     <string name="refresh">Refresh</string>
-    <string name="eshop">E-Shop</string>
+    <string name="invoices">Invoices</string>
     <string name="shutdown">Shutdown</string>
     <string name="about">About</string>
     <string name="help">Help</string>
@@ -24,9 +24,18 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="configure">Configure</string>
-    <string name="nameHint">Item name</string>
+    
+    <!-- Labels -->
+    <string name="invoice">Invoice number: </string>
+    
+    <!-- Text fields --> 
+    <string name="invoiceNumberHint">Invoice Number</string>
+    <string name="nameHint">Name</string>
+    <string name="streetHint">Street</string>
+    <string name="cityHint">City</string>
     <string name="prizeHint">Prize</string>
-    <string name="descriptionHint">Description</string>
-    <string name="manufacturerHint">Manufacturer</string>
+    <string name="dateOfIssueHint">Date of issue</string>
+    <string name="maturityDateHint">Maturity date</string>
+    
   
 </resources>

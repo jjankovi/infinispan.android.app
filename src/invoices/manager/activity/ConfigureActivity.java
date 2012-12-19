@@ -1,4 +1,4 @@
-package org.infinispan.android.app;
+package invoices.manager.activity;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

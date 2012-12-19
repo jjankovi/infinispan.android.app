@@ -1,7 +1,6 @@
-package org.infinispan.android.app;
+package invoices.manager.activity;
 
-import org.infinispan.android.app.cache.CacheManager;
-
+import invoices.manager.cache.CacheManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -29,10 +28,10 @@ public class MainActivity extends Activity {
         return true;
     }
     
-    /** Called when eshop item button is pressed */
-	public void eshop(View view) {
+    /** Called when invoices item button is pressed */
+	public void invoices(View view) {
 		
-		Intent intent = new Intent(this, ShopActivity.class);
+		Intent intent = new Intent(this, InvoicesActivity.class);
 		startActivity(intent);
 		
 	}

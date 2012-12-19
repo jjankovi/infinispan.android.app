@@ -1,4 +1,4 @@
-package org.infinispan.android.app.logger;
+package invoices.manager.logger;
 
 import java.io.File;
 

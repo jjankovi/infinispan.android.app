@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.infinispan.android.app"
+    package="invoices.manager.activity"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="8"
         android:targetSdkVersion="15" />
 
     <application
@@ -23,25 +23,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ShopActivity"
+            android:name=".InvoicesActivity"
             android:label="@string/title_activity_main" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.infinispan.android.app.MainActivity" />
+                android:value="invoices.manager.activity.MainActivity" />
         </activity>
         <activity
             android:name=".ConfigureActivity"
             android:label="@string/title_activity_configure" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.infinispan.android.app.MainActivity" />
+                android:value="invoices.manager.activity.MainActivity" />
         </activity>
         <activity
             android:name=".AddActivity"
             android:label="@string/title_activity_add" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.infinispan.android.app.ListActivity" />
+                android:value="invoices.manager.activity.ListActivity" />
         </activity>
     </application>
 
