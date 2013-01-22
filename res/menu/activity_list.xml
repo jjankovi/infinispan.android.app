@@ -2,9 +2,11 @@
     <item android:id="@+id/add_item"
         android:title="@string/add_item"
         android:icon="@drawable/ic_menu_add"
-        android:orderInCategory="100" />
+        android:orderInCategory="100"
+        android:showAsAction="always" />
 	<item android:id="@+id/refresh"
         android:title="@string/refresh"
         android:icon="@drawable/ic_menu_refresh"
-        android:orderInCategory="100" />         
+        android:orderInCategory="100" 
+        android:showAsAction="collapseActionView" />         
 </menu>

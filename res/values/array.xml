@@ -6,8 +6,8 @@
 	    <item>Distributed</item>
 	</string-array>    
 	<string-array name="listValues">
-	    <item>Local setting</item>
-	    <item>Replicated setting</item>
-	    <item>Distributed setting</item>
+	    <item>local</item>
+	    <item>replicated</item>
+	    <item>distributed</item>
 	</string-array>
 </resources>

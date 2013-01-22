@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import android.os.Environment;
 import de.mindpipe.android.logging.log4j.LogConfigurator;
 
-
 public class LoggerFactory {
 
 	public static final LogConfigurator logConfigurator = new LogConfigurator();

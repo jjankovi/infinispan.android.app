@@ -3,7 +3,6 @@ package invoices.manager.activity;
 import invoices.manager.model.Invoice;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.infinispan.container.DataContainer;
@@ -85,7 +84,7 @@ public class InvoicesActivity extends Activity {
 		if (resultCode == RESULT_OK) {
 			Invoice invoice = (Invoice)data.getExtras().getSerializable("item");
 			if (invoice != null) {
-				MainActivity.localCache.put(invoice.getId(), invoice);
+				MainActivity.cacheManager.put(invoice.getId(), invoice);
 			}
 			updateItems();
 			updateUI();
@@ -118,7 +117,7 @@ public class InvoicesActivity extends Activity {
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {
 				String listItem = (String) listView.getItemAtPosition(index);
-				MainActivity.localCache.remove(Integer.parseInt(listItem.split(" ")[0]));
+				MainActivity.cacheManager.remove(Integer.parseInt(listItem.split(" ")[0]));
 			}
 		}
 		updateItems();
@@ -132,7 +131,7 @@ public class InvoicesActivity extends Activity {
 			if (listView.isItemChecked(index)) {
 				String listItem = (String) listView.getItemAtPosition(index);
 				Intent intent = new Intent(this, AddActivity.class);
-				intent.putExtra("item", MainActivity.localCache.get(
+				intent.putExtra("item", MainActivity.cacheManager.get(
 						Integer.parseInt(listItem.split(" ")[0])));
 				startActivityForResult(intent, 2);
 			}
@@ -154,9 +153,9 @@ public class InvoicesActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			if (!MainActivity.localCache.isCacheStarted()) {
-				MainActivity.localCache.startCache();
-				generateCacheElements(3);
+			if (!MainActivity.cacheManager.isCacheStarted()) {
+				MainActivity.cacheManager.startCache();
+//				generateCacheElements(3);
 			}
 			return null;
 		}
@@ -195,12 +194,12 @@ public class InvoicesActivity extends Activity {
 	 */
 	private void generateCacheElements(int elementsCount) {
 //		for (int i = 0; i < elementsCount; i++) {
-//			MainActivity.localCache.put(Integer.valueOf(i), 
+//			MainActivity.cacheManager.put(Integer.valueOf(i), 
 //					new Invoice("item" + i, i+20, "information" + i, "manufacturer" + i));
 //		}
-		MainActivity.localCache.put(12, new Invoice(1, new GregorianCalendar(2012, 12, 19), 
-				new GregorianCalendar(2012, 12, 19), (long)12.12, 
-				"Jaroslav", "D. Makovickeho", "Martin"));
+//		MainActivity.cacheManager.put(12, new Invoice(1, new GregorianCalendar(2012, 12, 19), 
+//				new GregorianCalendar(2012, 12, 19), (long)12.12, 
+//				"Jaroslav", "D. Makovickeho", "Martin"));
 	}
 
 	/**
@@ -211,7 +210,7 @@ public class InvoicesActivity extends Activity {
 	 */
 	private void updateItems() {
 		List<String> listElements = new ArrayList<String>();
-		DataContainer container = MainActivity.localCache.getAll();
+		DataContainer container = MainActivity.cacheManager.getAll();
 		if (container != null) {
 			for (InternalCacheEntry entry : container.entrySet()) {
 				listElements.add(entry.getKey() + " " + entry.getValue());

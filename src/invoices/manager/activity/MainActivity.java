@@ -1,24 +1,31 @@
 package invoices.manager.activity;
 
 import invoices.manager.cache.CacheManager;
+
+import org.infinispan.configuration.cache.CacheMode;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.View;
 
 public class MainActivity extends Activity {
 
-	public static CacheManager localCache = null;
+	public static CacheManager cacheManager = null;
+	
+	private static final int RESULT_SETTINGS = 1;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        if (localCache == null) {
-			localCache = new CacheManager();
+        if (cacheManager == null) {
+			cacheManager = new CacheManager();
 		}
     }
 
@@ -36,11 +43,17 @@ public class MainActivity extends Activity {
 		
 	}
 	
-	/** Called when configure button is pressed */
+	/** 
+	 * 	Called when configure button is pressed.
+	 * 	After settings are done, cache settings 
+	 *  are initiated again according to configure
+	 *  settings
+	 *  
+	 */
 	public void configure(View view) {
 		
 		Intent intent = new Intent(this, ConfigureActivity.class);
-		startActivity(intent);
+		startActivityForResult(intent, RESULT_SETTINGS);
 		
 	}
 	
@@ -57,6 +70,46 @@ public class MainActivity extends Activity {
 	
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		switch (requestCode) {
+		case RESULT_SETTINGS:
+			setCache(); 		// set cache according to configure options
+			break;
+		}
+		
+	}
+	
+	private void setCache() {
+		
+		SharedPreferences sharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+		
+		setCacheMode(sharedPrefs.getString("mode", "NULL"));
+		setCacheStore(sharedPrefs.getBoolean("store", false));
+		
+	}
+
+	private void setCacheMode(String cacheMode) {
+		
+		if (cacheMode.toLowerCase().equals("local")) {
+			cacheManager.setCacheMode(CacheMode.LOCAL);
+		}else if (cacheMode.toLowerCase().equals("replicated")) {
+			cacheManager.setCacheMode(CacheMode.REPL_ASYNC);
+		}else if (cacheMode.toLowerCase().equals("distributed")) {
+			cacheManager.setCacheMode(CacheMode.DIST_ASYNC);
+		}
+		cacheManager.cacheInitialization();
+		
+	}
+	
+	private void setCacheStore(boolean setCacheStore) {
+		
+	}
+
 	/**
 	 * Async task to shutdown app, performing two tasks:
 	 * 
@@ -71,16 +124,16 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			localCache.stopCache();
+			cacheManager.stopCache();
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void result) {
-			MainActivity.localCache = null;
+			MainActivity.cacheManager = null;
 			finish();
 		}
 
 	}
-		
+	
 }
