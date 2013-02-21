@@ -21,6 +21,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author jjankovi
+ *
+ */
 public class AddActivity extends FragmentActivity {
 
 	private Button dateOfIssue;

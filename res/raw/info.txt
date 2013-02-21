@@ -1,0 +1,4 @@
+<h3>Invoices Manager</h3>
+Version: 1.0<br>
+Author: Jaroslav Jankovic<br>
+Copyright 2013<br>

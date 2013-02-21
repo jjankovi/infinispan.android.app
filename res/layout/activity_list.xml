@@ -1,47 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <TableRow
         android:id="@+id/top_toolbar"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" 
-        android:layout_marginTop= "-7dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-8dp" >
         
         <Button
             android:id="@+id/select_all"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:layout_marginRight="-4.2dp"
+            android:layout_marginRight="-4.1dp"
             android:layout_marginLeft="-5dp"
             android:onClick="selectAll" 
-            android:text="@string/select_all" />
+            android:text="@string/select_all" 
+            android:textSize="16dp"
+            android:width="0dp"
+            android:layout_weight="0.8" />
         
         <Button
             android:id="@+id/select_count"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:layout_marginRight="-4.2dp"
-            android:layout_marginLeft="-4.2dp"
+            android:layout_marginRight="-4.1dp"
+            android:layout_marginLeft="-4.1dp"
             android:clickable="false"
-            android:text="@string/select_count" />
+            android:text="@string/select_count"
+            android:textSize="16dp" 
+            android:width="0dp"
+            android:layout_weight="0.2" />
          
          <Button
-            android:id="@+id/deselect_all"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:layout_marginRight="-5dp"
-            android:layout_marginLeft="-4.2dp"
-            android:onClick="deselectAll"
-            android:text="@string/deselect_all" />
+             android:id="@+id/deselect_all"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="-4.1dp"
+             android:layout_marginRight="-5dp"
+             android:onClick="deselectAll"
+             android:text="@string/deselect_all"
+             android:textSize="16dp" 
+             android:width="0dp"
+             android:layout_weight="0.8" />
         
     </TableRow>
-
+    
+    <RelativeLayout 
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/RelativeLayout01" 
+    	android:layout_width="fill_parent" 
+    	android:layout_height="fill_parent">
+    	
+        <Button
+        	android:id="@+id/load_invoices"
+        	android:text="@string/load_invoices"
+        	android:textSize="20dp"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_centerInParent="true"
+        	android:background="@android:color/transparent"
+        	android:drawableTop="@drawable/load_invoices_selector"
+        	android:onClick="loadInvoices" >
+    	</Button>
+    	
+     </RelativeLayout>
+    
      <ListView
         android:id="@+id/elements"
         android:layout_width="fill_parent"

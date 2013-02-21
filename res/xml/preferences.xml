@@ -4,7 +4,7 @@
     <PreferenceCategory android:title="Main Options" >
         <ListPreference
             android:title="Clustering mode"
-            android:summary="Select one of available clustering modes"
+            android:summary="Local"
             android:defaultValue="local"
             android:entries="@array/listOptions"
             android:entryValues="@array/listValues"

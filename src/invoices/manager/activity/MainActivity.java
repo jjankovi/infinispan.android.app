@@ -1,6 +1,9 @@
 package invoices.manager.activity;
 
 import invoices.manager.cache.CacheManager;
+import invoices.manager.dialog.AboutDialog;
+
+import java.util.Properties;
 
 import org.infinispan.configuration.cache.CacheMode;
 
@@ -9,12 +12,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Process;
 import android.preference.PreferenceManager;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 public class MainActivity extends Activity {
 
+//	private Logger log = LoggerFactory.getLogger(MainActivity.class);
+	
 	public static CacheManager cacheManager = null;
 	
 	private static final int RESULT_SETTINGS = 1;
@@ -24,22 +31,40 @@ public class MainActivity extends Activity {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        if (cacheManager == null) {
-			cacheManager = new CacheManager();
-		}
+        initiateCacheManager();
+        
+        Properties props = System.getProperties();
+        props.setProperty("java.net.preferIPv4Stack", "true");
+        
     }
 
-    @Override
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		if (item.getItemId() == R.id.about) {
+			AboutDialog aboutDialog = new AboutDialog(this);
+			aboutDialog.setTitle("Invoices Manager");
+			aboutDialog.show();
+		}
+		return true;
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		Process.killProcess(Process.myPid());
+	}
+	
     
     /** Called when invoices item button is pressed */
 	public void invoices(View view) {
 		
-		Intent intent = new Intent(this, InvoicesActivity.class);
-		startActivity(intent);
+		handleWifiState();
 		
 	}
 	
@@ -66,8 +91,9 @@ public class MainActivity extends Activity {
 	
 	/** Called when help button is pressed */
 	public void help(View view) {
-	
-	
+		
+		
+		
 	}
 	
 	@Override
@@ -107,6 +133,40 @@ public class MainActivity extends Activity {
 	}
 	
 	private void setCacheStore(boolean setCacheStore) {
+		
+	}
+	
+	private void handleWifiState() {
+		 
+//		if(!WifiHelper.getWifiHelper().isConnectedToWifiNetwork(this)) {
+//			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+//			dialogBuilder.setTitle("Network").
+//						  setMessage("You are not connected " +
+//								  "to wireless network. To access to Invoices you have to be " +
+//								  "connected to some wireless network (3G is not sufficient). " +
+//								  "You will now be redirected to wireless network settings.");
+//			dialogBuilder.setPositiveButton(R.string.ok, new OnClickListener() {
+//				public void onClick(DialogInterface dialog, int which) {
+//					startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+//				}
+//			});
+//			dialogBuilder.setNegativeButton(R.string.cancel, new OnClickListener() {
+//				public void onClick(DialogInterface dialog, int which) {
+//					
+//				}
+//			});
+//			dialogBuilder.create().show();
+//		}else {
+			Intent intent = new Intent(this, InvoicesMainActivity.class);
+			startActivity(intent);
+//		}
+	}
+
+	private void initiateCacheManager() {
+    	
+		if (cacheManager == null) {
+			cacheManager = new CacheManager();
+		}
 		
 	}
 

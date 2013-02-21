@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns:android="http://schemas.android.com/apk/res/android" 
+    name="Theme.Example" parent="Theme.Sherlock">
+    <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
+    <item name="absForceOverflow">true</item>       
+</style>

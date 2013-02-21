@@ -11,8 +11,10 @@ public class ConfigurationsBuilder {
 
 	public static GlobalConfiguration globalConfiguration() {
 		return new GlobalConfigurationBuilder().transport().
+//				defaultTransport().addProperty("configurationFile", 
+//				"jgroups-tcp.xml").addProperty("jgroups.tcp.port=1234", "10.0.2.2").build();
 				defaultTransport().addProperty("configurationFile", 
-				"jgroups-tcp.xml").addProperty("jgroups.tcp.port=1234", "10.0.2.2").build();
+						"jgroups.xml").build();
 	}
 	
 	public static Configuration localConfiguration(CacheMode clusterMode) {

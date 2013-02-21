@@ -1,0 +1,63 @@
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:checked="false"
+        android:onClick="searchingDevice"
+        android:text="Turn on searching" />
+
+    <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:id="@+id/separator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/white" 
+        android:background="@android:color/darker_gray"
+        android:text="Found devices"/>
+    
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5" >
+    </ListView>
+    
+    <TableRow
+        android:id="@+id/bottom_toolbar2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom= "-7dp"
+        >
+        
+         <Button
+            android:id="@+id/join_item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_marginRight="-4.2dp"
+            android:layout_marginLeft="-4.2dp"
+            android:onClick="join" 
+            android:text="@string/join" />
+         
+         <Button
+             android:id="@+id/refresh_searching"
+             android:layout_width="fill_parent"
+             android:layout_height="match_parent"
+             android:layout_marginLeft="-4.2dp"
+             android:layout_marginRight="-5dp"
+             android:layout_weight="0.5"
+             android:onClick="refreshSearching"
+             android:text="@string/refresh" />
+        
+    </TableRow>
+
+</LinearLayout>
