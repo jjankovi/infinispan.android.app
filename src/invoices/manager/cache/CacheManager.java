@@ -5,11 +5,20 @@ import invoices.manager.model.Invoice;
 
 import org.apache.log4j.Logger;
 import org.infinispan.Cache;
+import org.infinispan.configuration.cache.Configuration;
+import org.infinispan.configuration.cache.ConfigurationBuilder;
+import org.infinispan.configuration.global.GlobalConfiguration;
+import org.infinispan.configuration.global.GlobalConfigurationBuilder;
 import org.infinispan.configuration.cache.CacheMode;
 import org.infinispan.container.DataContainer;
 import org.infinispan.lifecycle.ComponentStatus;
 import org.infinispan.manager.DefaultCacheManager;
 
+/**
+ * 
+ * @author jjankovi
+ *
+ */
 public class CacheManager {
 
 	private static final Logger logger = LoggerFactory
@@ -20,6 +29,9 @@ public class CacheManager {
 	private DefaultCacheManager cacheManager;
 
 	private CacheMode cacheMode;
+	
+	private boolean l1Cache;
+	private int numOwners;
 
 	/**
 	 * Parameter-less constructor defaultly call Local mode  
@@ -31,19 +43,38 @@ public class CacheManager {
 	public CacheManager(CacheMode cacheMode) {
 		super();
 		this.cacheMode = cacheMode;
+		this.l1Cache = false;
+		this.numOwners = 1;
 		cacheInitialization();
 	}
 	
 	public void cacheInitialization() {
 		try {
 			cacheManager = new DefaultCacheManager(
-					ConfigurationsBuilder.globalConfiguration(),
-					ConfigurationsBuilder.localConfiguration(getCacheMode()), true);
+					globalConfiguration(),
+					localConfiguration(),
+					true);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
+	private GlobalConfiguration globalConfiguration() {
+		return new GlobalConfigurationBuilder()
+				.transport()
+				.defaultTransport()
+				.addProperty("configurationFile", "jgroups.xml")
+				.build();
+	}
+	
+	private Configuration localConfiguration() {
+		return new ConfigurationBuilder().clustering()
+				.cacheMode(getCacheMode()) 					/** set clustering mode **/
+				.l1().enabled(l1Cache()) 					/** enable/disable l1 cache **/
+				.hash().numOwners(getNumOwners()) 			/** set num owners **/
+				.build();
+	}
+ 
 	public void startCache() {
 		try {
 			cache = cacheManager.getCache();
@@ -116,5 +147,21 @@ public class CacheManager {
 	public void setCacheMode(CacheMode cacheMode) {
 		this.cacheMode = cacheMode;
 	}
+	
+	public boolean l1Cache() {
+		return l1Cache;
+	}
+	
+	public void setL1Cache(boolean set) {
+		l1Cache = set;
+	}
 
+	public int getNumOwners() {
+		return numOwners;
+	}
+
+	public void setNumOwners(int numOwners) {
+		this.numOwners = numOwners;
+	}
+	
 }

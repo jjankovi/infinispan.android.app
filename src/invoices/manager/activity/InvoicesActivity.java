@@ -1,7 +1,5 @@
 package invoices.manager.activity;
 
-import invoices.manager.model.Invoice;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,21 +9,22 @@ import org.infinispan.container.entries.InternalCacheEntry;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.ClipData.Item;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+/**
+ * 
+ * @author jjankovi
+ *
+ */
 public class InvoicesActivity extends Activity {
 
 	private ProgressDialog progressDialog = null;
@@ -38,9 +37,6 @@ public class InvoicesActivity extends Activity {
 	private Button modifyItem;
 	private Button loadInvoices;
 
-	private MenuItem addItem;
-	private MenuItem refreshItem;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -55,6 +51,12 @@ public class InvoicesActivity extends Activity {
 				getClass().getClassLoader());
 	}
 	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_list, menu);
+        return true;
+    }
+	
 	private void loadViewObjects() {
 		
 		listView = (ListView)findViewById(R.id.elements);
@@ -66,70 +68,6 @@ public class InvoicesActivity extends Activity {
 		
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		listView.setOnItemClickListener(new CustomListClickListener());
-	}
-	
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		
-		addItem = menu.getItem(0);
-	    refreshItem = menu.getItem(1);
-	    
-	    addItem.setVisible(MainActivity.cacheManager.isCacheStarted());
-		refreshItem.setVisible(MainActivity.cacheManager.isCacheStarted());
-		
-		return true;
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.activity_list, menu);
-		return true;
-	}
-	
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		
-		switch (item.getItemId()) {
-		case R.id.add_item:
-			Intent intent = new Intent(this, AddActivity.class);
-			startActivityForResult(intent, 1);
-			break;
-		case R.id.refresh:
-			updateItems();
-			updateUI();
-			break;
-		}
-		
-		return true;
-	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == RESULT_OK) {
-			Invoice invoice = (Invoice)data.getExtras().getSerializable("item");
-			if (invoice != null) {
-				MainActivity.cacheManager.put(invoice.getId(), invoice);
-			}
-			updateItems();
-			updateUI();
-		}
-	}
-	
-	/** Called when the add imagebutton is pressed */
-	public void addInvoice(View view) {
-		
-		Intent intent = new Intent(this, AddActivity.class);
-		startActivityForResult(intent, 1);
-		
-	}
-	
-	/** Called when the refresh imagebutton is pressed */
-	public void refresh(View view) {
-		
-		updateItems();
-		updateUI();
-		
 	}
 	
 	/** Called when the select all button is pressed */
@@ -264,7 +202,7 @@ public class InvoicesActivity extends Activity {
 	 * application is started
 	 * 
 	 */
-	private void updateItems() {
+	public void updateItems() {
 		List<String> listElements = new ArrayList<String>();
 		DataContainer container = MainActivity.cacheManager.getAll();
 		if (container != null) {
@@ -282,7 +220,7 @@ public class InvoicesActivity extends Activity {
 	 * update UI of activity
 	 * 
 	 */
-	private void updateUI() {
+	public void updateUI() {
 		
 		updateCounterAndButtons();
 		updateRelativeOrListLayout();
@@ -291,9 +229,6 @@ public class InvoicesActivity extends Activity {
 	
 	/** update selected items counter and enable state of modification buttons **/
 	private void updateCounterAndButtons() {
-		
-//		addButton.setEnabled(MainActivity.cacheManager.isCacheStarted());
-//		refreshButton.setEnabled(MainActivity.cacheManager.isCacheStarted());
 		
 		/** obtain the count of selected items in list view **/
 		int checkedCount = 0;

@@ -9,6 +9,11 @@ import android.text.Html;
 import android.view.Window;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author jjankovi
+ *
+ */
 public class AboutDialog extends Dialog {
 
 	private static Context context;

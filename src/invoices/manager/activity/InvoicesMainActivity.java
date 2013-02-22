@@ -1,29 +1,31 @@
 package invoices.manager.activity;
 
+import invoices.manager.model.Invoice;
 import invoices.manager.network.PortHelper;
 import invoices.manager.wifi.WifiHelper;
 
-import java.net.ServerSocket;
 import java.util.Properties;
 
 import android.app.TabActivity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.Window;
+import android.view.MenuItem;
 import android.widget.TabHost;
+import android.widget.Toast;
 
+/**
+ * 
+ * @author jjankovi
+ *
+ */
 public class InvoicesMainActivity extends TabActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_invoices_main);
-        
-        
-        Resources res = getResources(); 
+                
         TabHost tabHost = getTabHost();
         TabHost.TabSpec spec;
         
@@ -52,8 +54,46 @@ public class InvoicesMainActivity extends TabActivity {
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_invoices_main, menu);
+		getMenuInflater().inflate(R.menu.activity_invoices_main, menu);
         return true;
     }
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		
+		if (!MainActivity.cacheManager.isCacheStarted()) {
+			Toast.makeText(this, "You have to load invoices", 
+					Toast.LENGTH_LONG).show();
+			return false;
+		}
+		
+		switch (item.getItemId()) {
+		case R.id.add_item:
+			Intent intent = new Intent(this, AddActivity.class);
+			startActivityForResult(intent, 1);
+			break;
+		case R.id.refresh:
+			updateChildUI();
+			break;
+		}
+		
+		return true;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			Invoice invoice = (Invoice)data.getExtras().getSerializable("item");
+			if (invoice != null) {
+				MainActivity.cacheManager.put(invoice.getId(), invoice);
+			}
+			updateChildUI();
+		}
+	}
+	
+	private void updateChildUI() {
+		((InvoicesActivity)getLocalActivityManager().getCurrentActivity()).updateItems();
+		((InvoicesActivity)getLocalActivityManager().getCurrentActivity()).updateUI();
+	}
 	
 }

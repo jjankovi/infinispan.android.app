@@ -17,30 +17,31 @@ public final class R {
     public static final class color {
         public static final int blue1=0x7f070000;
         public static final int grey=0x7f070001;
+        public static final int grey2=0x7f070002;
     }
     public static final class drawable {
-        public static final int custom_button=0x7f020000;
-        public static final int ic_action_about=0x7f020001;
-        public static final int ic_action_search=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int ic_menu_add=0x7f020004;
-        public static final int ic_menu_configure=0x7f020005;
-        public static final int ic_menu_invoices=0x7f020006;
-        public static final int ic_menu_refresh=0x7f020007;
-        public static final int ic_menu_shop=0x7f020008;
-        public static final int ic_menu_shutdown=0x7f020009;
-        public static final int load_invoices_selector=0x7f02000a;
-        public static final int off_load_invoices=0x7f02000b;
-        public static final int on_load_invoices=0x7f02000c;
+        public static final int black_buttons=0x7f020000;
+        public static final int custom_button=0x7f020001;
+        public static final int ic_action_about=0x7f020002;
+        public static final int ic_action_search=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int ic_menu_add=0x7f020005;
+        public static final int ic_menu_configure=0x7f020006;
+        public static final int ic_menu_invoices=0x7f020007;
+        public static final int ic_menu_refresh=0x7f020008;
+        public static final int ic_menu_shop=0x7f020009;
+        public static final int ic_menu_shutdown=0x7f02000a;
+        public static final int load_invoices_selector=0x7f02000b;
+        public static final int off_load_invoices=0x7f02000c;
+        public static final int on_load_invoices=0x7f02000d;
     }
     public static final class id {
         public static final int RelativeLayout01=0x7f0b0014;
-        public static final int about=0x7f0b0028;
-        public static final int add_item=0x7f0b0026;
+        public static final int about=0x7f0b0025;
+        public static final int add_item=0x7f0b0023;
         public static final int bottom_toolbar=0x7f0b0017;
-        public static final int bottom_toolbar2=0x7f0b0022;
+        public static final int bottom_toolbar2=0x7f0b0021;
         public static final int cancel_button=0x7f0b0004;
-        public static final int checkBox1=0x7f0b001f;
         public static final int city=0x7f0b000a;
         public static final int configure=0x7f0b001c;
         public static final int dateOfIssue=0x7f0b000d;
@@ -53,23 +54,21 @@ public final class R {
         public static final int invoice=0x7f0b0006;
         public static final int invoiceNumber=0x7f0b0007;
         public static final int invoicesButton=0x7f0b001b;
-        public static final int join_item=0x7f0b0023;
+        public static final int join_item=0x7f0b0022;
         public static final int layout1=0x7f0b0002;
-        public static final int listView1=0x7f0b0021;
+        public static final int listView1=0x7f0b0020;
         public static final int load_invoices=0x7f0b0015;
         public static final int maturityDate=0x7f0b000f;
         public static final int maturityDateLabel=0x7f0b000e;
-        public static final int menu_settings=0x7f0b0025;
         public static final int modify_item=0x7f0b0019;
         public static final int name=0x7f0b0008;
         public static final int prize=0x7f0b000b;
-        public static final int refresh=0x7f0b0027;
-        public static final int refresh_searching=0x7f0b0024;
+        public static final int refresh=0x7f0b0024;
         public static final int relativeLayout1=0x7f0b0005;
         public static final int save_button=0x7f0b0003;
+        public static final int searchDevicesButton=0x7f0b001f;
         public static final int select_all=0x7f0b0011;
         public static final int select_count=0x7f0b0012;
-        public static final int separator=0x7f0b0020;
         public static final int shutdown=0x7f0b001e;
         public static final int street=0x7f0b0009;
         public static final int tableRow1=0x7f0b001a;
@@ -98,51 +97,53 @@ public final class R {
         public static final int info=0x7f050001;
     }
     public static final class string {
-        public static final int about=0x7f08000d;
+        public static final int about=0x7f08000e;
         public static final int add_item=0x7f080008;
         /**  App name 
          */
         public static final int app_name=0x7f080000;
-        public static final int cancel=0x7f080014;
-        public static final int cityHint=0x7f08001b;
-        public static final int configure=0x7f080015;
-        public static final int dateOfIssueHint=0x7f08001d;
-        public static final int delete_item=0x7f08000f;
+        public static final int cancel=0x7f080015;
+        public static final int cityHint=0x7f08001d;
+        public static final int configure=0x7f080016;
+        public static final int dateOfIssueHint=0x7f08001f;
+        public static final int delete_item=0x7f080010;
         public static final int deselect_all=0x7f080006;
-        public static final int hello_world=0x7f08001f;
-        public static final int help=0x7f08000e;
-        /**  Labels 
-         */
-        public static final int invoice=0x7f080016;
-        public static final int invoiceNumberHint=0x7f080018;
-        public static final int invoices=0x7f08000a;
-        public static final int join=0x7f080013;
-        public static final int load_invoices=0x7f08000b;
-        public static final int maturityDateHint=0x7f08001e;
-        public static final int menu_settings=0x7f080020;
-        public static final int modify_item=0x7f080010;
-        public static final int nameHint=0x7f080019;
-        public static final int ok=0x7f080012;
-        public static final int prizeHint=0x7f08001c;
-        public static final int refresh=0x7f080009;
-        public static final int save=0x7f080011;
         /**  Text fields 
          */
-        public static final int searchTextHint=0x7f080017;
+        public static final int foundDevices=0x7f080018;
+        public static final int hello_world=0x7f080021;
+        public static final int help=0x7f08000f;
+        /**  Labels 
+         */
+        public static final int invoice=0x7f080017;
+        public static final int invoiceNumberHint=0x7f08001a;
+        public static final int invoices=0x7f08000a;
+        public static final int join=0x7f080014;
+        public static final int load_invoices=0x7f08000c;
+        public static final int maturityDateHint=0x7f080020;
+        public static final int menu_settings=0x7f080022;
+        public static final int modify_item=0x7f080011;
+        public static final int nameHint=0x7f08001b;
+        public static final int ok=0x7f080013;
+        public static final int prizeHint=0x7f08001e;
+        public static final int refresh=0x7f080009;
+        public static final int save=0x7f080012;
+        public static final int search=0x7f08000b;
+        public static final int searchTextHint=0x7f080019;
         /**  Buttons names 
          */
         public static final int select_all=0x7f080005;
         public static final int select_count=0x7f080007;
-        public static final int shutdown=0x7f08000c;
-        public static final int streetHint=0x7f08001a;
+        public static final int shutdown=0x7f08000d;
+        public static final int streetHint=0x7f08001c;
         /**  Activities names 
          */
         public static final int title_activity_add=0x7f080001;
         public static final int title_activity_configure=0x7f080004;
-        public static final int title_activity_invoices_main=0x7f080021;
+        public static final int title_activity_invoices_main=0x7f080023;
         public static final int title_activity_list=0x7f080003;
         public static final int title_activity_main=0x7f080002;
-        public static final int title_activity_searching_devices=0x7f080022;
+        public static final int title_activity_searching_devices=0x7f080024;
     }
     public static final class style {
         public static final int AppTheme=0x7f090001;

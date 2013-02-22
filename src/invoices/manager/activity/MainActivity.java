@@ -2,22 +2,33 @@ package invoices.manager.activity;
 
 import invoices.manager.cache.CacheManager;
 import invoices.manager.dialog.AboutDialog;
+import invoices.manager.wifi.WifiHelper;
 
 import java.util.Properties;
 
 import org.infinispan.configuration.cache.CacheMode;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+/**
+ * 
+ * @author jjankovi
+ *
+ */
 public class MainActivity extends Activity {
 
 //	private Logger log = LoggerFactory.getLogger(MainActivity.class);
@@ -85,6 +96,11 @@ public class MainActivity extends Activity {
 	/** Called when shutdown button is pressed */
 	public void shutdown(View view) {
 	
+		Editor prefEditor = PreferenceManager
+                .getDefaultSharedPreferences(this).edit();
+		prefEditor.clear();
+		prefEditor.commit();
+		
 		new ApplicationShutDownTask().execute();
 	
 	}
@@ -114,22 +130,28 @@ public class MainActivity extends Activity {
 		SharedPreferences sharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
 		
-		setCacheMode(sharedPrefs.getString("mode", "NULL"));
-		setCacheStore(sharedPrefs.getBoolean("store", false));
-		
-	}
-
-	private void setCacheMode(String cacheMode) {
+		String cacheMode = sharedPrefs.getString("mode", "local");
+		boolean cacheStore = sharedPrefs.getBoolean("store", false);
+		String numOwners = "1";
+		boolean l1Cache = false;
+		if (cacheMode.equals("distributed")) {
+			numOwners = sharedPrefs.getString("owners", "1");
+			l1Cache = sharedPrefs.getBoolean("l1", false);
+		}
 		
 		if (cacheMode.toLowerCase().equals("local")) {
-			cacheManager.setCacheMode(CacheMode.LOCAL);
+			cacheManager.setCacheMode(CacheMode.LOCAL);	
+			cacheManager.setL1Cache(l1Cache);
+			cacheManager.setNumOwners(Integer.parseInt(numOwners));
 		}else if (cacheMode.toLowerCase().equals("replicated")) {
 			cacheManager.setCacheMode(CacheMode.REPL_ASYNC);
 		}else if (cacheMode.toLowerCase().equals("distributed")) {
 			cacheManager.setCacheMode(CacheMode.DIST_ASYNC);
 		}
-		cacheManager.cacheInitialization();
+	
+		setCacheStore(cacheStore);
 		
+		cacheManager.cacheInitialization();
 	}
 	
 	private void setCacheStore(boolean setCacheStore) {
@@ -138,28 +160,28 @@ public class MainActivity extends Activity {
 	
 	private void handleWifiState() {
 		 
-//		if(!WifiHelper.getWifiHelper().isConnectedToWifiNetwork(this)) {
-//			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-//			dialogBuilder.setTitle("Network").
-//						  setMessage("You are not connected " +
-//								  "to wireless network. To access to Invoices you have to be " +
-//								  "connected to some wireless network (3G is not sufficient). " +
-//								  "You will now be redirected to wireless network settings.");
-//			dialogBuilder.setPositiveButton(R.string.ok, new OnClickListener() {
-//				public void onClick(DialogInterface dialog, int which) {
-//					startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-//				}
-//			});
-//			dialogBuilder.setNegativeButton(R.string.cancel, new OnClickListener() {
-//				public void onClick(DialogInterface dialog, int which) {
-//					
-//				}
-//			});
-//			dialogBuilder.create().show();
-//		}else {
+		if(!WifiHelper.getWifiHelper().isConnectedToWifiNetwork(this)) {
+			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+			dialogBuilder.setTitle("Network").
+						  setMessage("You are not connected " +
+								  "to wireless network. To access to Invoices you have to be " +
+								  "connected to some wireless network (3G is not sufficient). " +
+								  "You will now be redirected to wireless network settings.");
+			dialogBuilder.setPositiveButton(R.string.ok, new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+				}
+			});
+			dialogBuilder.setNegativeButton(R.string.cancel, new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					
+				}
+			});
+			dialogBuilder.create().show();
+		}else {
 			Intent intent = new Intent(this, InvoicesMainActivity.class);
 			startActivity(intent);
-//		}
+		}
 	}
 
 	private void initiateCacheManager() {

@@ -4,18 +4,31 @@
     <PreferenceCategory android:title="Main Options" >
         <ListPreference
             android:title="Clustering mode"
+            android:key="mode"
             android:summary="Local"
             android:defaultValue="local"
             android:entries="@array/listOptions"
-            android:entryValues="@array/listValues"
-            android:key="mode" />
+            android:entryValues="@array/listValues" />
 
+        <EditTextPreference 
+            android:title="Number of owners"
+            android:key="owners"
+            android:defaultValue="1" />
+            
         <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="store"
+            android:title="L1 cache" 
+        	android:key="l1"    
+        	android:defaultValue="false"
+            android:summaryOff="Turn on L1 cache"
+            android:summaryOn="Turn off L1 cache" />
+        
+        <CheckBoxPreference
+            android:title="Cache store" 
+        	android:key="store"    
+        	android:defaultValue="false"
             android:summaryOff="Turn on the cache store"
-            android:summaryOn="Turn off the cache store"
-            android:title="Cache store" />
+            android:summaryOn="Turn off the cache store" />
+            
     </PreferenceCategory>
 
 </PreferenceScreen>

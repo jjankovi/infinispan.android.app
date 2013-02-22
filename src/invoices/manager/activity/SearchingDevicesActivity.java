@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
 
 /**
@@ -33,10 +32,8 @@ public class SearchingDevicesActivity extends Activity {
 	private static final Logger log = LoggerFactory.getLogger(
 			SearchingDevicesActivity.class);
 	
-	private CheckBox searchCheckbox;
 	private ListView devices;
 	
-	private Button refreshButton;
 	private Button joinButton;
 	
 	private static int counter = 0;
@@ -52,14 +49,9 @@ public class SearchingDevicesActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searching_devices);
         
-        searchCheckbox = (CheckBox)findViewById(R.id.checkBox1);
-        
         devices = (ListView)findViewById(R.id.listView1);
         devices.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         devices.setOnItemClickListener(new CustomListClickListener());
-        
-        refreshButton = (Button)findViewById(R.id.refresh_searching);
-        refreshButton.setEnabled(searchCheckbox.isChecked());
         
         joinButton = (Button)findViewById(R.id.join_item);
         updateJoinButtonState();
@@ -72,15 +64,11 @@ public class SearchingDevicesActivity extends Activity {
         return true;
     }
     
-    /** method is invoked when checkbox is checked/unchecked **/
-    public void searchingDevice(View view) {
-    	if (searchCheckbox.isChecked()) {
-    		startDeviceSearching();
-    	} else {
-    		updateDevices(new ArrayList<String>());
-    		refreshButton.setEnabled(searchCheckbox.isChecked());
-    		joinButton.setEnabled(searchCheckbox.isChecked());
-    	}
+    /** method is invoked when search button is pressed **/
+    public void searchDevices(View view) {
+    	
+    	startDeviceSearching();
+    	
     }
     
     /** method is invoked when Join button is pressed **/
@@ -88,11 +76,6 @@ public class SearchingDevicesActivity extends Activity {
     	
     	JgroupsHelper.getInstance().configureJgroups(this, getDevicesToJoin());
     	
-    }
-    
-    /** method is invoked when Refresh button is pressed **/
-    public void refreshSearching(View view) {
-    	startDeviceSearching();
     }
     
     public void updateJoinButtonState() {
@@ -115,7 +98,7 @@ public class SearchingDevicesActivity extends Activity {
     		if (!devices.getAdapter().isEmpty()) {
         		for (int index = 0; index < devices.getAdapter().getCount(); index++) {
         			if (devices.isItemChecked(index)) {
-        				devicesToJoin.add(devices.getItemAtPosition(index).toString());
+        				devicesToJoin.add(devices.getItemAtPosition(index).toString() + "[7800]");
         			}
         		}
         	}
@@ -131,7 +114,7 @@ public class SearchingDevicesActivity extends Activity {
     private void startDeviceSearching() {
     	String myIpAddress = WifiHelper.getWifiHelper().getDeviceIpAddress(this);
 		this.progressDialog = ProgressDialog.show(
-				this, "Devices discovering", "Devices on same network are discovering...", true, false);
+				this, "Devices discovering", "Devices for cluster are discovering...", true, false);
 		
 		searchDevices.clear();
 		runSearchingThreads(myIpAddress, 50);
@@ -231,7 +214,6 @@ public class SearchingDevicesActivity extends Activity {
     	    		if (counter == 0) { // this is last thread
     	    			dismissProgressDialog();
     	    			updateDevices(searchDevices);
-    	    			refreshButton.setEnabled(true);
     	    			joinButton.setEnabled(false);
     	    			
     	    			log.info(counterDevices + " devices found");

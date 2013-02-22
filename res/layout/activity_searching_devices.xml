@@ -5,24 +5,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:checked="false"
-        android:onClick="searchingDevice"
-        android:text="Turn on searching" />
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp" >
+
+        <Button
+            android:id="@+id/searchDevicesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/search"
+            android:onClick="searchDevices" />
+
+    </RelativeLayout>
 
     <TextView
         style="?android:attr/listSeparatorTextViewStyle"
-        android:id="@+id/separator"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textColor="@android:color/white" 
         android:background="@android:color/darker_gray"
-        android:text="Found devices"/>
+        android:text="@string/foundDevices"
+        android:textColor="@android:color/white" />
     
     <ListView
         android:id="@+id/listView1"
@@ -47,16 +52,6 @@
             android:layout_marginLeft="-4.2dp"
             android:onClick="join" 
             android:text="@string/join" />
-         
-         <Button
-             android:id="@+id/refresh_searching"
-             android:layout_width="fill_parent"
-             android:layout_height="match_parent"
-             android:layout_marginLeft="-4.2dp"
-             android:layout_marginRight="-5dp"
-             android:layout_weight="0.5"
-             android:onClick="refreshSearching"
-             android:text="@string/refresh" />
         
     </TableRow>
 

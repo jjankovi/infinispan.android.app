@@ -16,6 +16,7 @@
     <string name="add_item">Add item</string>
     <string name="refresh">Refresh</string>
     <string name="invoices">Invoices</string>
+    <string name="search">Search</string>
     <string name="load_invoices">Load Invoices</string>
     <string name="shutdown">Shutdown</string>
     <string name="about">About</string>
@@ -32,6 +33,7 @@
     <string name="invoice">Invoice number: </string>
 
     <!-- Text fields -->
+    <string name="foundDevices">Found devices</string>
     <string name="searchTextHint">Search an invoice</string>
     <string name="invoiceNumberHint">Invoice Number</string>
     <string name="nameHint">Name</string>

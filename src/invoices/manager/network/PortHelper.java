@@ -2,6 +2,11 @@ package invoices.manager.network;
 
 import java.net.ServerSocket;
 
+/**
+ * 
+ * @author jjankovi
+ *
+ */
 public class PortHelper {
 
 	private static PortHelper instance = null;

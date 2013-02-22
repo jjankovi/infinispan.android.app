@@ -3,6 +3,11 @@ package invoices.manager.model;
 import java.io.Serializable;
 import java.util.Calendar;
 
+/**
+ * 
+ * @author jjankovi
+ *
+ */
 public class Invoice implements Serializable {
 	
 	private static final long serialVersionUID = -7240877323585426820L;
