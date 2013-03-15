@@ -2,6 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory android:title="Main Options" >
+        
         <ListPreference
             android:title="Clustering mode"
             android:key="mode"

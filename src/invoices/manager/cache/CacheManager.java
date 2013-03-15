@@ -5,11 +5,11 @@ import invoices.manager.model.Invoice;
 
 import org.apache.log4j.Logger;
 import org.infinispan.Cache;
+import org.infinispan.configuration.cache.CacheMode;
 import org.infinispan.configuration.cache.Configuration;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.configuration.global.GlobalConfiguration;
 import org.infinispan.configuration.global.GlobalConfigurationBuilder;
-import org.infinispan.configuration.cache.CacheMode;
 import org.infinispan.container.DataContainer;
 import org.infinispan.lifecycle.ComponentStatus;
 import org.infinispan.manager.DefaultCacheManager;
@@ -77,6 +77,10 @@ public class CacheManager {
  
 	public void startCache() {
 		try {
+			if (cacheManager == null || 
+				cacheManager.getStatus() != ComponentStatus.RUNNING) {
+				cacheInitialization();
+			}
 			cache = cacheManager.getCache();
 			logger.info("Cache was started");
 		} catch (Exception e) {
@@ -92,10 +96,9 @@ public class CacheManager {
 		}
 		if (cacheManager != null) {
 			cacheManager.stop();
-			cacheManager = null;
 		}
 	}
-
+	
 	public void put(Integer key, Invoice value) {
 		if (isCacheStarted()) {
 			cache.put(key, value);

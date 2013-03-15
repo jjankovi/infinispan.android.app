@@ -3,8 +3,12 @@
     
     <item android:id="@+id/about"
         android:title="@string/about"
-        android:icon="@drawable/ic_action_about"
-        android:orderInCategory="100"
+        android:icon="@drawable/ic_menu_info_details"
+        android:showAsAction="always" />
+    
+    <item android:id="@+id/shutdown2"
+        android:title="@string/shutdown"
+        android:icon="@drawable/ic_menu_exit"
         android:showAsAction="always" />
 
 </menu>

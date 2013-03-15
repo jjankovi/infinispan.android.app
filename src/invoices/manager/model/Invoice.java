@@ -1,7 +1,6 @@
 package invoices.manager.model;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 /**
  * 
@@ -26,17 +25,20 @@ public class Invoice implements Serializable {
 	
 	private String city;
 	
-	public Invoice(Integer id, Calendar dateOfIssue, Calendar maturityDate,
-			long prize, String name, String street, String city) {
-		super();
-		this.id = id;
-		this.dateOfIssue = dateOfIssue;
-		this.maturityDate = maturityDate;
-		this.prize = prize;
-		this.name = name;
-		this.street = street;
-		this.city = city;
+	public Invoice() {
+		
 	}
+	
+//	public Invoice(Integer id, Calendar dateOfIssue, Calendar maturityDate,
+//			long prize, String name, String street, String city) {
+//		this.id = id;
+//		this.dateOfIssue = dateOfIssue;
+//		this.maturityDate = maturityDate;
+//		this.prize = prize;
+//		this.name = name;
+//		this.street = street;
+//		this.city = city;
+//	}
 
 	public Integer getId() {
 		return id;

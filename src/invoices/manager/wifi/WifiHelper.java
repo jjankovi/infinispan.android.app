@@ -46,7 +46,7 @@ public class WifiHelper {
 		return true;
 	}
 	
-	public String getDeviceIpAddress(Activity activity) {
+	public String getDeviceIpAddress(Context activity) {
 		wifiManager = (WifiManager) activity.
 				getSystemService(Context.WIFI_SERVICE);
 		
@@ -67,4 +67,22 @@ public class WifiHelper {
 		         + "." + String.valueOf(intMyIp3);
 	}
 	
+	public String getIpAddress(String deviceAddress, String subnetAddress) {
+		return getIpAddress(null, deviceAddress, subnetAddress);
+	}
+	
+	public String getIpAddress(Context context, String deviceAddress, String subnetAddress) {
+		if (context == null) {
+			return deviceAddress.substring(
+					0, deviceAddress.lastIndexOf(".") + 1) + subnetAddress;
+		}else {
+			return getDeviceIpAddress(context).substring(
+					0, getDeviceIpAddress(context).lastIndexOf(".") + 1) + subnetAddress;
+		}
+		
+	}
+	
+	public String getsubnetAddress(String ipAddress) {
+		return ipAddress.substring(ipAddress.lastIndexOf(".") + 1);
+	}
 }

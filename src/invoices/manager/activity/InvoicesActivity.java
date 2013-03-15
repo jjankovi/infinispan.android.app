@@ -1,5 +1,7 @@
 package invoices.manager.activity;
 
+import invoices.manager.model.Invoice;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,12 +37,11 @@ public class InvoicesActivity extends Activity {
 	private Button deleteItem;
 	private Button modifyItem;
 	private Button loadInvoices;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_list);
 		loadViewObjects();
 		updateItems();
@@ -57,6 +57,18 @@ public class InvoicesActivity extends Activity {
         return true;
     }
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			Invoice invoice = (Invoice)data.getExtras().getSerializable("item");
+			if (invoice != null) {
+				MainActivity.cacheManager.put(invoice.getId(), invoice);
+			}
+			updateItems();
+			updateUI();
+		}
+	}
+	
 	private void loadViewObjects() {
 		
 		listView = (ListView)findViewById(R.id.elements);
@@ -65,7 +77,7 @@ public class InvoicesActivity extends Activity {
 		selectCount = (Button)findViewById(R.id.select_count);
 		deleteItem = (Button)findViewById(R.id.delete_item);
 		modifyItem = (Button)findViewById(R.id.modify_item);
-		
+				
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		listView.setOnItemClickListener(new CustomListClickListener());
 	}
@@ -94,7 +106,7 @@ public class InvoicesActivity extends Activity {
 	public void loadInvoices(View view) {
 		
 		this.progressDialog = ProgressDialog.show(
-				this, "Invoices loading", "Invoices are loading...", true, false);
+				this, "Invoices loading", "Invoices are loading. It may take a while...", true, false);
 		
 		/** start local cache at startup **/
 		new StartApplication().execute();
@@ -144,7 +156,7 @@ public class InvoicesActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			if (!MainActivity.cacheManager.isCacheStarted()) {
 				MainActivity.cacheManager.startCache();
-//				generateCacheElements(3);
+				generateCacheElements(3);
 			}
 			return null;
 		}
@@ -154,6 +166,8 @@ public class InvoicesActivity extends Activity {
 			loadInvoices.setVisibility(View.INVISIBLE);
 			relativeLayout.setVisibility(View.GONE);
 			listView.setVisibility(View.VISIBLE);
+			
+			((InvoicesMainActivity)getParent()).setMenuItemsVisibilityState(true);
 			
 			updateItems();
 			updateUI();
@@ -186,15 +200,18 @@ public class InvoicesActivity extends Activity {
 	 * 
 	 * @param elementsCount number of elements to be generated
 	 */
-//	private void generateCacheElements(int elementsCount) {
-//		for (int i = 0; i < elementsCount; i++) {
+	private void generateCacheElements(int elementsCount) {
+		for (int i = 0; i < elementsCount; i++) {
+//			MainActivity.cacheManager.put(i, "item");  
+//					new Invoice("item" + i, i+20, "information" + i, "manufacturer" + i));
+//			
 //			MainActivity.cacheManager.put(Integer.valueOf(i), 
 //					new Invoice("item" + i, i+20, "information" + i, "manufacturer" + i));
-//		}
+		}
 //		MainActivity.cacheManager.put(12, new Invoice(1, new GregorianCalendar(2012, 12, 19), 
 //				new GregorianCalendar(2012, 12, 19), (long)12.12, 
 //				"Jaroslav", "D. Makovickeho", "Martin"));
-//	}
+	}
 
 	/**
 	 * transfer items from local cache into list view. Needed when
@@ -217,7 +234,7 @@ public class InvoicesActivity extends Activity {
 	}
 	
 	/**
-	 * update UI of activity
+	 * update UI views of this activity according to existing state
 	 * 
 	 */
 	public void updateUI() {
@@ -250,22 +267,33 @@ public class InvoicesActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * Enables or disables delete and modify button
+	 * @param deleteButtonShow
+	 * @param modifyButtonShow
+	 */
 	private void enableButtons(boolean deleteButtonShow, 
 			boolean modifyButtonShow) {
 		deleteItem.setEnabled(deleteButtonShow);			
 		modifyItem.setEnabled(modifyButtonShow);
 	}
 	
-	/**  **/
+	/**
+	 * According to cache state either list with items
+	 * are shown or button to load items is shown
+	 */
 	private void updateRelativeOrListLayout() {
-		/**  **/
-		if (!MainActivity.cacheManager.isCacheStarted()) {
-			listView.setVisibility(View.INVISIBLE);
-		} else {
-			loadInvoices.setVisibility(View.INVISIBLE);
-			relativeLayout.setVisibility(View.GONE);
-			listView.setVisibility(View.VISIBLE);
-		}
+		listView.setVisibility(
+				MainActivity.cacheManager.isCacheStarted()?
+				View.VISIBLE:
+				View.INVISIBLE);
+		loadInvoices.setVisibility(MainActivity.cacheManager.isCacheStarted()?
+				View.INVISIBLE:
+				View.VISIBLE);
+		relativeLayout.setVisibility(MainActivity.cacheManager.isCacheStarted()?
+				View.GONE:
+				View.VISIBLE);
+		
 	}
 
 }

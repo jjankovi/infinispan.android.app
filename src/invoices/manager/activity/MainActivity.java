@@ -57,10 +57,20 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		if (item.getItemId() == R.id.about) {
+		switch (item.getItemId()) {
+		case R.id.about:
 			AboutDialog aboutDialog = new AboutDialog(this);
 			aboutDialog.setTitle("Invoices Manager");
 			aboutDialog.show();
+			break;
+			
+		case R.id.shutdown2:
+			Editor prefEditor = PreferenceManager
+            	.getDefaultSharedPreferences(this).edit();
+			prefEditor.clear();
+			prefEditor.commit();
+			new ApplicationShutDownTask().execute();
+			break;
 		}
 		return true;
 	}
@@ -91,18 +101,6 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, ConfigureActivity.class);
 		startActivityForResult(intent, RESULT_SETTINGS);
 		
-	}
-	
-	/** Called when shutdown button is pressed */
-	public void shutdown(View view) {
-	
-		Editor prefEditor = PreferenceManager
-                .getDefaultSharedPreferences(this).edit();
-		prefEditor.clear();
-		prefEditor.commit();
-		
-		new ApplicationShutDownTask().execute();
-	
 	}
 	
 	/** Called when help button is pressed */

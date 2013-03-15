@@ -16,29 +16,16 @@
             android:id="@+id/invoicesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:background="@drawable/custom_button"
             android:drawableTop="@drawable/ic_menu_invoices"
             android:onClick="invoices"
             android:text="@string/invoices"
-            android:textSize="25dp" 
-            android:textColor="@android:color/white"/>
-
-        <Button
-            android:id="@+id/configure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/custom_button"
-            android:drawableTop="@drawable/ic_menu_configure"
-            android:onClick="configure"
-            android:text="@string/configure"
-            android:textSize="25dp" 
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black"
+            android:textSize="25dp" />
 
     </TableRow>
 
-    <TableRow
+    <!-- <TableRow
         android:id="@+id/tableRow2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
@@ -54,6 +41,24 @@
             android:text="@string/shutdown"
             android:textSize="25dp" 
             android:textColor="@android:color/white" />
+
+    </TableRow>  -->
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/configure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button"
+            android:drawableTop="@drawable/ic_menu_configure"
+            android:onClick="configure"
+            android:text="@string/configure"
+            android:textColor="@android:color/black"
+            android:textSize="25dp" />
 
     </TableRow>
 

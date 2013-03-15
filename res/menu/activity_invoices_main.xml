@@ -1,4 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+     <item
+        android:id="@+id/menu_dummy"
+        android:showAsAction="always"
+        android:title=""
+        android:enabled="false"
+        android:visible="true"/>
     <item android:id="@+id/add_item"
         android:title="@string/add_item"
         android:icon="@drawable/ic_menu_add"
@@ -8,5 +14,15 @@
         android:title="@string/refresh"
         android:icon="@drawable/ic_menu_refresh"
         android:orderInCategory="100" 
-        android:showAsAction="always" />         
+        android:showAsAction="always" />
+	<item android:id="@+id/cacheStop"
+        android:title="Stop"
+        android:icon="@drawable/ic_menu_exit"
+        android:orderInCategory="100" 
+        android:showAsAction="always" />  
+    <item android:id="@+id/searching_interval"
+        android:title="Edit Search Settings"
+        android:icon="@drawable/ic_action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="always" />      
 </menu>

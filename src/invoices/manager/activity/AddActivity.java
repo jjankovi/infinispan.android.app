@@ -1,11 +1,9 @@
 package invoices.manager.activity;
 
+import invoices.manager.model.Calendar;
 import invoices.manager.model.Invoice;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -64,13 +62,27 @@ public class AddActivity extends FragmentActivity {
 
 		int[] dateOfIssueCalendar = getSingleDateElements(dateOfIssue.getText().toString());
 		int[] maturityDateCalendar = getSingleDateElements(maturityDate.getText().toString());
-		Invoice invoiceItem = new Invoice(12, 
-				new GregorianCalendar(dateOfIssueCalendar[2], dateOfIssueCalendar[1], 
-						dateOfIssueCalendar[0]), new GregorianCalendar(maturityDateCalendar[2], 
-						maturityDateCalendar[1], maturityDateCalendar[0]), 
-						Long.parseLong(prize.getText().toString()), name.getText().toString(), 
-						street.getText().toString(), city.getText().toString());
-		 intent.putExtra("item", invoiceItem);
+		
+		Calendar dateOfIssue = new Calendar();
+		dateOfIssue.setDay(dateOfIssueCalendar[0]);
+		dateOfIssue.setMonth(dateOfIssueCalendar[1]);
+		dateOfIssue.setYear(dateOfIssueCalendar[2]);
+		
+		Calendar maturityDate = new Calendar();
+		maturityDate.setDay(maturityDateCalendar[0]);
+		maturityDate.setMonth(maturityDateCalendar[1]);
+		maturityDate.setYear(maturityDateCalendar[2]);
+		
+		Invoice invoiceItem = new Invoice();
+		invoiceItem.setId(12);
+		invoiceItem.setDateOfIssue(dateOfIssue);
+		invoiceItem.setMaturityDate(maturityDate);
+		invoiceItem.setPrize(Long.parseLong(prize.getText().toString()));
+		invoiceItem.setName(name.getText().toString());
+		invoiceItem.setStreet(street.getText().toString());
+		invoiceItem.setCity(city.getText().toString());
+
+		intent.putExtra("item", invoiceItem);
 		setResult(RESULT_OK, intent);
 		finish();
 	}
@@ -133,24 +145,19 @@ public class AddActivity extends FragmentActivity {
 			invoice.setText(R.string.invoice);
 			invoiceNumber.setText(invoiceItem.getId() + "");
 			
-			int month = invoiceItem.getDateOfIssue().get(Calendar.MONTH);
-			invoiceItem.getDateOfIssue().set(Calendar.MONTH, month - 1);
-			month = invoiceItem.getMaturityDate().get(Calendar.MONTH);
-			invoiceItem.getMaturityDate().set(Calendar.MONTH, month - 1);
+			Calendar issue = invoiceItem.getDateOfIssue();
+			Calendar maturity = invoiceItem.getMaturityDate();
 			
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-			dateOfIssue.setText(simpleDateFormat.format(
-					invoiceItem.getDateOfIssue().getTime()));
-			maturityDate.setText(simpleDateFormat.format(
-					invoiceItem.getMaturityDate().getTime()));
+			dateOfIssue.setText(issue.getDay() + "." + issue.getMonth() + "." + issue.getYear());
+			maturityDate.setText(maturity.getDay() + "." + maturity.getMonth() + "." + maturity.getYear());
 		}
 	}
 
 	private void setCurrentDateOnTextView(TextView view) {
-		final Calendar c = Calendar.getInstance();
-		int year = c.get(Calendar.YEAR);
-		int month = c.get(Calendar.MONTH) + 1;
-		int day = c.get(Calendar.DAY_OF_MONTH);
+		final java.util.Calendar c = java.util.Calendar.getInstance();
+		int year = c.get(java.util.Calendar.YEAR);
+		int month = c.get(java.util.Calendar.MONTH) + 1;
+		int day = c.get(java.util.Calendar.DAY_OF_MONTH);
 		setDateOnTextView(view, year, month, day);
 	}
 

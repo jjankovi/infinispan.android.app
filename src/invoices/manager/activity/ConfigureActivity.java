@@ -27,6 +27,7 @@ public class ConfigureActivity extends PreferenceActivity implements OnSharedPre
 	private EditTextPreference owners;
 //	private CheckBoxPreference cacheStore;
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,6 +49,7 @@ public class ConfigureActivity extends PreferenceActivity implements OnSharedPre
 //		cacheStore = (CheckBoxPreference)getPreferenceScreen().findPreference(KEY_CACHE_STORE);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
 		Preference pref = findPreference(key);

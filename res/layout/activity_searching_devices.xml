@@ -1,57 +1,84 @@
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/searchDevicesButton"
-            android:layout_width="wrap_content"
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/search"
-            android:onClick="searchDevices" />
+            android:background="@color/blue1" >
 
-    </RelativeLayout>
+            <RadioButton
+                android:id="@+id/connectedDevices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connected Devices"
+                android:textColor="@android:color/white" />
+        </TableRow>
 
-    <TextView
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:text="@string/foundDevices"
-        android:textColor="@android:color/white" />
-    
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5" >
-    </ListView>
+        <ListView
+            android:id="@+id/connectedDevicesList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.66"
+        android:orientation="vertical" >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blue1" >
+
+            <RadioButton
+                android:id="@+id/foundDevices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Found Devices"
+                android:textColor="@android:color/white"
+                android:checked="true" />
+        </TableRow>
+
+        <ListView
+            android:id="@+id/foundDevicesList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
+    </LinearLayout>
     
     <TableRow
         android:id="@+id/bottom_toolbar2"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom= "-7dp"
-        >
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/searchDevicesButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:onClick="searchDevices"
+            android:text="@string/search" />
         
          <Button
             android:id="@+id/join_item"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_marginRight="-4.2dp"
-            android:layout_marginLeft="-4.2dp"
             android:onClick="join" 
-            android:text="@string/join" />
+            android:text="@string/join"
+            android:layout_weight="0.5" />
         
     </TableRow>
 

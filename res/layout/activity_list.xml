@@ -17,6 +17,7 @@
             android:layout_weight="0.8"
             android:onClick="selectAll"
             android:text="@string/select_all"
+            android:textColor="@android:color/white"
             android:textSize="16dp"
             android:width="0dp"
             android:background="@drawable/black_buttons" />
@@ -28,6 +29,7 @@
             android:layout_weight="0.2"
             android:clickable="false"
             android:text="@string/select_count"
+            android:textColor="@android:color/white"
             android:textSize="16dp"
             android:width="0dp"
             android:background="@drawable/black_buttons" />
@@ -37,9 +39,9 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_weight="0.8"
-             
              android:onClick="deselectAll"
              android:text="@string/deselect_all"
+             android:textColor="@android:color/white"
              android:textSize="16dp"
              android:width="0dp"
              android:background="@drawable/black_buttons" />
@@ -88,8 +90,10 @@
             android:layout_weight="0.5"
             android:layout_marginRight="-4.2dp"
             android:layout_marginLeft="-4.2dp"
+            android:textColor="@android:color/white"
             android:onClick="delete" 
-            android:text="@string/delete_item" />
+            android:text="@string/delete_item"
+            android:background="@drawable/black_buttons" />
          
          <Button
              android:id="@+id/modify_item"
@@ -98,8 +102,10 @@
              android:layout_marginLeft="-4.2dp"
              android:layout_marginRight="-5dp"
              android:layout_weight="0.5"
+             android:textColor="@android:color/white"
              android:onClick="modify"
-             android:text="@string/modify_item" />
+             android:text="@string/modify_item"
+             android:background="@drawable/black_buttons" />
         
     </TableRow>
 
