@@ -144,13 +144,13 @@ public class SearchingDevicesActivity extends Activity {
     }
     
     /**
-     * Join button is enabled only if at least one device 
-     * in active devices list is checked. 
+     * Join button is enabled if connected devices list is checked or
+     * if at least one device in search devices list is checked. 
      */
     private void updateJoinButtonState() {
     	joinButton.setEnabled(
     			connectedButton.isChecked()?
-    			updateJoinButtonState(connectedDevices):
+    			true:
     			updateJoinButtonState(foundDevices));
 	}
     

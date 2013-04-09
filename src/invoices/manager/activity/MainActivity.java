@@ -1,6 +1,6 @@
 package invoices.manager.activity;
 
-import invoices.manager.cache.CacheManager;
+import invoices.manager.controller.CacheManager;
 import invoices.manager.dialog.AboutDialog;
 import invoices.manager.wifi.WifiHelper;
 
