@@ -1,4 +1,4 @@
-package invoices.manager.cache;
+package invoices.manager.controller;
 
 import invoices.manager.logger.LoggerFactory;
 import invoices.manager.model.Invoice;
