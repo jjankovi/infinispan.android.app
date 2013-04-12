@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -26,6 +27,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TableRow;
 
 /**
  * 
@@ -48,6 +50,9 @@ public class SearchingDevicesActivity extends Activity {
 	
 	private RadioButton connectedButton;
 	private RadioButton foundButton;
+	
+	private TableRow connectedDevicesRow;
+	private TableRow foundDevicesRow;
 	
 	private static int counter = 0;
 	private static int counterDevices = 0;
@@ -76,6 +81,9 @@ public class SearchingDevicesActivity extends Activity {
         connectedDevices.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         connectedDevices.setOnItemClickListener(new CustomListClickListener());
         
+        foundDevicesRow = (TableRow)findViewById(R.id.foundDevicesRow);
+        connectedDevicesRow = (TableRow)findViewById(R.id.connectedDevicesRow);
+        
         joinButton = (Button)findViewById(R.id.join_item);
         
         connectedButton = (RadioButton)findViewById(R.id.connectedDevices);
@@ -86,8 +94,10 @@ public class SearchingDevicesActivity extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				connectedDevices.setEnabled(isChecked);
 				foundButton.setChecked(!isChecked);
+				changeColoursOfList();
 				updateJoinButtonState();
 			}
+
 		});
         
         foundButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -95,9 +105,24 @@ public class SearchingDevicesActivity extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				foundDevices.setEnabled(isChecked);
 				connectedButton.setChecked(!isChecked);
+				changeColoursOfList();
 				updateJoinButtonState();
 			}
 		});
+	}
+	
+	private void changeColoursOfList() {
+		if (connectedButton.isChecked()) {
+			connectedDevicesRow.setBackgroundResource(R.color.blue1);
+			connectedButton.setTextColor(Color.WHITE);
+			foundDevicesRow.setBackgroundResource(R.color.grey3);
+			foundButton.setTextColor(Color.BLACK);
+		}else {
+			foundDevicesRow.setBackgroundResource(R.color.blue1);
+			foundButton.setTextColor(Color.WHITE);
+			connectedDevicesRow.setBackgroundResource(R.color.grey3);
+			connectedButton.setTextColor(Color.BLACK);
+		}
 	}
 
 	@Override

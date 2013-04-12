@@ -11,16 +11,17 @@
         android:orientation="vertical" >
 
         <TableRow
+            android:id="@+id/connectedDevicesRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue1" >
+            android:background="@color/grey3" >
 
             <RadioButton
                 android:id="@+id/connectedDevices"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Connected Devices"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/black" />
         </TableRow>
 
         <ListView
@@ -38,6 +39,7 @@
         android:orientation="vertical" >
 
         <TableRow
+            android:id="@+id/foundDevicesRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/blue1" >
