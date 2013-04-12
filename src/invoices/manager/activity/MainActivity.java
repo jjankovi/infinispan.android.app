@@ -160,11 +160,10 @@ public class MainActivity extends Activity {
 		 
 		if(!WifiHelper.getWifiHelper().isConnectedToWifiNetwork(this)) {
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-			dialogBuilder.setTitle("Network").
-						  setMessage("You are not connected " +
-								  "to wireless network. To access to Invoices you have to be " +
-								  "connected to some wireless network (3G is not sufficient). " +
-								  "You will now be redirected to wireless network settings.");
+			dialogBuilder.setTitle("Wifi Network").
+						  setMessage("To access to Invoices you have to be " +
+								  	 "connected to wireless network (3G is not sufficient). " +
+								  	 "You will now be redirected to wireless network settings...");
 			dialogBuilder.setPositiveButton(R.string.ok, new OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
