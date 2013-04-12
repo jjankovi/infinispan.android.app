@@ -13,6 +13,8 @@ import org.infinispan.configuration.global.GlobalConfigurationBuilder;
 import org.infinispan.container.DataContainer;
 import org.infinispan.lifecycle.ComponentStatus;
 import org.infinispan.manager.DefaultCacheManager;
+import org.infinispan.transaction.LockingMode;
+import org.infinispan.transaction.TransactionMode;
 
 /**
  * 
@@ -68,10 +70,14 @@ public class CacheManager {
 	}
 	
 	private Configuration localConfiguration() {
-		return new ConfigurationBuilder().clustering()
-				.cacheMode(getCacheMode()) 					/** set clustering mode **/
-				.l1().enabled(l1Cache()) 					/** enable/disable l1 cache **/
-				.hash().numOwners(getNumOwners()) 			/** set num owners **/
+		return new ConfigurationBuilder()
+				.transaction() 										/** enter to transaction-specific options**/
+					.lockingMode(LockingMode.OPTIMISTIC)			/** set optimistic transaction locking mode **/
+					.transactionMode(TransactionMode.TRANSACTIONAL) /** set transactional model **/
+				.clustering() 										/** enter to cluster-specific options **/
+					.cacheMode(getCacheMode()) 						/** set clustering mode **/
+					.l1().enabled(l1Cache()) 						/** enable/disable l1 cache **/
+					.hash().numOwners(getNumOwners()) 				/** set num owners **/
 				.build();
 	}
  
