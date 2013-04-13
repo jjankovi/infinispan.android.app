@@ -1,3 +1,2 @@
-Application Invoices Manager allows you to setup a grid of android devices. As backup the infinispan cache system
-is used. All infinispan modes (local, replicated, distributed) are allowed to use. In addition possibility to 
-create a grid system with only selected devices is also supported.
+Application Invoices Manager allows you to setup a grid of android devices. As backup, Infinispan cache system is applied. 
+All Infinispan modes (local, replicated, distributed) are supported. In addition, possibility to create a grid system with only selected devices is also supported.
