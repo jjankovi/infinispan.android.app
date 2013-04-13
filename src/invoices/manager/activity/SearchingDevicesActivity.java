@@ -110,20 +110,6 @@ public class SearchingDevicesActivity extends Activity {
 			}
 		});
 	}
-	
-	private void changeColoursOfList() {
-		if (connectedButton.isChecked()) {
-			connectedDevicesRow.setBackgroundResource(R.color.blue1);
-			connectedButton.setTextColor(Color.WHITE);
-			foundDevicesRow.setBackgroundResource(R.color.grey3);
-			foundButton.setTextColor(Color.BLACK);
-		}else {
-			foundDevicesRow.setBackgroundResource(R.color.blue1);
-			foundButton.setTextColor(Color.WHITE);
-			connectedDevicesRow.setBackgroundResource(R.color.grey3);
-			connectedButton.setTextColor(Color.BLACK);
-		}
-	}
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -280,6 +266,11 @@ public class SearchingDevicesActivity extends Activity {
     	listView.invalidateViews();
 	}
     
+    /**
+     * method is use to change check state of all items in the list
+     * @param devices
+     * @param state
+     */
     private void changeStateofAllDevices(ListView devices, boolean state) {
     	if (devices.getAdapter() != null) {
     		for (int index = 0; index < devices.getAdapter().getCount(); index++) {
@@ -287,6 +278,23 @@ public class SearchingDevicesActivity extends Activity {
         	}
     	}
     }
+    
+    /**
+     * method ensures that color of lists reflects its check state 
+     */
+    private void changeColoursOfList() {
+		if (connectedButton.isChecked()) {
+			connectedDevicesRow.setBackgroundResource(R.color.blue1);
+			connectedButton.setTextColor(Color.WHITE);
+			foundDevicesRow.setBackgroundResource(R.color.grey3);
+			foundButton.setTextColor(Color.BLACK);
+		}else {
+			foundDevicesRow.setBackgroundResource(R.color.blue1);
+			foundButton.setTextColor(Color.WHITE);
+			connectedDevicesRow.setBackgroundResource(R.color.grey3);
+			connectedButton.setTextColor(Color.BLACK);
+		}
+	}
     
     /**
      * thread safe method for increasing counter

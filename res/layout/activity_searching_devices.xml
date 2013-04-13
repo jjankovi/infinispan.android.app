@@ -18,7 +18,7 @@
 
             <RadioButton
                 android:id="@+id/connectedDevices"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Connected Devices"
                 android:textColor="@android:color/black" />
@@ -46,7 +46,7 @@
 
             <RadioButton
                 android:id="@+id/foundDevices"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Found Devices"
                 android:textColor="@android:color/white"

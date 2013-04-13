@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
@@ -147,9 +149,8 @@ public class InvoicesMainActivity extends TabActivity {
 		switch (id) {
 		case SEACH_PARAM_DIALOG:
 			LayoutInflater inflater = LayoutInflater.from(this);
-			View dialogView = inflater.inflate(R.layout.dialog_searching_interval, null);
-			
-			return new AlertDialog.Builder(this)
+			final View dialogView = inflater.inflate(R.layout.dialog_searching_interval, null);
+			final AlertDialog alertDialog = new AlertDialog.Builder(this)
 				.setTitle("Set interval to scan")
 				.setView(dialogView)
 				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -163,18 +164,40 @@ public class InvoicesMainActivity extends TabActivity {
 					}
 				})
 				.create();
+			alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+				public void onShow(DialogInterface dialog) {
+					final TextView errorText = (TextView)dialogView.findViewById(R.id.error_from_to);
+					errorText.setVisibility(View.GONE);
+					Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+					b.setOnClickListener(new OnClickListener() {
+						public void onClick(View arg0) {
+							int from = Integer.parseInt(WifiHelper.getWifiHelper().getSubnetIPAddressNode(
+									fromAddressLabel.getText().toString()));
+							int to = Integer.parseInt(WifiHelper.getWifiHelper().getSubnetIPAddressNode(
+									toAddressLabel.getText().toString()));
+							if (from > to) {
+								errorText.setText("'Start of interval' must be lower than 'End of interval'!");
+								errorText.setTextColor(Color.RED);
+								errorText.setVisibility(View.VISIBLE);
+								return;
+							}
+							fromIpAddress = from + "";
+							toIpAddress = to + "";
+							alertDialog.dismiss();
+						}
+					});
+				}
+			});
+			return alertDialog;
 		case FROM_IP_ADDRESS_DIALOG:
 			inflater = LayoutInflater.from(this);
 			final View dialogView1 = inflater.inflate(R.layout.input_ip_address, null);
-			
-			return new AlertDialog.Builder(this)
+			final AlertDialog alertDialog1 = new AlertDialog.Builder(this)
 				.setTitle("Specify IP Address")
 				.setView(dialogView1)
 				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						TextView tv = (TextView)dialogView1.findViewById(R.id.inputIpAddress);
-						fromAddressLabel.setText(tv.getText().toString());
-						fromIpAddress = WifiHelper.getWifiHelper().getsubnetAddress(tv.getText().toString());
+						
 					}
 				})
 				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -183,18 +206,39 @@ public class InvoicesMainActivity extends TabActivity {
 					}
 				})
 				.create();
+			alertDialog1.setOnShowListener(new DialogInterface.OnShowListener() {
+				public void onShow(DialogInterface dialog) {
+					final TextView errorText = (TextView)dialogView1.findViewById(R.id.error);
+					errorText.setVisibility(View.GONE);
+					Button b = alertDialog1.getButton(AlertDialog.BUTTON_POSITIVE);
+					b.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							TextView tv = (TextView)dialogView1.findViewById(R.id.inputIpAddress);
+							String error = validation(tv);
+							
+							if (error != null) {
+								errorText.setText(error);
+								errorText.setVisibility(View.VISIBLE);
+								errorText.setTextColor(Color.RED);
+								return;
+							}
+							
+							fromAddressLabel.setText(tv.getText().toString());
+							alertDialog1.dismiss();
+						}
+					});
+				}
+			});			
+			return alertDialog1;
 		case TO_IP_ADDRESS_DIALOG:
 			inflater = LayoutInflater.from(this);
 			final View dialogView2 = inflater.inflate(R.layout.input_ip_address, null);
-			
-			return new AlertDialog.Builder(this)
+			final AlertDialog alertDialog2 = new AlertDialog.Builder(this)
 				.setTitle("Specify IP Address")
 				.setView(dialogView2)
 				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						TextView tv = (TextView)dialogView2.findViewById(R.id.inputIpAddress);
-						toAddressLabel.setText(tv.getText().toString());
-						toIpAddress = WifiHelper.getWifiHelper().getsubnetAddress(tv.getText().toString());
+						
 					}
 				})
 				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -203,9 +247,31 @@ public class InvoicesMainActivity extends TabActivity {
 					}
 				})
 				.create();
+			alertDialog2.setOnShowListener(new DialogInterface.OnShowListener() {
+				public void onShow(DialogInterface dialog) {
+					Button b = alertDialog2.getButton(AlertDialog.BUTTON_POSITIVE);
+					final TextView errorText = (TextView)dialogView2.findViewById(R.id.error);
+					b.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							TextView tv = (TextView)dialogView2.findViewById(R.id.inputIpAddress);
+							String error = validation(tv);
+							
+							if (error != null) {
+								errorText.setText(error);
+								errorText.setVisibility(View.VISIBLE);
+								errorText.setTextColor(Color.RED);
+								return;
+							}
+							
+							toAddressLabel.setText(tv.getText().toString());
+							alertDialog2.dismiss();
+						}
+					});
+				}
+			});
+			return alertDialog2;
 		}
-		return null;
-		
+		return null;	
 	}
 	
 	@Override
@@ -271,6 +337,40 @@ public class InvoicesMainActivity extends TabActivity {
 	private void setSearchParamMenuItemVisibilityState() {
 		searchParamsVisibilityState = tabHost.getCurrentTab() == 1;
 		editSearchParam.setVisible(searchParamsVisibilityState);
+	}
+	
+	/**
+	 * Validate IP address
+	 * @param tv
+	 * @return
+	 */
+	private String validation(TextView tv) {
+		String error = null;
+		String input = tv.getText().toString();
+		String regex = "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$";
+		
+		/* format is x.x.x.x and x is numeric */
+		if (!input.matches(regex)) {
+			error = "IP address is not valid!";
+		}
+		
+		/* subnet ip address matches the local one */
+		if (error == null) {
+			String subnet = WifiHelper.getWifiHelper().getSubnetAddress(input);
+			if (!subnet.equals(WifiHelper.getWifiHelper().getSubnetAddress(
+				WifiHelper.getWifiHelper().getDeviceIpAddress(getApplicationContext())))) {								
+				error = "IP address of subnet is not the local one!";
+			}
+		}
+		
+		/* ip address ends with numeric value in range 0-255 */
+		if (error == null) {
+			int localAddress = Integer.parseInt(WifiHelper.getWifiHelper().getSubnetIPAddressNode(input));
+			if (localAddress > 255) {
+				error = "IP address should end in range 0-255!";
+			}
+		}
+		return error;
 	}
 	
 	private class StopCache extends AsyncTask<Void, Void, Void> {

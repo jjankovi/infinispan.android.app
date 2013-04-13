@@ -46,6 +46,11 @@ public class WifiHelper {
 		return true;
 	}
 	
+	/**
+	 * Returns IP address of android device
+	 * @param activity
+	 * @return
+	 */
 	public String getDeviceIpAddress(Context activity) {
 		wifiManager = (WifiManager) activity.
 				getSystemService(Context.WIFI_SERVICE);
@@ -67,22 +72,39 @@ public class WifiHelper {
 		         + "." + String.valueOf(intMyIp3);
 	}
 	
+	/**
+	 * 
+	 * @param deviceAddress
+	 * @param subnetAddress
+	 * @return
+	 */
 	public String getIpAddress(String deviceAddress, String subnetAddress) {
-		return getIpAddress(null, deviceAddress, subnetAddress);
+		return getSubnetAddress(deviceAddress) + subnetAddress;
 	}
 	
-	public String getIpAddress(Context context, String deviceAddress, String subnetAddress) {
-		if (context == null) {
-			return deviceAddress.substring(
-					0, deviceAddress.lastIndexOf(".") + 1) + subnetAddress;
-		}else {
-			return getDeviceIpAddress(context).substring(
-					0, getDeviceIpAddress(context).lastIndexOf(".") + 1) + subnetAddress;
+	/**
+	 * IP Address of local subnet
+	 * @param ipAddress
+	 * @return
+	 */
+	public String getSubnetAddress(String ipAddress) {
+		try {
+			return ipAddress.substring(0, ipAddress.lastIndexOf(".") + 1);
+		} catch (IndexOutOfBoundsException ioobe) {
+			return "";
 		}
-		
 	}
 	
-	public String getsubnetAddress(String ipAddress) {
-		return ipAddress.substring(ipAddress.lastIndexOf(".") + 1);
+	/**
+	 * IP address associated of subnet - local address node of device
+	 * @param ipAddress
+	 * @return
+	 */
+	public String getSubnetIPAddressNode(String ipAddress) {
+		try {
+			return ipAddress.substring(ipAddress.lastIndexOf(".") + 1);
+		} catch (IndexOutOfBoundsException ioobe) {
+			return "";
+		}
 	}
 }
