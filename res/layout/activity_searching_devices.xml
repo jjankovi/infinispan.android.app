@@ -70,17 +70,21 @@
             android:id="@+id/searchDevicesButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="-4.2dp"
+            android:layout_marginRight="-4.2dp"
             android:layout_weight="0.5"
             android:onClick="searchDevices"
             android:text="@string/search" />
         
          <Button
-            android:id="@+id/join_item"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:onClick="join" 
-            android:text="@string/join"
-            android:layout_weight="0.5" />
+             android:id="@+id/join_item"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="-4.2dp"
+             android:layout_marginRight="-4.2dp"
+             android:layout_weight="0.5"
+             android:onClick="join"
+             android:text="@string/join" />
         
     </TableRow>
 
