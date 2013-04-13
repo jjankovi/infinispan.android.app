@@ -21,7 +21,8 @@
         android:theme="@android:style/Theme.Holo.Light" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"> 
+            android:label="@string/title_activity_main" 
+            android:screenOrientation="portrait" > 
             <!-- android:theme="@style/My_Theme"  -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,35 +33,40 @@
         <activity
             android:name=".ConfigureActivity"
             android:label="@string/title_activity_configure"
-            android:theme="@android:style/Theme" >
+            android:theme="@android:style/Theme" 
+            android:screenOrientation="portrait" > 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="invoices.manager.activity.MainActivity" />
         </activity>
         <activity
             android:name=".AddActivity"
-            android:label="@string/title_activity_add" >
+            android:label="@string/title_activity_add" 
+            android:screenOrientation="portrait" > 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="invoices.manager.activity.ListActivity" />
         </activity>
         <activity
             android:name=".InvoicesMainActivity"
-            android:label="@string/title_activity_invoices_main" >
+            android:label="@string/title_activity_invoices_main" 
+            android:screenOrientation="portrait" > 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="invoices.manager.activity.MainActivity" />
         </activity>
         <activity
             android:name=".InvoicesActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main" 
+            android:screenOrientation="portrait" > 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="invoices.manager.activity.InvoicesMainActivity" />
         </activity>
         <activity
             android:name=".SearchingDevicesActivity"
-            android:label="@string/title_activity_searching_devices" >
+            android:label="@string/title_activity_searching_devices" 
+            android:screenOrientation="portrait" > 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="invoices.manager.activity.InvoicesMainActivity" />
