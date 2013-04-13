@@ -16,10 +16,11 @@ public final class R {
     }
     public static final class color {
         public static final int blue1=0x7f070000;
-        public static final int grey=0x7f070001;
-        public static final int grey2=0x7f070002;
-        public static final int grey3=0x7f070003;
-        public static final int orange=0x7f070004;
+        public static final int blue2=0x7f070001;
+        public static final int grey=0x7f070002;
+        public static final int grey2=0x7f070003;
+        public static final int grey3=0x7f070004;
+        public static final int orange=0x7f070005;
     }
     public static final class drawable {
         public static final int black_buttons=0x7f020000;
@@ -41,8 +42,9 @@ public final class R {
         public static final int load_invoices_selector=0x7f020010;
         public static final int off_load_invoices=0x7f020011;
         public static final int on_load_invoices=0x7f020012;
-        public static final int shutdown=0x7f020013;
-        public static final int tab_style=0x7f020014;
+        public static final int on_load_invoices2=0x7f020013;
+        public static final int shutdown=0x7f020014;
+        public static final int tab_style=0x7f020015;
     }
     public static final class id {
         public static final int RelativeLayout01=0x7f0b0014;
