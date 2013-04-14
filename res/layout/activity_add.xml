@@ -1,138 +1,221 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/layout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:padding="10dp" >
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/save_button"
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/invoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/id"
+                android:visibility="gone"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/invoiceNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/invoiceNumberHint"
+                android:visibility="gone"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
+
+        <TextView
+            android:id="@+id/errorAddInvoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TableRow
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="save"
-            android:text="@string/save" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/nameHint"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="13"
+                android:gravity="right"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/streetHint"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/street"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="13"
+                android:gravity="right"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/cityHint"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/city"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="13"
+                android:gravity="right"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/prizeHint"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/prize"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="13"
+                android:gravity="right"
+                android:inputType="number" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/dateOfIssueTableRow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
+
+            <TextView
+                android:id="@+id/dateOfIssueLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/dateOfIssueHint"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/dateOfIssue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:ems="13"
+                android:focusable="true"
+                android:gravity="right"
+                android:inputType="none" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/maturityDateTableRow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:onClick="setMaturityDate" >
+
+            <TextView
+                android:id="@+id/maturityDateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/maturityDateHint"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/maturityDate"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:ems="13"
+                android:focusable="true"
+                android:gravity="right"
+                android:inputType="none" />
+        </TableRow>
+        
+    </LinearLayout>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
 
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="-4.2dp"
+            android:layout_marginRight="-4.2dp"
             android:layout_weight="1"
             android:onClick="cancel"
             android:text="@string/cancel" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
-
-        <TextView
-            android:id="@+id/invoice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/invoice"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/invoiceNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_toRightOf="@+id/invoice"
-            android:text="@string/invoiceNumberHint"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/invoice"
-            android:ems="13"
-            android:hint="@string/nameHint" />
-
-        <EditText
-            android:id="@+id/street"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/name"
-            android:ems="13"
-            android:hint="@string/streetHint" />
-
-        <EditText
-            android:id="@+id/city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/street"
-            android:ems="13"
-            android:hint="@string/cityHint" />
-
-        <EditText
-            android:id="@+id/prize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/city"
-            android:ems="13"
-            android:hint="@string/prizeHint"
-            android:inputType="number" />
-
-        <TextView
-            android:id="@+id/dateOfIssueLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/dateOfIssue"
-            android:layout_alignBottom="@+id/dateOfIssue"
-            android:layout_alignParentLeft="true"
-            android:text="@string/dateOfIssueHint"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Button
-            android:id="@+id/dateOfIssue"
-            android:layout_width="wrap_content"
+            android:id="@+id/save_button"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/prize"
-            android:layout_below="@id/prize"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/dateOfIssueLabel"
-            android:ems="13"
-            android:onClick="setDateOfIssue"
-            android:text="19.12.2012" />
+            android:layout_marginLeft="-4.2dp"
+            android:layout_marginRight="-4.2dp"
+            android:layout_weight="1"
+            android:onClick="save"
+            android:text="@string/ok" />
 
-        <TextView
-            android:id="@+id/maturityDateLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/maturityDate"
-            android:layout_alignBottom="@+id/maturityDate"
-            android:layout_alignParentLeft="true"
-            android:text="@string/maturityDateHint"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </TableRow>
 
-        <Button
-            android:id="@+id/maturityDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/dateOfIssue"
-            android:layout_alignRight="@+id/dateOfIssue"
-            android:layout_below="@id/dateOfIssue"
-            android:ems="13"
-            android:onClick="setMaturityDate"
-            android:text="19.12.2012" />
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>

@@ -30,7 +30,7 @@
     <string name="configure">Configure</string>
 
     <!-- Labels -->
-    <string name="invoice">Invoice number: </string>
+    <string name="id">ID: </string>
 
     <!-- Text fields -->
     <string name="foundDevices">Found devices</string>

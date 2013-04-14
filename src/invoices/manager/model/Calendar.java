@@ -69,5 +69,9 @@ public class Calendar implements Serializable {
 	public void setYear(int year) {
 		this.year = year;
 	}
-
+	
+	public String toString() {
+		return year + (month<10?"0":"") + month + (day<10?"0":"") + day;
+	}
+	
 }

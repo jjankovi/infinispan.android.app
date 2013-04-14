@@ -4,17 +4,18 @@ import invoices.manager.model.Calendar;
 import invoices.manager.model.Invoice;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,15 +27,16 @@ import android.widget.TextView;
  */
 public class AddActivity extends FragmentActivity {
 
-	private Button dateOfIssue;
-	private Button maturityDate;
+	private EditText dateOfIssue;
+	private EditText maturityDate;
 	private EditText name;
 	private EditText street;
 	private EditText city;
 	private EditText prize;
 	private TextView invoice;
 	private TextView invoiceNumber;
-
+	private TextView error;
+	
 	private static final int DATE_OF_ISSUE_ID = 1212;
 	private static final int MATURITY_DATE_ID = 1213;
 
@@ -72,6 +74,30 @@ public class AddActivity extends FragmentActivity {
 		maturityDate.setDay(maturityDateCalendar[0]);
 		maturityDate.setMonth(maturityDateCalendar[1]);
 		maturityDate.setYear(maturityDateCalendar[2]);
+		
+		/* validation */
+		String errorText = null;
+		if (name.getText().toString().equals("") ||
+			name.getText().toString() == null) {
+			errorText = "Name must be set!";
+		}
+		if (prize.getText().toString() == null ||
+			prize.getText().toString().equals("")) {
+			errorText = "Prize must be set!";
+		}
+		BigInteger issueDateBigInteger = new BigInteger(dateOfIssue.toString());
+		BigInteger maturityDateBigInteger = new BigInteger(maturityDate.toString());
+		if (issueDateBigInteger.compareTo(maturityDateBigInteger) == 1) {
+			errorText = "Date of issue must be greater than maturity date!";
+		}
+			
+		if (errorText != null) {
+			error.setText(errorText);
+			error.setTextColor(Color.RED);
+			error.setVisibility(View.VISIBLE);
+			return;
+		}
+		/* end of validation */
 		
 		Invoice invoiceItem = new Invoice();
 		invoiceItem.setId(12);
@@ -111,20 +137,46 @@ public class AddActivity extends FragmentActivity {
 	}
 
 	private void setDefaultsValues() {
-		dateOfIssue = (Button) findViewById(R.id.dateOfIssue);
+		error = (TextView) findViewById(R.id.errorAddInvoice);
+		error.setVisibility(View.GONE);
+		
+		dateOfIssue = (EditText) findViewById(R.id.dateOfIssue);
+		dateOfIssue.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) setDateOfIssue(v);
+			}
+		});
+		dateOfIssue.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				setDateOfIssue(v);
+			}
+		});
+			
 		setCurrentDateOnTextView(dateOfIssue);
-		maturityDate = (Button) findViewById(R.id.maturityDate);
+		maturityDate = (EditText) findViewById(R.id.maturityDate);
+		maturityDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			public void onFocusChange(View v, boolean hasFocus) {
+				if(hasFocus) setMaturityDate(v);
+			}
+		});
+		maturityDate.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				setMaturityDate(v);
+			}
+		});
 		setCurrentDateOnTextView(maturityDate);
 
 		name = (EditText) findViewById(R.id.name);
 		street = (EditText) findViewById(R.id.street);
 		city = (EditText) findViewById(R.id.city);
 		prize = (EditText) findViewById(R.id.prize);
-
+		prize.setText("0");
+		
 		invoice = (TextView) findViewById(R.id.invoice);
-		invoice.setText("Create a new invoice");
+		invoice.setVisibility(View.GONE);
 		invoiceNumber = (TextView) findViewById(R.id.invoiceNumber);
-		invoiceNumber.setText("");
+		invoiceNumber.setVisibility(View.GONE);
+		
 	}
 	
 	private void setValuesFromIntent() {
@@ -142,14 +194,16 @@ public class AddActivity extends FragmentActivity {
 			street.setText(invoiceItem.getStreet());
 			city.setText(invoiceItem.getCity());
 			prize.setText(invoiceItem.getPrize() + "");
-			invoice.setText(R.string.invoice);
+			invoice.setText(R.string.id);
+			invoice.setVisibility(View.VISIBLE);
 			invoiceNumber.setText(invoiceItem.getId() + "");
+			invoiceNumber.setVisibility(View.VISIBLE);
 			
 			Calendar issue = invoiceItem.getDateOfIssue();
 			Calendar maturity = invoiceItem.getMaturityDate();
 			
-			dateOfIssue.setText(issue.getDay() + "." + issue.getMonth() + "." + issue.getYear());
-			maturityDate.setText(maturity.getDay() + "." + maturity.getMonth() + "." + maturity.getYear());
+			setDateOnTextView(dateOfIssue, issue.getDay(), issue.getMonth(), issue.getYear());
+			setDateOnTextView(maturityDate, maturity.getDay(), maturity.getMonth(), maturity.getYear());
 		}
 	}
 
@@ -158,11 +212,11 @@ public class AddActivity extends FragmentActivity {
 		int year = c.get(java.util.Calendar.YEAR);
 		int month = c.get(java.util.Calendar.MONTH) + 1;
 		int day = c.get(java.util.Calendar.DAY_OF_MONTH);
-		setDateOnTextView(view, year, month, day);
+		setDateOnTextView(view, day, month, year);
 	}
 
-	private void setDateOnTextView(TextView view, int year, int month, int day) {
-		view.setText(day + "." + month + "." + year);
+	private void setDateOnTextView(TextView view, int day, int month, int year) {
+		view.setText((day<10?"0":"") + day + "." + (month<10?"0":"") + month + "." + year);
 	}
 
 	private int[] getSingleDateElements(String text) {
@@ -198,10 +252,10 @@ public class AddActivity extends FragmentActivity {
 		public void onDateSet(DatePicker view, int year, int month, int day) {
 			switch (id) {
 			case DATE_OF_ISSUE_ID:
-				setDateOnTextView(dateOfIssue, year, month + 1, day);
+				setDateOnTextView(dateOfIssue, day, month + 1, year);
 				break;
 			case MATURITY_DATE_ID:
-				setDateOnTextView(maturityDate, year, month + 1, day);
+				setDateOnTextView(maturityDate, day, month + 1, year);
 				break;
 			}
 		}
