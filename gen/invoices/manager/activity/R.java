@@ -39,29 +39,31 @@ public final class R {
         public static final int ic_menu_refresh=0x7f02000d;
         public static final int ic_menu_shop=0x7f02000e;
         public static final int ic_menu_shutdown=0x7f02000f;
-        public static final int load_invoices_selector=0x7f020010;
-        public static final int off_load_invoices=0x7f020011;
-        public static final int on_load_invoices=0x7f020012;
-        public static final int on_load_invoices2=0x7f020013;
-        public static final int shutdown=0x7f020014;
-        public static final int tab_style=0x7f020015;
+        public static final int list_selector=0x7f020010;
+        public static final int load_invoices_selector=0x7f020011;
+        public static final int off_load_invoices=0x7f020012;
+        public static final int on_load_invoices=0x7f020013;
+        public static final int on_load_invoices2=0x7f020014;
+        public static final int shutdown=0x7f020015;
+        public static final int tab_style=0x7f020016;
     }
     public static final class id {
         public static final int RelativeLayout01=0x7f0b0015;
-        public static final int about=0x7f0b0035;
-        public static final int add_item=0x7f0b0031;
+        public static final int about=0x7f0b0038;
+        public static final int account_number=0x7f0b0005;
+        public static final int add_item=0x7f0b0034;
+        public static final int bank_code=0x7f0b0006;
         public static final int bottom_toolbar=0x7f0b0018;
         public static final int bottom_toolbar2=0x7f0b0025;
-        public static final int cacheStop=0x7f0b0033;
+        public static final int cacheStop=0x7f0b0036;
         public static final int cancel_button=0x7f0b000f;
-        public static final int city=0x7f0b0007;
         public static final int configure=0x7f0b001e;
         public static final int connectedDevices=0x7f0b0020;
         public static final int connectedDevicesList=0x7f0b0021;
         public static final int connectedDevicesRow=0x7f0b001f;
-        public static final int dateOfIssue=0x7f0b000b;
-        public static final int dateOfIssueLabel=0x7f0b000a;
-        public static final int dateOfIssueTableRow=0x7f0b0009;
+        public static final int dateOfIssue=0x7f0b000a;
+        public static final int dateOfIssueLabel=0x7f0b0009;
+        public static final int dateOfIssueTableRow=0x7f0b0008;
         public static final int delete_item=0x7f0b0019;
         public static final int description_text=0x7f0b0001;
         public static final int deselect_all=0x7f0b0014;
@@ -79,24 +81,26 @@ public final class R {
         public static final int invoice=0x7f0b0002;
         public static final int invoiceNumber=0x7f0b0003;
         public static final int invoicesButton=0x7f0b001c;
+        public static final int item_row_account=0x7f0b0030;
+        public static final int item_row_date=0x7f0b0031;
+        public static final int item_row_prize=0x7f0b0032;
         public static final int join_item=0x7f0b0027;
         public static final int load_invoices=0x7f0b0016;
         public static final int localIpAddressText=0x7f0b0029;
-        public static final int maturityDate=0x7f0b000e;
-        public static final int maturityDateLabel=0x7f0b000d;
-        public static final int maturityDateTableRow=0x7f0b000c;
-        public static final int menu_dummy=0x7f0b0030;
+        public static final int maturityDate=0x7f0b000d;
+        public static final int maturityDateLabel=0x7f0b000c;
+        public static final int maturityDateTableRow=0x7f0b000b;
+        public static final int menu_dummy=0x7f0b0033;
         public static final int modify_item=0x7f0b001a;
-        public static final int name=0x7f0b0005;
-        public static final int prize=0x7f0b0008;
-        public static final int refresh=0x7f0b0032;
+        public static final int notes=0x7f0b000e;
+        public static final int prize=0x7f0b0007;
+        public static final int refresh=0x7f0b0035;
         public static final int save_button=0x7f0b0010;
         public static final int searchDevicesButton=0x7f0b0026;
-        public static final int searching_interval=0x7f0b0034;
+        public static final int searching_interval=0x7f0b0037;
         public static final int select_all=0x7f0b0012;
         public static final int select_count=0x7f0b0013;
-        public static final int shutdown2=0x7f0b0036;
-        public static final int street=0x7f0b0006;
+        public static final int shutdown2=0x7f0b0039;
         public static final int tableRow1=0x7f0b001b;
         public static final int tableRow2=0x7f0b001d;
         public static final int toIpAddressLabel=0x7f0b002d;
@@ -112,7 +116,8 @@ public final class R {
         public static final int activity_searching_devices=0x7f030005;
         public static final int dialog_searching_interval=0x7f030006;
         public static final int input_ip_address=0x7f030007;
-        public static final int main_panel_style=0x7f030008;
+        public static final int listview_item_row=0x7f030008;
+        public static final int main_panel_style=0x7f030009;
     }
     public static final class menu {
         public static final int activity_add=0x7f0a0000;
@@ -127,15 +132,17 @@ public final class R {
         public static final int info=0x7f050001;
     }
     public static final class string {
+        public static final int Notes=0x7f08001d;
         public static final int about=0x7f08000e;
+        public static final int account_number=0x7f08001b;
         public static final int add_item=0x7f080008;
         /**  App name 
          */
         public static final int app_name=0x7f080000;
+        public static final int bank_code=0x7f08001c;
         public static final int cancel=0x7f080015;
-        public static final int cityHint=0x7f08001d;
         public static final int configure=0x7f080016;
-        public static final int dateOfIssueHint=0x7f08001f;
+        public static final int dateOfIssue=0x7f08001f;
         public static final int delete_item=0x7f080010;
         public static final int deselect_all=0x7f080006;
         /**  Text fields 
@@ -146,26 +153,24 @@ public final class R {
         /**  Labels 
          */
         public static final int id=0x7f080017;
-        public static final int invoiceNumberHint=0x7f08001a;
+        public static final int invoiceNumber=0x7f08001a;
         public static final int invoices=0x7f08000a;
         public static final int join=0x7f080014;
         public static final int load_invoices=0x7f08000c;
-        public static final int maturityDateHint=0x7f080020;
+        public static final int maturityDate=0x7f080020;
         public static final int menu_settings=0x7f080022;
         public static final int modify_item=0x7f080011;
-        public static final int nameHint=0x7f08001b;
         public static final int ok=0x7f080013;
-        public static final int prizeHint=0x7f08001e;
+        public static final int prize=0x7f08001e;
         public static final int refresh=0x7f080009;
         public static final int save=0x7f080012;
         public static final int search=0x7f08000b;
-        public static final int searchTextHint=0x7f080019;
+        public static final int searchText=0x7f080019;
         /**  Buttons names 
          */
         public static final int select_all=0x7f080005;
         public static final int select_count=0x7f080007;
         public static final int shutdown=0x7f08000d;
-        public static final int streetHint=0x7f08001c;
         /**  Activities names 
          */
         public static final int title_activity_add=0x7f080001;

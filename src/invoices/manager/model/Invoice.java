@@ -19,27 +19,16 @@ public class Invoice implements Serializable {
 	
 	private long prize;
 	
-	private String name;
+	private String accountNumber;
 	
-	private String street;
+	private String bankCode;
 	
-	private String city;
+	private String notes;
 	
 	public Invoice() {
 		
 	}
 	
-//	public Invoice(Integer id, Calendar dateOfIssue, Calendar maturityDate,
-//			long prize, String name, String street, String city) {
-//		this.id = id;
-//		this.dateOfIssue = dateOfIssue;
-//		this.maturityDate = maturityDate;
-//		this.prize = prize;
-//		this.name = name;
-//		this.street = street;
-//		this.city = city;
-//	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -72,37 +61,28 @@ public class Invoice implements Serializable {
 		this.prize = prize;
 	}
 
-	public String getName() {
-		return name;
+	public String getAccountNumber() {
+		return accountNumber;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 
-	public String getStreet() {
-		return street;
+	public String getBankCode() {
+		return bankCode;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
+	public void setBankCode(String bankCode) {
+		this.bankCode = bankCode;
 	}
 
-	public String getCity() {
-		return city;
+	public String getNotes() {
+		return notes;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	@Override
-	public String toString() {
-		return name;
-	}
-	
 }

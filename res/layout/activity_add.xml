@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/invoiceNumberHint"
+                android:text="@string/invoiceNumber"
                 android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
         </TableRow>
@@ -48,21 +48,43 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp" >
-
+            
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="@string/nameHint"
+                android:text="@string/account_number"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/account_number"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ems="13"
                 android:gravity="right"
-                android:inputType="text" />
+                android:inputType="number" />
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/bank_code"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/bank_code"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="13"
+                android:gravity="right"
+                android:inputType="number" />
         </TableRow>
 
         <TableRow
@@ -75,51 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="@string/streetHint"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/street"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:ems="13"
-                android:gravity="right"
-                android:inputType="text" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="@string/cityHint"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/city"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:ems="13"
-                android:gravity="right"
-                android:inputType="text" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="@string/prizeHint"
+                android:text="@string/prize"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
@@ -143,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="@string/dateOfIssueHint"
+                android:text="@string/dateOfIssue"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
@@ -173,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="@string/maturityDateHint"
+                android:text="@string/maturityDate"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
@@ -188,6 +166,28 @@
                 android:focusable="true"
                 android:gravity="right"
                 android:inputType="none" />
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/Notes"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/notes"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="13"
+                android:gravity="right"
+                android:inputType="textMultiLine" />
         </TableRow>
         
     </LinearLayout>

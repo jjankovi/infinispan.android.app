@@ -27,11 +27,12 @@ import android.widget.TextView;
  */
 public class AddActivity extends FragmentActivity {
 
-	private EditText dateOfIssue;
-	private EditText maturityDate;
-	private EditText name;
-	private EditText street;
-	private EditText city;
+	private Integer id = -1;
+	private EditText dateOfIssueInput;
+	private EditText maturityDateInput;
+	private EditText accountNumber;
+	private EditText bankCode;
+	private EditText notes;
 	private EditText prize;
 	private TextView invoice;
 	private TextView invoiceNumber;
@@ -44,7 +45,7 @@ public class AddActivity extends FragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add);
-		setViews();
+		loadInvoice();
 	}
 
 	@Override
@@ -62,8 +63,8 @@ public class AddActivity extends FragmentActivity {
 	public void save(View view) {
 		Intent intent = getIntent();
 
-		int[] dateOfIssueCalendar = getSingleDateElements(dateOfIssue.getText().toString());
-		int[] maturityDateCalendar = getSingleDateElements(maturityDate.getText().toString());
+		int[] dateOfIssueCalendar = getSingleDateElements(dateOfIssueInput.getText().toString());
+		int[] maturityDateCalendar = getSingleDateElements(maturityDateInput.getText().toString());
 		
 		Calendar dateOfIssue = new Calendar();
 		dateOfIssue.setDay(dateOfIssueCalendar[0]);
@@ -77,13 +78,20 @@ public class AddActivity extends FragmentActivity {
 		
 		/* validation */
 		String errorText = null;
-		if (name.getText().toString().equals("") ||
-			name.getText().toString() == null) {
-			errorText = "Name must be set!";
+		if (accountNumber.getText().toString().equals("") ||
+			accountNumber.getText().toString() == null) {
+			errorText = "Account number must be set!";
+			accountNumber.requestFocus();
+		}
+		if (bankCode.getText().toString().equals("") ||
+			bankCode.getText().toString() == null) {
+			errorText = "Bank code must be set!";
+			bankCode.requestFocus();
 		}
 		if (prize.getText().toString() == null ||
 			prize.getText().toString().equals("")) {
 			errorText = "Prize must be set!";
+			prize.requestFocus();
 		}
 		BigInteger issueDateBigInteger = new BigInteger(dateOfIssue.toString());
 		BigInteger maturityDateBigInteger = new BigInteger(maturityDate.toString());
@@ -100,13 +108,13 @@ public class AddActivity extends FragmentActivity {
 		/* end of validation */
 		
 		Invoice invoiceItem = new Invoice();
-		invoiceItem.setId(12);
+		invoiceItem.setId((id==-1?MainActivity.cacheManager.getNextKey():id));
 		invoiceItem.setDateOfIssue(dateOfIssue);
 		invoiceItem.setMaturityDate(maturityDate);
 		invoiceItem.setPrize(Long.parseLong(prize.getText().toString()));
-		invoiceItem.setName(name.getText().toString());
-		invoiceItem.setStreet(street.getText().toString());
-		invoiceItem.setCity(city.getText().toString());
+		invoiceItem.setAccountNumber(accountNumber.getText().toString());
+		invoiceItem.setBankCode(bankCode.getText().toString());
+		invoiceItem.setNotes(notes.getText().toString());
 
 		intent.putExtra("item", invoiceItem);
 		setResult(RESULT_OK, intent);
@@ -114,7 +122,7 @@ public class AddActivity extends FragmentActivity {
 	}
 
 	public void setDateOfIssue(View view) {
-		int[] dateElements = getSingleDateElements(dateOfIssue.getText()
+		int[] dateElements = getSingleDateElements(dateOfIssueInput.getText()
 				.toString());
 		DialogFragment dialogFragment = new DatePickerFragment(
 				DATE_OF_ISSUE_ID, dateElements[2], dateElements[1] - 1,
@@ -123,7 +131,7 @@ public class AddActivity extends FragmentActivity {
 	}
 
 	public void setMaturityDate(View view) {
-		int[] dateElements = getSingleDateElements(maturityDate.getText()
+		int[] dateElements = getSingleDateElements(maturityDateInput.getText()
 				.toString());
 		DialogFragment dialogFragment = new DatePickerFragment(
 				MATURITY_DATE_ID, dateElements[2], dateElements[1] - 1,
@@ -131,52 +139,51 @@ public class AddActivity extends FragmentActivity {
 		dialogFragment.show(getSupportFragmentManager(), "maturityDatePicker");
 	}
 
-	private void setViews() {
+	private void loadInvoice() {
+		loadViews();
 		setDefaultsValues();
 		setValuesFromIntent();
 	}
 
-	private void setDefaultsValues() {
+	private void loadViews() {
+		invoice = (TextView) findViewById(R.id.invoice);
+		invoiceNumber = (TextView) findViewById(R.id.invoiceNumber);
 		error = (TextView) findViewById(R.id.errorAddInvoice);
-		error.setVisibility(View.GONE);
-		
-		dateOfIssue = (EditText) findViewById(R.id.dateOfIssue);
-		dateOfIssue.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		dateOfIssueInput = (EditText) findViewById(R.id.dateOfIssue);
+		dateOfIssueInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) setDateOfIssue(v);
 			}
 		});
-		dateOfIssue.setOnClickListener(new View.OnClickListener() {
+		dateOfIssueInput.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				setDateOfIssue(v);
 			}
 		});
-			
-		setCurrentDateOnTextView(dateOfIssue);
-		maturityDate = (EditText) findViewById(R.id.maturityDate);
-		maturityDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		maturityDateInput = (EditText) findViewById(R.id.maturityDate);
+		maturityDateInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			public void onFocusChange(View v, boolean hasFocus) {
 				if(hasFocus) setMaturityDate(v);
 			}
 		});
-		maturityDate.setOnClickListener(new View.OnClickListener() {
+		maturityDateInput.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				setMaturityDate(v);
 			}
 		});
-		setCurrentDateOnTextView(maturityDate);
-
-		name = (EditText) findViewById(R.id.name);
-		street = (EditText) findViewById(R.id.street);
-		city = (EditText) findViewById(R.id.city);
+		accountNumber = (EditText) findViewById(R.id.account_number);
+		bankCode = (EditText) findViewById(R.id.bank_code);
+		notes = (EditText) findViewById(R.id.notes);
 		prize = (EditText) findViewById(R.id.prize);
-		prize.setText("0");
-		
-		invoice = (TextView) findViewById(R.id.invoice);
+	}
+
+	private void setDefaultsValues() {
 		invoice.setVisibility(View.GONE);
-		invoiceNumber = (TextView) findViewById(R.id.invoiceNumber);
 		invoiceNumber.setVisibility(View.GONE);
-		
+		error.setVisibility(View.GONE);
+		setCurrentDateOnTextView(dateOfIssueInput);
+		setCurrentDateOnTextView(maturityDateInput);
+		prize.setText("0");
 	}
 	
 	private void setValuesFromIntent() {
@@ -187,24 +194,29 @@ public class AddActivity extends FragmentActivity {
 			serializableItem = intent.getExtras().getSerializable("item");
 		}
 
-		if (serializableItem != null) {
-			Invoice invoiceItem = (Invoice) serializableItem;
-
-			name.setText(invoiceItem.getName());
-			street.setText(invoiceItem.getStreet());
-			city.setText(invoiceItem.getCity());
-			prize.setText(invoiceItem.getPrize() + "");
-			invoice.setText(R.string.id);
-			invoice.setVisibility(View.VISIBLE);
-			invoiceNumber.setText(invoiceItem.getId() + "");
-			invoiceNumber.setVisibility(View.VISIBLE);
-			
-			Calendar issue = invoiceItem.getDateOfIssue();
-			Calendar maturity = invoiceItem.getMaturityDate();
-			
-			setDateOnTextView(dateOfIssue, issue.getDay(), issue.getMonth(), issue.getYear());
-			setDateOnTextView(maturityDate, maturity.getDay(), maturity.getMonth(), maturity.getYear());
+		if (serializableItem == null) {
+			return;
 		}
+		
+		Invoice invoiceItem = (Invoice) serializableItem;
+		id = invoiceItem.getId();
+		
+		invoice.setText(R.string.id);
+		invoice.setVisibility(View.VISIBLE);
+		invoiceNumber.setText(invoiceItem.getId() + "");
+		invoiceNumber.setVisibility(View.VISIBLE);
+		
+		accountNumber.setText(invoiceItem.getAccountNumber());
+		bankCode.setText(invoiceItem.getBankCode());
+		
+		prize.setText(invoiceItem.getPrize() + "");
+		
+		Calendar issue = invoiceItem.getDateOfIssue();
+		setDateOnTextView(dateOfIssueInput, issue.getDay(), issue.getMonth(), issue.getYear());
+		Calendar maturity = invoiceItem.getMaturityDate();
+		setDateOnTextView(maturityDateInput, maturity.getDay(), maturity.getMonth(), maturity.getYear());
+		
+		notes.setText(invoiceItem.getNotes());
 	}
 
 	private void setCurrentDateOnTextView(TextView view) {
@@ -252,10 +264,10 @@ public class AddActivity extends FragmentActivity {
 		public void onDateSet(DatePicker view, int year, int month, int day) {
 			switch (id) {
 			case DATE_OF_ISSUE_ID:
-				setDateOnTextView(dateOfIssue, day, month + 1, year);
+				setDateOnTextView(dateOfIssueInput, day, month + 1, year);
 				break;
 			case MATURITY_DATE_ID:
-				setDateOnTextView(maturityDate, day, month + 1, year);
+				setDateOnTextView(maturityDateInput, day, month + 1, year);
 				break;
 			}
 		}

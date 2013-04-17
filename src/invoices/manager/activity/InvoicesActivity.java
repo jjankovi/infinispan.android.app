@@ -1,5 +1,6 @@
 package invoices.manager.activity;
 
+import invoices.manager.adapter.InvoiceListAdapter;
 import invoices.manager.model.Invoice;
 
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -117,8 +117,8 @@ public class InvoicesActivity extends Activity {
 
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {
-				String listItem = (String) listView.getItemAtPosition(index);
-				MainActivity.cacheManager.remove(Integer.parseInt(listItem.split(" ")[0]));
+				Invoice listItem = (Invoice) listView.getItemAtPosition(index);
+				MainActivity.cacheManager.remove(listItem.getId());
 			}
 		}
 		updateItems();
@@ -130,10 +130,9 @@ public class InvoicesActivity extends Activity {
 		
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {
-				String listItem = (String) listView.getItemAtPosition(index);
+				Invoice listItem = (Invoice)listView.getItemAtPosition(index);
 				Intent intent = new Intent(this, AddActivity.class);
-				intent.putExtra("item", MainActivity.cacheManager.get(
-						Integer.parseInt(listItem.split(" ")[0])));
+				intent.putExtra("item", MainActivity.cacheManager.get(listItem.getId()));
 				startActivityForResult(intent, 2);
 			}
 		}
@@ -156,7 +155,6 @@ public class InvoicesActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			if (!MainActivity.cacheManager.isCacheStarted()) {
 				MainActivity.cacheManager.startCache();
-				generateCacheElements(3);
 			}
 			return null;
 		}
@@ -196,39 +194,20 @@ public class InvoicesActivity extends Activity {
 	}
 
 	/**
-	 * generate random elements into local cache
-	 * 
-	 * @param elementsCount number of elements to be generated
-	 */
-	private void generateCacheElements(int elementsCount) {
-		for (int i = 0; i < elementsCount; i++) {
-//			MainActivity.cacheManager.put(i, "item");  
-//					new Invoice("item" + i, i+20, "information" + i, "manufacturer" + i));
-//			
-//			MainActivity.cacheManager.put(Integer.valueOf(i), 
-//					new Invoice("item" + i, i+20, "information" + i, "manufacturer" + i));
-		}
-//		MainActivity.cacheManager.put(12, new Invoice(1, new GregorianCalendar(2012, 12, 19), 
-//				new GregorianCalendar(2012, 12, 19), (long)12.12, 
-//				"Jaroslav", "D. Makovickeho", "Martin"));
-	}
-
-	/**
 	 * transfer items from local cache into list view. Needed when
 	 * CRUD operations on local cache are performed, and when
 	 * application is started
 	 * 
 	 */
 	public void updateItems() {
-		List<String> listElements = new ArrayList<String>();
+		List<Invoice> listElements = new ArrayList<Invoice>();
 		DataContainer container = MainActivity.cacheManager.getAll();
 		if (container != null) {
 			for (InternalCacheEntry entry : container.entrySet()) {
-				listElements.add(entry.getKey() + " " + entry.getValue());
+				listElements.add((Invoice) entry.getValue());
 			}
 		}
-		listView.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_multiple_choice, listElements));
+		listView.setAdapter(new InvoiceListAdapter(listElements, this));
 		listView.setItemsCanFocus(false);
 		listView.invalidateViews();
 	}
@@ -251,7 +230,14 @@ public class InvoicesActivity extends Activity {
 		int checkedCount = 0;
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {
+				listView.getChildAt(index).setBackgroundResource(R.color.blue2);
 				checkedCount++;
+			}
+			else {
+				View item = listView.getChildAt(index);
+				if (item != null) {
+					item.setBackgroundResource(0);
+				}
 			}
 		}
 		/** update selected items counter **/

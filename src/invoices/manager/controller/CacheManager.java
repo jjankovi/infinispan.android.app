@@ -1,5 +1,7 @@
 package invoices.manager.controller;
 
+import java.util.Random;
+
 import invoices.manager.logger.LoggerFactory;
 import invoices.manager.model.Invoice;
 
@@ -131,6 +133,15 @@ public class CacheManager {
 		}
 		return null;
 
+	}
+	
+	public Integer getNextKey() {
+		Integer random = null;
+		do {
+			random = new Random().nextInt(Integer.MAX_VALUE) + 1;
+		} while (cache.containsKey(random));
+		
+		return random;
 	}
 
 	public boolean isCacheStarted() {
