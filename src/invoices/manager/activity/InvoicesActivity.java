@@ -86,16 +86,17 @@ public class InvoicesActivity extends Activity {
 	public void selectAll(View view) {
 		
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
+			((InvoiceListAdapter)listView.getAdapter()).select(Integer.valueOf(index));
 			listView.setItemChecked(index, true);
-			updateUI();
 		}
-		
+		updateUI();
 	}
 	
 	/** Called when the deselect all button is pressed */
 	public void deselectAll(View view) {
 		
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
+			((InvoiceListAdapter)listView.getAdapter()).deselect(Integer.valueOf(index));
 			listView.setItemChecked(index, false);
 			updateUI();
 		}
@@ -188,6 +189,7 @@ public class InvoicesActivity extends Activity {
 
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
+			((InvoiceListAdapter)listView.getAdapter()).toggleSelected(Integer.valueOf(arg2));
 			updateUI();
 		}
 		
@@ -230,14 +232,7 @@ public class InvoicesActivity extends Activity {
 		int checkedCount = 0;
 		for (int index = 0; index < listView.getAdapter().getCount(); index++) {
 			if (listView.isItemChecked(index)) {
-				listView.getChildAt(index).setBackgroundResource(R.color.blue2);
 				checkedCount++;
-			}
-			else {
-				View item = listView.getChildAt(index);
-				if (item != null) {
-					item.setBackgroundResource(0);
-				}
 			}
 		}
 		/** update selected items counter **/
