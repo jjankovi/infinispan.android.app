@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    	setContentView(R.layout.activity_main);
         
         initiateCacheManager();
         
@@ -103,13 +103,6 @@ public class MainActivity extends Activity {
 		
 	}
 	
-	/** Called when help button is pressed */
-	public void help(View view) {
-		
-		
-		
-	}
-	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
@@ -128,27 +121,26 @@ public class MainActivity extends Activity {
 		SharedPreferences sharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
 		
-		String cacheMode = sharedPrefs.getString("mode", "local");
-		boolean cacheStore = sharedPrefs.getBoolean("store", false);
-		String numOwners = "1";
-		boolean l1Cache = false;
-		if (cacheMode.equals("distributed")) {
-			numOwners = sharedPrefs.getString("owners", "1");
-			l1Cache = sharedPrefs.getBoolean("l1", false);
-		}
+		String cacheModeNew = sharedPrefs.getString("mode", "local");
+		String numOwnersNew = "1";
+		boolean l1CacheNew = false;
 		
-		if (cacheMode.toLowerCase().equals("local")) {
-			cacheManager.setCacheMode(CacheMode.LOCAL);	
-			cacheManager.setL1Cache(l1Cache);
-			cacheManager.setNumOwners(Integer.parseInt(numOwners));
-		}else if (cacheMode.toLowerCase().equals("replicated")) {
-			cacheManager.setCacheMode(CacheMode.REPL_ASYNC);
-		}else if (cacheMode.toLowerCase().equals("distributed")) {
+		if (cacheModeNew.equals("distributed")) {
 			cacheManager.setCacheMode(CacheMode.DIST_ASYNC);
+			numOwnersNew = sharedPrefs.getString("owners", "1");
+			l1CacheNew = sharedPrefs.getBoolean("l1", false);
+		} else if(cacheModeNew.toLowerCase().equals("local")) {
+			cacheManager.setCacheMode(CacheMode.LOCAL);
+		} else if (cacheModeNew.toLowerCase().equals("replicated")) {
+			cacheManager.setCacheMode(CacheMode.REPL_ASYNC);
 		}
-	
-		setCacheStore(cacheStore);
 		
+		boolean cacheStoreNew = sharedPrefs.getBoolean("store", false);
+		
+		cacheManager.setNumOwners(Integer.parseInt(numOwnersNew));
+		cacheManager.setL1Cache(l1CacheNew);
+		setCacheStore(cacheStoreNew);
+
 		cacheManager.cacheInitialization();
 	}
 	

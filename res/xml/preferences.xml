@@ -1,35 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="Main Options" >
-        
-        <ListPreference
-            android:title="Clustering mode"
-            android:key="mode"
-            android:summary="Local"
-            android:defaultValue="local"
-            android:entries="@array/listOptions"
-            android:entryValues="@array/listValues" />
+    <ListPreference
+        android:defaultValue="local"
+        android:entries="@array/listOptions"
+        android:entryValues="@array/listValues"
+        android:key="mode"
+        android:summary="Local"
+        android:title="Clustering mode" />
 
-        <EditTextPreference 
-            android:title="Number of owners"
-            android:key="owners"
-            android:defaultValue="1" />
-            
-        <CheckBoxPreference
-            android:title="L1 cache" 
-        	android:key="l1"    
-        	android:defaultValue="false"
-            android:summaryOff="Turn on L1 cache"
-            android:summaryOn="Turn off L1 cache" />
-        
-        <CheckBoxPreference
-            android:title="Cache store" 
-        	android:key="store"    
-        	android:defaultValue="false"
-            android:summaryOff="Turn on the cache store"
-            android:summaryOn="Turn off the cache store" />
-            
-    </PreferenceCategory>
+    <EditTextPreference
+        android:defaultValue="1"
+        android:key="owners"
+        android:title="Number of owners" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="l1"
+        android:summaryOff="Turn on L1 cache"
+        android:summaryOn="Turn off L1 cache"
+        android:title="L1 cache" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="store"
+        android:summaryOff="Turn on the cache store"
+        android:summaryOn="Turn off the cache store"
+        android:title="Cache store" />
 
 </PreferenceScreen>
