@@ -82,13 +82,11 @@ public class AddActivity extends FragmentActivity {
 			accountNumber.getText().toString() == null) {
 			errorText = "Account number must be set!";
 			accountNumber.requestFocus();
-		}
-		if (bankCode.getText().toString().equals("") ||
+		}else if (bankCode.getText().toString().equals("") ||
 			bankCode.getText().toString() == null) {
 			errorText = "Bank code must be set!";
 			bankCode.requestFocus();
-		}
-		if (prize.getText().toString() == null ||
+		} else if (prize.getText().toString() == null ||
 			prize.getText().toString().equals("")) {
 			errorText = "Prize must be set!";
 			prize.requestFocus();
