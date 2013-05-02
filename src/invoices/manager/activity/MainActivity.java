@@ -139,13 +139,9 @@ public class MainActivity extends Activity {
 		
 		cacheManager.setNumOwners(Integer.parseInt(numOwnersNew));
 		cacheManager.setL1Cache(l1CacheNew);
-		setCacheStore(cacheStoreNew);
-
-		cacheManager.cacheInitialization();
-	}
-	
-	private void setCacheStore(boolean setCacheStore) {
+		cacheManager.setCacheStore(cacheStoreNew);
 		
+		cacheManager.cacheInitialization();
 	}
 	
 	private void handleWifiState() {

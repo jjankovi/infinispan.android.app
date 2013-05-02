@@ -1,9 +1,11 @@
 package invoices.manager.controller;
 
-import java.util.Random;
-
 import invoices.manager.logger.LoggerFactory;
 import invoices.manager.model.Invoice;
+
+import java.util.Collection;
+import java.util.Map.Entry;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.infinispan.Cache;
@@ -12,7 +14,7 @@ import org.infinispan.configuration.cache.Configuration;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.configuration.global.GlobalConfiguration;
 import org.infinispan.configuration.global.GlobalConfigurationBuilder;
-import org.infinispan.container.DataContainer;
+import org.infinispan.eviction.EvictionStrategy;
 import org.infinispan.lifecycle.ComponentStatus;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.transaction.LockingMode;
@@ -35,6 +37,7 @@ public class CacheManager {
 	private CacheMode cacheMode;
 	
 	private boolean l1Cache;
+	private boolean cacheStore;
 	private int numOwners;
 
 	/**
@@ -49,6 +52,7 @@ public class CacheManager {
 		this.cacheMode = cacheMode;
 		this.l1Cache = false;
 		this.numOwners = 1;
+		this.cacheStore = false;
 		cacheInitialization();
 	}
 	
@@ -72,15 +76,36 @@ public class CacheManager {
 	}
 	
 	private Configuration localConfiguration() {
-		return new ConfigurationBuilder()
-				.transaction() 										/** enter to transaction-specific options**/
-					.lockingMode(LockingMode.OPTIMISTIC)			/** set optimistic transaction locking mode **/
-					.transactionMode(TransactionMode.TRANSACTIONAL) /** set transactional model **/
-				.clustering() 										/** enter to cluster-specific options **/
-					.cacheMode(getCacheMode()) 						/** set clustering mode **/
-					.l1().enabled(l1Cache()) 						/** enable/disable l1 cache **/
-					.hash().numOwners(getNumOwners()) 				/** set num owners **/
-				.build();
+		if (isCacheStore()) {
+			return new ConfigurationBuilder()
+			.transaction() 										/** enter to transaction-specific options**/
+				.lockingMode(LockingMode.OPTIMISTIC)			/** set optimistic transaction locking mode **/
+				.transactionMode(TransactionMode.TRANSACTIONAL) /** set transactional model **/
+			.clustering() 										/** enter to cluster-specific options **/
+				.cacheMode(getCacheMode()) 						/** set clustering mode **/
+				.l1().enabled(l1Cache()) 						/** enable/disable l1 cache **/
+				.hash().numOwners(getNumOwners()) 				/** set num owners **/
+			.loaders()
+				.passivation(true)	
+				.preload(true)
+				.addFileCacheStore()
+					.location(System.getProperty("java.io.tmpdir"))
+			.eviction()
+				.strategy(EvictionStrategy.LIRS)
+				.maxEntries(100)
+			.build();
+		} else {
+			return new ConfigurationBuilder()
+			.transaction() 										/** enter to transaction-specific options**/
+				.lockingMode(LockingMode.OPTIMISTIC)			/** set optimistic transaction locking mode **/
+				.transactionMode(TransactionMode.TRANSACTIONAL) /** set transactional model **/
+			.clustering() 										/** enter to cluster-specific options **/
+				.cacheMode(getCacheMode()) 						/** set clustering mode **/
+				.l1().enabled(l1Cache()) 						/** enable/disable l1 cache **/
+				.hash().numOwners(getNumOwners()) 				/** set num owners **/
+			.build();
+		}
+		
 	}
  
 	public void startCache() {
@@ -120,9 +145,9 @@ public class CacheManager {
 		return null;
 	}
 
-	public DataContainer getAll() {
+	public Collection<Entry<Integer, Invoice>> getAll() {
 		if (isCacheStarted()) {
-			return cache.getAdvancedCache().getDataContainer();
+			return cache.entrySet();
 		}
 		return null;
 	}
@@ -182,6 +207,14 @@ public class CacheManager {
 
 	public void setNumOwners(int numOwners) {
 		this.numOwners = numOwners;
+	}
+
+	public boolean isCacheStore() {
+		return cacheStore;
+	}
+
+	public void setCacheStore(boolean cacheStore) {
+		this.cacheStore = cacheStore;
 	}
 	
 }
