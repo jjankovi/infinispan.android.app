@@ -44,8 +44,10 @@ public final class R {
         public static final int off_load_invoices=0x7f020012;
         public static final int on_load_invoices=0x7f020013;
         public static final int on_load_invoices2=0x7f020014;
-        public static final int shutdown=0x7f020015;
-        public static final int tab_style=0x7f020016;
+        public static final int selector_background_button=0x7f020015;
+        public static final int selector_text_button=0x7f020016;
+        public static final int shutdown=0x7f020017;
+        public static final int tab_style=0x7f020018;
     }
     public static final class id {
         public static final int RelativeLayout01=0x7f0b0015;
@@ -181,7 +183,13 @@ public final class R {
         public static final int title_activity_searching_devices=0x7f080024;
     }
     public static final class style {
-        public static final int AppTheme=0x7f090001;
+        public static final int AppTheme=0x7f090002;
+        public static final int Button=0x7f090001;
+        /**  Any customizations for your app running on pre-3.0 devices here 
+ Any customizations for your app running on 3.0+ devices here 
+ Any customizations for your app running on 4.0+ devices here 
+         */
+        public static final int InvoicesManagerTheme=0x7f090003;
         public static final int My_Theme=0x7f090000;
     }
     public static final class xml {
