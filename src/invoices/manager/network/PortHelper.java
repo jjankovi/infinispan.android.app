@@ -23,14 +23,18 @@ public class PortHelper {
 	}
 	
 	public void listeningOnPort(int port) {
-		try {
-			ServerSocket server = new ServerSocket(7800);
-			while (true) {
-				server.accept();
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					ServerSocket server = new ServerSocket(7800);
+					while (true) {
+						server.accept();
+					}
+				} catch (Exception exc) {
+					
+				}
 			}
-		} catch (Exception exc) {
-			
-		}
+		}).start();
 	}
 	
 }
