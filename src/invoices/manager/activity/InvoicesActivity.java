@@ -4,10 +4,10 @@ import invoices.manager.adapter.InvoiceListAdapter;
 import invoices.manager.model.Invoice;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
-
-import org.infinispan.container.DataContainer;
-import org.infinispan.container.entries.InternalCacheEntry;
+import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -166,7 +166,9 @@ public class InvoicesActivity extends Activity {
 			relativeLayout.setVisibility(View.GONE);
 			listView.setVisibility(View.VISIBLE);
 			
-			((InvoicesMainActivity)getParent()).setMenuItemsVisibilityState(true);
+			if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
+				((InvoicesMainActivity)getParent()).setMenuItemsVisibilityState(true);
+			}
 			
 			updateItems();
 			updateUI();
@@ -203,10 +205,11 @@ public class InvoicesActivity extends Activity {
 	 */
 	public void updateItems() {
 		List<Invoice> listElements = new ArrayList<Invoice>();
-		DataContainer container = MainActivity.cacheManager.getAll();
+		Collection<Entry<Integer, Invoice>> container = MainActivity.cacheManager.getAll();
 		if (container != null) {
-			for (InternalCacheEntry entry : container.entrySet()) {
-				listElements.add((Invoice) entry.getValue());
+			Iterator<Entry<Integer, Invoice>> iter = container.iterator();
+			while (iter.hasNext()) {
+				listElements.add(iter.next().getValue());
 			}
 		}
 		listView.setAdapter(new InvoiceListAdapter(listElements, this));

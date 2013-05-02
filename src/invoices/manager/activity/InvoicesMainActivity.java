@@ -42,6 +42,8 @@ public class InvoicesMainActivity extends TabActivity {
 	private static String fromIpAddress = "1";
 	private static String toIpAddress = "255";
 	
+	private Menu menuRef;
+	
 	private MenuItem cacheStop;
 	private MenuItem refresh;
 	private MenuItem addItem;
@@ -94,23 +96,47 @@ public class InvoicesMainActivity extends TabActivity {
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_invoices_main, menu);
-		
-		cacheStop = menu.findItem(R.id.cacheStop);
-		refresh = menu.findItem(R.id.refresh);
-		addItem = menu.findItem(R.id.add_item);
-		editSearchParam = menu.findItem(R.id.searching_interval);
-    	
-		invoicesMenuItemsVisibilityState = MainActivity.cacheManager.isCacheStarted();
-		
-		setMenuItemsVisibilityState(invoicesMenuItemsVisibilityState);
-		setSearchParamMenuItemVisibilityState();
-		
+    	if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
+    		getMenuInflater().inflate(R.menu.activity_invoices_main, menu);
+    		
+    		cacheStop = menu.findItem(R.id.cacheStop);
+    		refresh = menu.findItem(R.id.refresh);
+    		addItem = menu.findItem(R.id.add_item);
+    		editSearchParam = menu.findItem(R.id.searching_interval);
+        	
+    		invoicesMenuItemsVisibilityState = MainActivity.cacheManager.isCacheStarted();
+    		
+    		setMenuItemsVisibilityState(invoicesMenuItemsVisibilityState);
+    		setSearchParamMenuItemVisibilityState();
+    	}
+    	return true;
+    }
+    
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+    	if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
+    		menuRef = menu;
+        	menuRef.clear();
+        	
+        	getMenuInflater().inflate(R.menu.activity_invoices_main, menuRef);
+        	menuRef.removeItem(R.id.menu_dummy);
+        	
+        	cacheStop = menuRef.findItem(R.id.cacheStop);
+    		refresh = menuRef.findItem(R.id.refresh);
+    		addItem = menuRef.findItem(R.id.add_item);
+    		editSearchParam = menuRef.findItem(R.id.searching_interval);
+        	
+    		invoicesMenuItemsVisibilityState = MainActivity.cacheManager.isCacheStarted();
+    		setMenuItemsVisibilityState(invoicesMenuItemsVisibilityState);
+    		setSearchParamMenuItemVisibilityState();
+    		
+    		return invoicesMenuItemsVisibilityState || tabHost.getCurrentTab() == 1;
+    	} 
     	return true;
     }
 	
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		switch (item.getItemId()) {
 		case R.id.add_item:
@@ -152,7 +178,7 @@ public class InvoicesMainActivity extends TabActivity {
 			final View dialogView = inflater.inflate(R.layout.dialog_searching_interval, null);
 			final AlertDialog alertDialog = new AlertDialog.Builder(this)
 				.setTitle("Set interval to scan")
-				.setView(dialogView)
+				.setView(dialogView)				
 				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						
@@ -336,7 +362,14 @@ public class InvoicesMainActivity extends TabActivity {
 	
 	private void setSearchParamMenuItemVisibilityState() {
 		searchParamsVisibilityState = tabHost.getCurrentTab() == 1;
-		editSearchParam.setVisible(searchParamsVisibilityState);
+		
+		if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
+			editSearchParam.setVisible(searchParamsVisibilityState);
+		} else {
+			if (editSearchParam != null && !searchParamsVisibilityState) {
+				menuRef.removeItem(R.id.searching_interval);
+			}
+		}
 	}
 	
 	/**
