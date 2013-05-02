@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
@@ -29,7 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </ListView>
-
     </LinearLayout>
 
     <LinearLayout
@@ -48,9 +47,9 @@
                 android:id="@+id/foundDevices"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="Found Devices"
-                android:textColor="@android:color/white"
-                android:checked="true" />
+                android:textColor="@android:color/white" />
         </TableRow>
 
         <ListView
@@ -58,34 +57,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </ListView>
-
     </LinearLayout>
-    
+
     <TableRow
         android:id="@+id/bottom_toolbar2"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="#C4C4C4" >
 
         <Button
             android:id="@+id/searchDevicesButton"
+            style="@style/Button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="-4.2dp"
-            android:layout_marginRight="-4.2dp"
+            android:layout_margin="4dp"
             android:layout_weight="0.5"
             android:onClick="searchDevices"
             android:text="@string/search" />
-        
-         <Button
-             android:id="@+id/join_item"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="-4.2dp"
-             android:layout_marginRight="-4.2dp"
-             android:layout_weight="0.5"
-             android:onClick="join"
-             android:text="@string/join" />
-        
+
+        <Button
+            android:id="@+id/join_item"
+            style="@style/Button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="0.5"
+            android:onClick="join"
+            android:text="@string/join" />
     </TableRow>
 
 </LinearLayout>

@@ -17,18 +17,18 @@
             android:onClick="selectAll"
             android:text="@string/select_all"
             android:textSize="16dp"
+            style="@style/Button"
             android:width="0dp" />
         
         <Button
             android:id="@+id/select_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="-10dp"
-            android:layout_marginRight="-10dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.4"
             android:clickable="false"
             android:text="@string/select_count"
             android:textSize="16dp"
+            style="@style/Button"
             android:width="0dp" />
          
          <Button
@@ -39,6 +39,7 @@
              android:onClick="deselectAll"
              android:text="@string/deselect_all"
              android:textSize="16dp"
+             style="@style/Button"
              android:width="0dp" />
         
     </TableRow>
@@ -74,26 +75,27 @@
     <TableRow
         android:id="@+id/bottom_toolbar"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="#C4C4C4" >
         
          <Button
-            android:id="@+id/delete_item"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_marginRight="-4.2dp"
-            android:layout_marginLeft="-4.2dp"
-            android:onClick="delete" 
-            android:text="@string/delete_item" />
+             android:id="@+id/delete_item"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="4dp"
+             android:layout_weight="0.5"
+             style="@style/Button"
+             android:onClick="delete"
+             android:text="@string/delete_item" />
          
          <Button
              android:id="@+id/modify_item"
              android:layout_width="fill_parent"
              android:layout_height="match_parent"
-             android:layout_marginLeft="-4.2dp"
-             android:layout_marginRight="-4.2dp"
+             android:layout_margin="4dp"
              android:layout_weight="0.5"
              android:onClick="modify"
+             style="@style/Button"
              android:text="@string/modify_item" />
         
     </TableRow>
