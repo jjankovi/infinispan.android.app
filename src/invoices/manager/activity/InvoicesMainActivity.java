@@ -28,6 +28,8 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 
 /**
+ * InvoicesMainActivity is TabActivity consisting of two tabs:
+ * InvoicesActivity and SearchingDevicesActivity
  * 
  * @author jjankovi
  *
@@ -342,6 +344,12 @@ public class InvoicesMainActivity extends TabActivity {
 		
 	}
 	
+	/**
+	 * Sets menu items visibility according to given value.
+	 * This method is used only in action bar
+	 * 
+	 * @param state
+	 */
 	public void setMenuItemsVisibilityState(boolean state) {
 		invoicesMenuItemsVisibilityState = state;
 		cacheStop.setVisible(invoicesMenuItemsVisibilityState);

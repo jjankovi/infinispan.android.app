@@ -14,6 +14,7 @@ import android.preference.PreferenceActivity;
 import android.text.method.DigitsKeyListener;
 
 /**
+ * ConfigureActivity is used for configuring the application
  * 
  * @author jjankovi
  *

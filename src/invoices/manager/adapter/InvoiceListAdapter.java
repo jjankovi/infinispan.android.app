@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 /**
  * Custom List adapter used in Invoices activity
+ * 
  * @author jjankovi
  * 
  */
@@ -28,6 +29,7 @@ public class InvoiceListAdapter extends ArrayAdapter<Invoice> {
 	/**
 	 * Constructs InvoiceListAdapter with given list of Invoice element and 
 	 * application context
+	 * 
 	 * @param invoices
 	 * @param context
 	 */
@@ -39,6 +41,7 @@ public class InvoiceListAdapter extends ArrayAdapter<Invoice> {
 
 	/**
 	 * List Item with given position will be selected 
+	 *
 	 * @param position
 	 */
 	public void select(Integer position) {
@@ -49,6 +52,7 @@ public class InvoiceListAdapter extends ArrayAdapter<Invoice> {
 	
 	/**
 	 * List Item with given position will be deselected
+	 * 
 	 * @param position
 	 */
 	public void deselect(Integer position) {
@@ -59,6 +63,7 @@ public class InvoiceListAdapter extends ArrayAdapter<Invoice> {
 	
 	/**
 	 * List Item with given position will be toggled
+	 * 
 	 * @param position
 	 */
 	public void toggleSelected(Integer position) {
@@ -96,7 +101,7 @@ public class InvoiceListAdapter extends ArrayAdapter<Invoice> {
 		itemRowDate.setText(invoice.getDateOfIssue().getDay() + "."
 				+ invoice.getDateOfIssue().getMonth() + "."
 				+ invoice.getDateOfIssue().getYear());
-		itemRowPrize.setText(invoice.getPrize() + "€");
+		itemRowPrize.setText(invoice.getPrice() + "€");
 
 		if (selectedIds.contains(position)) {
 			convertView.setSelected(true);

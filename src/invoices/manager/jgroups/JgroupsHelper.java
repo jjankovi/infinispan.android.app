@@ -11,6 +11,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
+ * JgroupsHelper provides tooling for jgroups system manipulation
  * 
  * @author jjankovi
  *
@@ -27,6 +28,11 @@ public class JgroupsHelper {
 		
 	}
 	
+	/**
+	 * Creates an instance of JgroupsHelper
+	 * 
+	 * @return		instance of JgroupsHelper
+	 */
 	public static JgroupsHelper getInstance() {
 		if (instance == null) {
 			instance = new JgroupsHelper();
@@ -34,6 +40,13 @@ public class JgroupsHelper {
 		return instance;
 	}
 	
+	/**
+	 * Sets value of TCPPING initial hosts parameter according to
+	 * given collection of ip addresses and ports 
+	 * 
+	 * @param 		context
+	 * @param 		devices
+	 */
 	public void configureJgroups(Context context, Collection<String> devices) {
 		
 		String initialDevices = "";

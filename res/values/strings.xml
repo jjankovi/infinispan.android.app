@@ -39,7 +39,7 @@
     <string name="account_number">Account Number</string>
     <string name="bank_code">Bank code</string>
     <string name="Notes">Notes</string>
-    <string name="prize">Prize</string>
+    <string name="price">Price</string>
     <string name="dateOfIssue">Date of issue</string>
     <string name="maturityDate">Maturity date</string>
     <string name="hello_world">Hello world!</string>

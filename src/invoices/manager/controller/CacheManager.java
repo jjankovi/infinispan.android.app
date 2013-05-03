@@ -12,6 +12,7 @@ import org.infinispan.Cache;
 import org.infinispan.configuration.cache.CacheMode;
 import org.infinispan.configuration.cache.Configuration;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
+import org.infinispan.configuration.cache.HashConfigurationBuilder;
 import org.infinispan.configuration.global.GlobalConfiguration;
 import org.infinispan.configuration.global.GlobalConfigurationBuilder;
 import org.infinispan.eviction.EvictionStrategy;
@@ -21,6 +22,9 @@ import org.infinispan.transaction.LockingMode;
 import org.infinispan.transaction.TransactionMode;
 
 /**
+ * CacheManager is bridge between graphical interface and underlying 
+ * layer - Infinispan. It is the main Controller class of MVC model in
+ * this application
  * 
  * @author jjankovi
  *
@@ -33,29 +37,36 @@ public class CacheManager {
 	private Cache<Integer, Invoice> cache;
 
 	private DefaultCacheManager cacheManager;
-
-	private CacheMode cacheMode;
 	
-	private boolean l1Cache;
-	private boolean cacheStore;
-	private int numOwners;
+	private CacheConfiguration cacheConfiguration = new CacheConfiguration();
 
 	/**
-	 * Parameter-less constructor defaultly call Local mode  
+	 * Creates default Cache Manager object with LOCAL cache mode  
 	 */
 	public CacheManager() {
 		this(CacheMode.LOCAL);
 	}
 
+	/**
+	 * Creates Cache Manager object with given cache mode 
+	 * 
+	 * @param 		cacheMode which should be used for rest of configuration
+	 */
 	public CacheManager(CacheMode cacheMode) {
 		super();
-		this.cacheMode = cacheMode;
-		this.l1Cache = false;
-		this.numOwners = 1;
-		this.cacheStore = false;
+		
+		cacheConfiguration().setCacheMode(cacheMode);
+		cacheConfiguration().setL1Cache(false);
+		cacheConfiguration().setNumOwners(1);
+		cacheConfiguration().setCacheStore(false);
+		
 		cacheInitialization();
 	}
 	
+	/**
+	 * Creates a new instance of Infinispan Cache Manager and
+	 * invoke its global and local configuration process
+	 */
 	public void cacheInitialization() {
 		try {
 			cacheManager = new DefaultCacheManager(
@@ -76,38 +87,35 @@ public class CacheManager {
 	}
 	
 	private Configuration localConfiguration() {
-		if (isCacheStore()) {
-			return new ConfigurationBuilder()
-			.transaction() 										/** enter to transaction-specific options**/
-				.lockingMode(LockingMode.OPTIMISTIC)			/** set optimistic transaction locking mode **/
-				.transactionMode(TransactionMode.TRANSACTIONAL) /** set transactional model **/
-			.clustering() 										/** enter to cluster-specific options **/
-				.cacheMode(getCacheMode()) 						/** set clustering mode **/
-				.l1().enabled(l1Cache()) 						/** enable/disable l1 cache **/
-				.hash().numOwners(getNumOwners()) 				/** set num owners **/
-			.loaders()
-				.passivation(true)	
-				.preload(true)
-				.addFileCacheStore()
-					.location(System.getProperty("java.io.tmpdir"))
-			.eviction()
-				.strategy(EvictionStrategy.LIRS)
-				.maxEntries(100)
-			.build();
-		} else {
-			return new ConfigurationBuilder()
-			.transaction() 										/** enter to transaction-specific options**/
-				.lockingMode(LockingMode.OPTIMISTIC)			/** set optimistic transaction locking mode **/
-				.transactionMode(TransactionMode.TRANSACTIONAL) /** set transactional model **/
-			.clustering() 										/** enter to cluster-specific options **/
-				.cacheMode(getCacheMode()) 						/** set clustering mode **/
-				.l1().enabled(l1Cache()) 						/** enable/disable l1 cache **/
-				.hash().numOwners(getNumOwners()) 				/** set num owners **/
-			.build();
+		HashConfigurationBuilder localConfiguration = new ConfigurationBuilder()
+			.transaction() 											 /** enter to transaction-specific options **/
+				.lockingMode(LockingMode.OPTIMISTIC)				 /** set optimistic transaction locking mode **/
+				.transactionMode(TransactionMode.TRANSACTIONAL) 	 /** set transactional model **/
+			.clustering() 											 /** enter to cluster-specific options **/
+				.cacheMode(cacheConfiguration.getCacheMode()) 		 /** set clustering mode **/
+				.l1().enabled(cacheConfiguration.l1Cache()) 		 /** enable/disable l1 cache **/
+				.hash().numOwners(cacheConfiguration.getNumOwners());/** set num owners **/
+			
+		if (cacheConfiguration.isCacheStore()) {
+			localConfiguration
+				.loaders()											 /** enter to loaders-specific options **/
+					.passivation(true)								 /** enable passivation **/
+					.preload(true)									 /** enable preload **/
+					.addFileCacheStore()							 /** default cache store is FileCacheStore **/
+						.location(System.getProperty(				 /** set location of file **/
+								"java.io.tmpdir"))
+				.eviction()											 /** enter to eviction-specific options **/
+					.strategy(EvictionStrategy.LIRS)				 /** set eviction strategy **/
+					.maxEntries(100);								 /** set max entries **/
 		}
 		
+		return localConfiguration.build();
 	}
  
+	/**
+	 * Starts a cache. If cache manager was not configured yet, cache initialization
+	 * is performed and cache is started after that
+	 */
 	public void startCache() {
 		try {
 			if (cacheManager == null || 
@@ -121,6 +129,9 @@ public class CacheManager {
 		}
 	}
 
+	/**
+	 * Stops a cache and cache manager as well
+	 */
 	public void stopCache() {
 		if (cache != null) {
 			cache.stop();
@@ -132,12 +143,24 @@ public class CacheManager {
 		}
 	}
 	
+	/**
+	 * Performs put operation over cache model object
+	 * 
+	 * @param 		key
+	 * @param 		value
+	 */
 	public void put(Integer key, Invoice value) {
 		if (isCacheStarted()) {
 			cache.put(key, value);
 		}
 	}
 
+	/**
+	 * Returns Invoices object according to given key
+	 * 
+	 * @param 		key
+	 * @return
+	 */
 	public Invoice get(Integer key) {
 		if (isCacheStarted()) {
 			return cache.get(key);
@@ -145,6 +168,11 @@ public class CacheManager {
 		return null;
 	}
 
+	/**
+	 * Returns collection of all cache elements (Invoices)
+	 * 
+	 * @return
+	 */
 	public Collection<Entry<Integer, Invoice>> getAll() {
 		if (isCacheStarted()) {
 			return cache.entrySet();
@@ -152,6 +180,13 @@ public class CacheManager {
 		return null;
 	}
 
+	/**
+	 * Remove specific Invoice from cache. Given key is used as
+	 * selection rule
+	 * 
+	 * @param 		key
+	 * @return
+	 */
 	public Invoice remove(Integer key) {
 		if (isCacheStarted()) {
 			return cache.remove(key);
@@ -160,6 +195,11 @@ public class CacheManager {
 
 	}
 	
+	/**
+	 * Constructs a new random integer value which is not already used in cache
+	 * 
+	 * @return
+	 */
 	public Integer getNextKey() {
 		Integer random = null;
 		do {
@@ -169,6 +209,11 @@ public class CacheManager {
 		return random;
 	}
 
+	/**
+	 * Determines if cache has been already started
+	 * 
+	 * @return
+	 */
 	public boolean isCacheStarted() {
 		boolean cacheManagerState;
 		boolean cacheState = false;
@@ -184,37 +229,14 @@ public class CacheManager {
 		}
 		return cacheManagerState && cacheState;
 	}
-	
-	public CacheMode getCacheMode() {
-		return cacheMode;
-	}
 
-	public void setCacheMode(CacheMode cacheMode) {
-		this.cacheMode = cacheMode;
-	}
-	
-	public boolean l1Cache() {
-		return l1Cache;
-	}
-	
-	public void setL1Cache(boolean set) {
-		l1Cache = set;
-	}
-
-	public int getNumOwners() {
-		return numOwners;
-	}
-
-	public void setNumOwners(int numOwners) {
-		this.numOwners = numOwners;
-	}
-
-	public boolean isCacheStore() {
-		return cacheStore;
-	}
-
-	public void setCacheStore(boolean cacheStore) {
-		this.cacheStore = cacheStore;
+	/**
+	 * Returns cache configuration
+	 * 
+	 * @return
+	 */
+	public CacheConfiguration cacheConfiguration() {
+		return cacheConfiguration;
 	}
 	
 }

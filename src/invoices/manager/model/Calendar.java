@@ -3,6 +3,7 @@ package invoices.manager.model;
 import java.io.Serializable;
 
 /**
+ * Custom Calendar object which is using in model of application 
  * 
  * @author jjankovi
  *
@@ -16,60 +17,68 @@ public class Calendar implements Serializable {
 	private int year;
 	
 	/**
-	 * 
+	 * Creates Calendar object
 	 */
 	public Calendar() {
 	
 	}
 
 	/**
+	 * Day value of date 
 	 * 
-	 * @return
+	 * @return		day
 	 */
 	public int getDay() {
 		return day;
 	}
 
 	/**
+	 * Sets day parameter with given value
 	 * 
-	 * @param day
+	 * @param 		day
 	 */
 	public void setDay(int day) {
 		this.day = day;
 	}
 
 	/**
+	 * Month value of date
 	 * 
-	 * @return
+	 * @return		month
 	 */
 	public int getMonth() {
 		return month;
 	}
 
 	/**
+	 * Sets month parameter with given value
 	 * 
-	 * @param month
+	 * @param 		month
 	 */
 	public void setMonth(int month) {
 		this.month = month;
 	}
 
 	/**
+	 * Year value of date
 	 * 
-	 * @return
+	 * @return		year
 	 */
 	public int getYear() {
 		return year;
 	}
 
 	/**
+	 * Sets year parameter with given value
 	 * 
-	 * @param year
+	 * @param 		year
 	 */
 	public void setYear(int year) {
 		this.year = year;
 	}
 	
+	
+	@Override
 	public String toString() {
 		return year + (month<10?"0":"") + month + (day<10?"0":"") + day;
 	}

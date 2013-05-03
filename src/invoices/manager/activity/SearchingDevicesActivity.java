@@ -30,6 +30,8 @@ import android.widget.RadioButton;
 import android.widget.TableRow;
 
 /**
+ * SearchingDevicesActivity is the second tab of InvoicesMainActivity. It provides interface
+ * for configuring content of cluster
  * 
  * @author jjankovi
  *

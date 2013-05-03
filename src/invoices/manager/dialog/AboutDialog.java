@@ -10,6 +10,8 @@ import android.view.Window;
 import android.widget.TextView;
 
 /**
+ * AboutDialog provides an information about application in
+ * user friendly style
  * 
  * @author jjankovi
  *
@@ -18,6 +20,11 @@ public class AboutDialog extends Dialog {
 
 	private static Context context;
 
+	/**
+	 * Constructs a predefined dialog with given context 
+	 * 
+	 * @param 		context
+	 */
 	public AboutDialog(Context context) {
 		super(context);
 		AboutDialog.context = context;

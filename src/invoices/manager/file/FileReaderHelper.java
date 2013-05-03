@@ -8,12 +8,20 @@ import java.io.InputStreamReader;
 import android.content.Context;
 
 /**
+ * FileReaderHelper helps with Android file reading operation 
  * 
  * @author jjankovi
  *
  */
 public class FileReaderHelper {
 
+	/**
+	 * From given context and resource id, a raw text is read.
+	 * 
+	 * @param 		context
+	 * @param 		id
+	 * @return		text of resource
+	 */
 	public static String readRawTextFile(Context context, int id) {
 		InputStream inputStream = context.getResources().openRawResource(id);
 		InputStreamReader in = new InputStreamReader(inputStream);

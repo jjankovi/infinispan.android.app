@@ -21,6 +21,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 /**
+ * AddActivity is used for creating and adding a new Invoice
+ * into cache
  * 
  * @author jjankovi
  *
@@ -59,7 +61,7 @@ public class AddActivity extends FragmentActivity {
 		finish();
 	}
 
-	/** Called when the add button is pressed **/
+	/** Called when the ok button is pressed **/
 	public void save(View view) {
 		Intent intent = getIntent();
 
@@ -109,7 +111,7 @@ public class AddActivity extends FragmentActivity {
 		invoiceItem.setId((id==-1?MainActivity.cacheManager.getNextKey():id));
 		invoiceItem.setDateOfIssue(dateOfIssue);
 		invoiceItem.setMaturityDate(maturityDate);
-		invoiceItem.setPrize(Long.parseLong(prize.getText().toString()));
+		invoiceItem.setPrice(Long.parseLong(prize.getText().toString()));
 		invoiceItem.setAccountNumber(accountNumber.getText().toString());
 		invoiceItem.setBankCode(bankCode.getText().toString());
 		invoiceItem.setNotes(notes.getText().toString());
@@ -119,7 +121,7 @@ public class AddActivity extends FragmentActivity {
 		finish();
 	}
 
-	public void setDateOfIssue(View view) {
+	private void setDateOfIssue(View view) {
 		int[] dateElements = getSingleDateElements(dateOfIssueInput.getText()
 				.toString());
 		DialogFragment dialogFragment = new DatePickerFragment(
@@ -128,7 +130,7 @@ public class AddActivity extends FragmentActivity {
 		dialogFragment.show(getSupportFragmentManager(), "dateOfIssuePicker");
 	}
 
-	public void setMaturityDate(View view) {
+	private void setMaturityDate(View view) {
 		int[] dateElements = getSingleDateElements(maturityDateInput.getText()
 				.toString());
 		DialogFragment dialogFragment = new DatePickerFragment(
@@ -207,7 +209,7 @@ public class AddActivity extends FragmentActivity {
 		accountNumber.setText(invoiceItem.getAccountNumber());
 		bankCode.setText(invoiceItem.getBankCode());
 		
-		prize.setText(invoiceItem.getPrize() + "");
+		prize.setText(invoiceItem.getPrice() + "");
 		
 		Calendar issue = invoiceItem.getDateOfIssue();
 		setDateOnTextView(dateOfIssueInput, issue.getDay(), issue.getMonth(), issue.getYear());

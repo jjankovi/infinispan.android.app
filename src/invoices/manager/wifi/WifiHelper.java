@@ -20,6 +20,11 @@ public class WifiHelper {
 		
 	}
 	
+	/**
+	 * Creates an instance of WifiHelper
+	 * 
+	 * @return		instance of WifiHelper
+	 */
 	public static WifiHelper getWifiHelper() {
 		if (instance == null) {
 			instance = new WifiHelper(); 
@@ -29,9 +34,9 @@ public class WifiHelper {
 	
 	/**
 	 * Checks if device is connected to wireless network. At first, it checks if wifi interface is enabled. then
-	 * the state of connected network (if any)
+	 * the status of connected network (if any)
 	 * 
-	 * @param activity
+	 * @param 		activity
 	 * @return
 	 */
 	public boolean isConnectedToWifiNetwork(Activity activity) {
@@ -47,9 +52,10 @@ public class WifiHelper {
 	}
 	
 	/**
-	 * Returns IP address of android device
-	 * @param activity
-	 * @return
+	 * Returns IP address of android device in IPv4 format
+	 * 
+	 * @param 		activity
+	 * @return		IPv4 address of device as String value
 	 */
 	public String getDeviceIpAddress(Context activity) {
 		wifiManager = (WifiManager) activity.
@@ -73,9 +79,12 @@ public class WifiHelper {
 	}
 	
 	/**
+	 * Methods input is IPv4 address of device from which subnet address is
+	 * determined. From this value and second parameter, IPv4 address of 
+	 * given value is calculated
 	 * 
-	 * @param deviceAddress
-	 * @param subnetAddress
+	 * @param 		deviceAddress
+	 * @param 		subnetAddress
 	 * @return
 	 */
 	public String getIpAddress(String deviceAddress, String subnetAddress) {
@@ -83,9 +92,11 @@ public class WifiHelper {
 	}
 	
 	/**
-	 * IP Address of local subnet
-	 * @param ipAddress
-	 * @return
+	 * Determines subnet address according to IPv4 address belonged to this
+	 * subnet
+	 * 
+	 * @param 		ipAddress
+	 * @return		IPv4 address of subnet as String value
 	 */
 	public String getSubnetAddress(String ipAddress) {
 		try {
@@ -96,9 +107,10 @@ public class WifiHelper {
 	}
 	
 	/**
-	 * IP address associated of subnet - local address node of device
-	 * @param ipAddress
-	 * @return
+	 * Determines IP address of subnet in which given device is located
+	 *
+	 * @param 		ipAddress of some device
+	 * @return		IPv4 address of subnet
 	 */
 	public String getSubnetIPAddressNode(String ipAddress) {
 		try {

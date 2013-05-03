@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 /**
+ * Invoices activity is the first tab of InvoicesMainActivity. It provides
+ * CRUD operations over Invoices
  * 
  * @author jjankovi
  *

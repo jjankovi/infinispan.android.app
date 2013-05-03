@@ -163,7 +163,7 @@ public final class R {
         public static final int menu_settings=0x7f080022;
         public static final int modify_item=0x7f080011;
         public static final int ok=0x7f080013;
-        public static final int prize=0x7f08001e;
+        public static final int price=0x7f08001e;
         public static final int refresh=0x7f080009;
         public static final int save=0x7f080012;
         public static final int search=0x7f08000b;

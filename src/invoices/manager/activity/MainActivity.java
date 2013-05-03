@@ -2,16 +2,12 @@ package invoices.manager.activity;
 
 import invoices.manager.controller.CacheManager;
 import invoices.manager.dialog.AboutDialog;
-import invoices.manager.wifi.WifiHelper;
 
 import java.util.Properties;
 
 import org.infinispan.configuration.cache.CacheMode;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -19,12 +15,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 /**
+ * MainActivity is the first activity started right after application 
+ * run
  * 
  * @author jjankovi
  *
@@ -92,7 +89,7 @@ public class MainActivity extends Activity {
 	/** 
 	 * 	Called when configure button is pressed.
 	 * 	After settings are done, cache settings 
-	 *  are initiated again according to configure
+	 *  are initiated again according to configuration
 	 *  settings
 	 *  
 	 */
@@ -126,47 +123,47 @@ public class MainActivity extends Activity {
 		boolean l1CacheNew = false;
 		
 		if (cacheModeNew.equals("distributed")) {
-			cacheManager.setCacheMode(CacheMode.DIST_ASYNC);
+			cacheManager.cacheConfiguration().setCacheMode(CacheMode.DIST_ASYNC);
 			numOwnersNew = sharedPrefs.getString("owners", "1");
 			l1CacheNew = sharedPrefs.getBoolean("l1", false);
 		} else if(cacheModeNew.toLowerCase().equals("local")) {
-			cacheManager.setCacheMode(CacheMode.LOCAL);
+			cacheManager.cacheConfiguration().setCacheMode(CacheMode.LOCAL);
 		} else if (cacheModeNew.toLowerCase().equals("replicated")) {
-			cacheManager.setCacheMode(CacheMode.REPL_ASYNC);
+			cacheManager.cacheConfiguration().setCacheMode(CacheMode.REPL_ASYNC);
 		}
 		
 		boolean cacheStoreNew = sharedPrefs.getBoolean("store", false);
 		
-		cacheManager.setNumOwners(Integer.parseInt(numOwnersNew));
-		cacheManager.setL1Cache(l1CacheNew);
-		cacheManager.setCacheStore(cacheStoreNew);
+		cacheManager.cacheConfiguration().setNumOwners(Integer.parseInt(numOwnersNew));
+		cacheManager.cacheConfiguration().setL1Cache(l1CacheNew);
+		cacheManager.cacheConfiguration().setCacheStore(cacheStoreNew);
 		
 		cacheManager.cacheInitialization();
 	}
 	
 	private void handleWifiState() {
 		 
-		if(!WifiHelper.getWifiHelper().isConnectedToWifiNetwork(this)) {
-			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-			dialogBuilder.setTitle("Wifi Network").
-						  setMessage("To access to Invoices you have to be " +
-								  	 "connected to wireless network (3G is not sufficient). " +
-								  	 "You will now be redirected to wireless network settings...");
-			dialogBuilder.setPositiveButton(R.string.ok, new OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-				}
-			});
-			dialogBuilder.setNegativeButton(R.string.cancel, new OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					
-				}
-			});
-			dialogBuilder.create().show();
-		}else {
+//		if(!WifiHelper.getWifiHelper().isConnectedToWifiNetwork(this)) {
+//			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+//			dialogBuilder.setTitle("Wifi Network").
+//						  setMessage("To access to Invoices you have to be " +
+//								  	 "connected to wireless network (3G is not sufficient). " +
+//								  	 "You will now be redirected to wireless network settings...");
+//			dialogBuilder.setPositiveButton(R.string.ok, new OnClickListener() {
+//				public void onClick(DialogInterface dialog, int which) {
+//					startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+//				}
+//			});
+//			dialogBuilder.setNegativeButton(R.string.cancel, new OnClickListener() {
+//				public void onClick(DialogInterface dialog, int which) {
+//					
+//				}
+//			});
+//			dialogBuilder.create().show();
+//		}else {
 			Intent intent = new Intent(this, InvoicesMainActivity.class);
 			startActivity(intent);
-		}
+//		}
 	}
 
 	private void initiateCacheManager() {
