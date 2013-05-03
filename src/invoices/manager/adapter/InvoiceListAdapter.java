@@ -96,11 +96,10 @@ public class InvoiceListAdapter extends ArrayAdapter<Invoice> {
 
 		Invoice invoice = invoices.get(position);
 
-		itemRowAccount.setText(invoice.getAccountNumber() + "/"
+		itemRowAccount.setText(invoice.getAccountNumber() 
+				+ "/" 
 				+ invoice.getBankCode());
-		itemRowDate.setText(invoice.getDateOfIssue().getDay() + "."
-				+ invoice.getDateOfIssue().getMonth() + "."
-				+ invoice.getDateOfIssue().getYear());
+		itemRowDate.setText(invoice.getDateOfIssue().getFormattedDate());
 		itemRowPrize.setText(invoice.getPrice() + "€");
 
 		if (selectedIds.contains(position)) {

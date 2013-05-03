@@ -37,7 +37,7 @@ public class CacheManager {
 
 	private Cache<Integer, Invoice> cache;
 
-	private DefaultCacheManager cacheManager;
+	private DefaultCacheManager cacheManager = null;
 	
 	private CacheConfiguration cacheConfiguration = new CacheConfiguration();
 
@@ -60,8 +60,6 @@ public class CacheManager {
 		cacheConfiguration().setL1Cache(false);
 		cacheConfiguration().setNumOwners(1);
 		cacheConfiguration().setCacheStore(false);
-		
-		cacheInitialization();
 	}
 	
 	/**
@@ -82,17 +80,17 @@ public class CacheManager {
 	}
 	
 	private GlobalConfiguration globalConfiguration() {
-		log.info("Global configuration is starting");
+		log.info("    Global configuration is starting");
 		TransportConfigurationBuilder globalBuilder = new GlobalConfigurationBuilder()
 			.transport()
 			.defaultTransport()
 			.addProperty("configurationFile", "jgroups.xml");
-		log.info("Global configuration was successfully performed");
+		log.info("    Global configuration was successfully performed");
 		return globalBuilder.build();
 	}
 	
 	private Configuration localConfiguration() {
-		log.info("Local configuration is starting");
+		log.info("    Local configuration is starting");
 		HashConfigurationBuilder localConfiguration = new ConfigurationBuilder()
 			.transaction() 											 /** enter to transaction-specific options **/
 				.lockingMode(LockingMode.OPTIMISTIC)				 /** set optimistic transaction locking mode **/
@@ -114,13 +112,13 @@ public class CacheManager {
 					.strategy(EvictionStrategy.LIRS)				 /** set eviction strategy **/
 					.maxEntries(100);								 /** set max entries **/
 		}
-		log.info("Local configuration was successfully performed");
+		log.info("    Local configuration was successfully performed");
 		
-		log.info("Local configuration: ");
-		log.info("	Cache mode  	  ==>  " + cacheConfiguration.getCacheMode());
-		log.info("	Number of owners  ==>  " + cacheConfiguration.getNumOwners());
-		log.info("	L1  			  ==>  " + (cacheConfiguration.l1Cache()?"enabled":"disabled"));
-		log.info("	Cache store  	  ==>  " + (cacheConfiguration.isCacheStore()?"enabled":"disabled"));
+		log.info("    Local configuration: ");
+		log.info("      Cache mode           ==>  " + cacheConfiguration.getCacheMode());
+		log.info("      Number of owners     ==>  " + cacheConfiguration.getNumOwners());
+		log.info("      L1                   ==>  " + (cacheConfiguration.l1Cache()?"enabled":"disabled"));
+		log.info("      Cache store          ==>  " + (cacheConfiguration.isCacheStore()?"enabled":"disabled"));
 		
 		return localConfiguration.build();
 	}
@@ -132,10 +130,7 @@ public class CacheManager {
 	public void startCache() {
 		try {
 			log.info("Cache is starting");
-			if (cacheManager == null || 
-				cacheManager.getStatus() != ComponentStatus.RUNNING) {
-				cacheInitialization();
-			}
+			cacheInitialization();
 			cache = cacheManager.getCache();
 			log.info("Cache was started");
 		} catch (Exception e) {
@@ -147,11 +142,10 @@ public class CacheManager {
 	 * Stops a cache and cache manager as well
 	 */
 	public void stopCache() {
-		log.info("Cache is stopping");
 		if (cache != null) {
+			log.info("Cache is stopping");
 			cache.stop();
 			log.info("Cache was stopped");
-			cache = null;
 		}
 		if (cacheManager != null) {
 			cacheManager.stop();
@@ -168,13 +162,13 @@ public class CacheManager {
 		if (isCacheStarted()) {
 			cache.put(key, value);
 			log.info("New Invoice object was put into a cache: ");
-			log.info("	ID 			   => " + value.getId());
-			log.info("	Account Number => " + value.getAccountNumber());
-			log.info("	Bank Code	   => " + value.getBankCode());
-			log.info("	Price 		   => " + value.getPrice());
-			log.info("	Date of Issue  => " + value.getDateOfIssue().getFormattedDate());
-			log.info("	Maturity Date  => " + value.getMaturityDate().getFormattedDate());
-			log.info("	Notes 		   => " + value.getNotes());
+			log.info("    ID             => " + value.getId());
+			log.info("    Account Number => " + value.getAccountNumber());
+			log.info("    Bank Code      => " + value.getBankCode());
+			log.info("    Price          => " + value.getPrice());
+			log.info("    Date of Issue  => " + value.getDateOfIssue().getFormattedDate());
+			log.info("    Maturity Date  => " + value.getMaturityDate().getFormattedDate());
+			log.info("    Notes          => " + value.getNotes());
 		}
 	}
 
