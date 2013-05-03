@@ -57,7 +57,6 @@ public class SearchingDevicesActivity extends Activity {
 	private TableRow foundDevicesRow;
 	
 	private static int counter = 0;
-	private static int counterDevices = 0;
 	
 	private static List<String> foundDevicesList = 
 		Collections.synchronizedList(new ArrayList<String>());
@@ -248,7 +247,6 @@ public class SearchingDevicesActivity extends Activity {
     	int localEnd = localStart + threadIterations - 1;
     	for (int i = 0; i < threadsCount; i++) {
     		if (localEnd > globalEnd) localEnd = globalEnd; // the last thread may run less than 5 iterations
-    		log.info("Thread #" + (i+1) + ", localStart: " + localStart + ", localEnd: " + localEnd);
     		new SearchThread(localStart, localEnd, myIpAddress).start();
     		localStart = localEnd + 1;
     		localEnd = localStart + threadIterations - 1;
@@ -349,8 +347,8 @@ public class SearchingDevicesActivity extends Activity {
     				new Socket(device, 7800);
     				foundDevicesList.add(device);
     			} catch (Exception e) {
+    			
     			}
-    			countDevices();
     		}
 			decreaseCounter();
 			runOnUiThread(new Runnable() {
@@ -362,9 +360,15 @@ public class SearchingDevicesActivity extends Activity {
     	    			updateDevices(foundDevices, foundDevicesList);
     	    			joinButton.setEnabled(false);
     	    			
-    	    			log.info(counterDevices + " devices found");
-    	    			log.info(foundDevicesList.size());
-    	    			counterDevices = 0;
+    	    			if (foundDevicesList.size() > 0) {
+    	    				String devices = "";
+    	    				for (String device : foundDevicesList) {
+    	    					devices += device;
+    	    					devices += ", ";
+        	    			}
+    	    				devices = devices.substring(0, devices.length() - 3);
+    	    				log.info("Devices for cluster creation were found: " + devices);
+    	    			}
     	    		}
 				}
 				
@@ -376,12 +380,6 @@ public class SearchingDevicesActivity extends Activity {
 			});
 				
 		}
-			
-		private void countDevices() {
-    		synchronized (this) {
-    			counterDevices++;
-    		}
-    	}	
 		
 	};
 

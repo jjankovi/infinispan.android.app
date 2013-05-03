@@ -77,6 +77,14 @@ public class Calendar implements Serializable {
 		this.year = year;
 	}
 	
+	/**
+	 * Returns date in format dd.mm.yyyy
+	 * 
+	 * @return
+	 */
+	public String getFormattedDate() {
+		return (day<10?"0":"") + day + "." + (month<10?"0":"") + month + "." + year;
+	}
 	
 	@Override
 	public String toString() {

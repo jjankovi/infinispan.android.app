@@ -27,8 +27,6 @@ import android.view.View;
  *
  */
 public class MainActivity extends Activity {
-
-//	private Logger log = LoggerFactory.getLogger(MainActivity.class);
 	
 	public static CacheManager cacheManager = null;
 	

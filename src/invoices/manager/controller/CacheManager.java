@@ -15,6 +15,7 @@ import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.configuration.cache.HashConfigurationBuilder;
 import org.infinispan.configuration.global.GlobalConfiguration;
 import org.infinispan.configuration.global.GlobalConfigurationBuilder;
+import org.infinispan.configuration.global.TransportConfigurationBuilder;
 import org.infinispan.eviction.EvictionStrategy;
 import org.infinispan.lifecycle.ComponentStatus;
 import org.infinispan.manager.DefaultCacheManager;
@@ -31,7 +32,7 @@ import org.infinispan.transaction.TransactionMode;
  */
 public class CacheManager {
 
-	private static final Logger logger = LoggerFactory
+	private static final Logger log = LoggerFactory
 			.getLogger(CacheManager.class);
 
 	private Cache<Integer, Invoice> cache;
@@ -69,24 +70,29 @@ public class CacheManager {
 	 */
 	public void cacheInitialization() {
 		try {
+			log.info("Cache initization is starting");
 			cacheManager = new DefaultCacheManager(
 					globalConfiguration(),
 					localConfiguration(),
 					true);
+			log.info("Cache initization was successfully performed");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
 	private GlobalConfiguration globalConfiguration() {
-		return new GlobalConfigurationBuilder()
-				.transport()
-				.defaultTransport()
-				.addProperty("configurationFile", "jgroups.xml")
-				.build();
+		log.info("Global configuration is starting");
+		TransportConfigurationBuilder globalBuilder = new GlobalConfigurationBuilder()
+			.transport()
+			.defaultTransport()
+			.addProperty("configurationFile", "jgroups.xml");
+		log.info("Global configuration was successfully performed");
+		return globalBuilder.build();
 	}
 	
 	private Configuration localConfiguration() {
+		log.info("Local configuration is starting");
 		HashConfigurationBuilder localConfiguration = new ConfigurationBuilder()
 			.transaction() 											 /** enter to transaction-specific options **/
 				.lockingMode(LockingMode.OPTIMISTIC)				 /** set optimistic transaction locking mode **/
@@ -108,22 +114,30 @@ public class CacheManager {
 					.strategy(EvictionStrategy.LIRS)				 /** set eviction strategy **/
 					.maxEntries(100);								 /** set max entries **/
 		}
+		log.info("Local configuration was successfully performed");
+		
+		log.info("Local configuration: ");
+		log.info("	Cache mode  	  ==>  " + cacheConfiguration.getCacheMode());
+		log.info("	Number of owners  ==>  " + cacheConfiguration.getNumOwners());
+		log.info("	L1  			  ==>  " + (cacheConfiguration.l1Cache()?"enabled":"disabled"));
+		log.info("	Cache store  	  ==>  " + (cacheConfiguration.isCacheStore()?"enabled":"disabled"));
 		
 		return localConfiguration.build();
 	}
  
 	/**
 	 * Starts a cache. If cache manager was not configured yet, cache initialization
-	 * is performed and cache is started after that
+	 * is performed and cache is started right after that
 	 */
 	public void startCache() {
 		try {
+			log.info("Cache is starting");
 			if (cacheManager == null || 
 				cacheManager.getStatus() != ComponentStatus.RUNNING) {
 				cacheInitialization();
 			}
 			cache = cacheManager.getCache();
-			logger.info("Cache was started");
+			log.info("Cache was started");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -133,9 +147,10 @@ public class CacheManager {
 	 * Stops a cache and cache manager as well
 	 */
 	public void stopCache() {
+		log.info("Cache is stopping");
 		if (cache != null) {
 			cache.stop();
-			logger.info("Cache was stopped");
+			log.info("Cache was stopped");
 			cache = null;
 		}
 		if (cacheManager != null) {
@@ -152,6 +167,14 @@ public class CacheManager {
 	public void put(Integer key, Invoice value) {
 		if (isCacheStarted()) {
 			cache.put(key, value);
+			log.info("New Invoice object was put into a cache: ");
+			log.info("	ID 			   => " + value.getId());
+			log.info("	Account Number => " + value.getAccountNumber());
+			log.info("	Bank Code	   => " + value.getBankCode());
+			log.info("	Price 		   => " + value.getPrice());
+			log.info("	Date of Issue  => " + value.getDateOfIssue().getFormattedDate());
+			log.info("	Maturity Date  => " + value.getMaturityDate().getFormattedDate());
+			log.info("	Notes 		   => " + value.getNotes());
 		}
 	}
 
@@ -189,7 +212,9 @@ public class CacheManager {
 	 */
 	public Invoice remove(Integer key) {
 		if (isCacheStarted()) {
-			return cache.remove(key);
+			Invoice removedElement = cache.remove(key);
+			log.info("Invoice with key: " + key + " was removed from cache");
+			return removedElement;
 		}
 		return null;
 

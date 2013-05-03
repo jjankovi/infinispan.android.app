@@ -212,9 +212,9 @@ public class AddActivity extends FragmentActivity {
 		prize.setText(invoiceItem.getPrice() + "");
 		
 		Calendar issue = invoiceItem.getDateOfIssue();
-		setDateOnTextView(dateOfIssueInput, issue.getDay(), issue.getMonth(), issue.getYear());
+		dateOfIssueInput.setText(issue.getFormattedDate());
 		Calendar maturity = invoiceItem.getMaturityDate();
-		setDateOnTextView(maturityDateInput, maturity.getDay(), maturity.getMonth(), maturity.getYear());
+		maturityDateInput.setText(maturity.getFormattedDate());
 		
 		notes.setText(invoiceItem.getNotes());
 	}

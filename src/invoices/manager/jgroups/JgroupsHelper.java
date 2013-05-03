@@ -58,9 +58,10 @@ public class JgroupsHelper {
 		Properties props = System.getProperties();
 		props.setProperty("jgroups.tcpping.initial_hosts", initialDevices);
 		
-		log.info("Devices: " + initialDevices);
+		log.info("List of cluster devices was updated");
+		log.info("New list of devices: " + initialDevices);
 		
-		Toast.makeText(context, "Join to devices was performed", 
+		Toast.makeText(context, "List of cluster devices was updated", 
     			Toast.LENGTH_LONG).show();
 	
 	}

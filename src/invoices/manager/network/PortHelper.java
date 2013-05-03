@@ -1,6 +1,10 @@
 package invoices.manager.network;
 
+import invoices.manager.logger.LoggerFactory;
+
 import java.net.ServerSocket;
+
+import org.apache.log4j.Logger;
 
 /**
  * PortHelper provides tooling to network port manipulation 
@@ -10,6 +14,8 @@ import java.net.ServerSocket;
  */
 public class PortHelper {
 
+	private Logger log = LoggerFactory.getLogger(PortHelper.class);
+	
 	private static PortHelper instance = null;
 	
 	private PortHelper() {
@@ -35,6 +41,7 @@ public class PortHelper {
 	 * @param 		port which should be opened
 	 */
 	public void listeningOnPort(int port) {
+		log.info("Port 7800 is opened and ready for requests");
 		new Thread(new Runnable() {
 			public void run() {
 				try {
