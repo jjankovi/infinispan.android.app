@@ -18,6 +18,8 @@ public class PortHelper {
 	
 	private static PortHelper instance = null;
 	
+	private static boolean portOpened = false;
+	
 	private PortHelper() {
 		
 	}
@@ -41,19 +43,29 @@ public class PortHelper {
 	 * @param 		port which should be opened
 	 */
 	public void listeningOnPort(int port) {
-		log.info("Port 7800 is opened and ready for requests");
+		if (portOpened) {
+			return;
+		}
 		new Thread(new Runnable() {
 			public void run() {
 				try {
 					ServerSocket server = new ServerSocket(7800);
 					while (true) {
+						openPort();
 						server.accept();
 					}
 				} catch (Exception exc) {
 					
 				}
-			}
+			}	
 		}).start();
+	}
+	
+	public void openPort() {
+		if (!portOpened) {
+			portOpened = true;
+			log.info("Port 7800 is opened and ready for requests");
+		}
 	}
 	
 }
