@@ -96,8 +96,8 @@ public class ConfigureActivity extends PreferenceActivity implements OnSharedPre
 
 		if (newSettings && MainActivity.cacheManager.isCacheStarted()) {
 			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-			dialog.setTitle("Warning").setMessage("Settings has been changed while Invoices " +
-					"container is running. Press OK to apply settings and stop the container. " +
+			dialog.setTitle("Warning").setMessage("Settings have been changed while Invoices " +
+					"container is running. Press OK to stop the container and apply settings. " +
 					"Press Cancel to reset settings.");
 			dialog.setPositiveButton(R.string.ok, new OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
